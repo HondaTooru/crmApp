@@ -12,8 +12,8 @@ export default {
 
 <style lang="less">
 @import '~vux/src/styles/reset.less';
+@import '~vux/src/styles/1px.less';
+@baseColor:#1cb0f1;
 html,body,#app{height:100%;overflow-x:hidden;width: 100%}
-body {
-  background-color: #fbf9fe;
-}
+body {background-color: #fbf9fe;}
 </style>
