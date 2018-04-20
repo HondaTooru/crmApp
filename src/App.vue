@@ -1,12 +1,27 @@
 <template>
   <div id="app">
+    <!-- <div v-transfer-dom>
+       <loading v-model="isLoading"></loading>
+    </div> -->
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import { TransferDom, Loading } from 'vux'
+import { mapState } from 'vuex'
 export default {
-  name: 'app'
+  directive: {
+    TransferDom
+  },
+  components: {
+    Loading
+  },
+  computed: {
+    ...mapState({
+      isLoading: state => state.vux.isLoading
+    })
+  }
 }
 </script>
 
