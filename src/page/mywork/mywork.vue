@@ -78,6 +78,13 @@ export default {
     Group,
     Flexbox,
     FlexboxItem
+  },
+  methods: {
+  },
+  created () {
+    this.$http.post(this.HOST + '/crm/api/menu', {customer_id: '810'}).then(data => {
+      console.log(data)
+    })
   }
 }
 </script>
