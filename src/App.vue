@@ -3,6 +3,7 @@
     <div v-transfer-dom>
        <loading v-model="isLoading"></loading>
     </div>
+    <m-sett :sett='config'></m-sett>
     <div class="home">
       <drawer
       width="200px"
@@ -35,21 +36,34 @@
           </div>
         </view-box>
       </div>
-      <view-box ref="viewBox" body-padding-top="46px" body-padding-bottom="55px" style="background-color:#35495e">
-        <x-header slot="header" class="header" title="首页">
-          <figure slot="overwrite-left" @click="drawerVisibility = !drawerVisibility">
+      <view-box ref="viewBox" body-padding-top="46px" body-padding-bottom="55px" class="homebg" :class="{whitebg: route.path === '/'}">
+        <x-header slot="header" class="header"
+        :title="title"
+        :transition="headerTransition"
+        :left-options="{showBack: false}"
+        >
+          <figure slot="overwrite-left" @click="drawerVisibility = !drawerVisibility" v-if="route.path == '/' && config == false">
             <img src="./assets/avatar.jpg">
           </figure>
+          <div slot="right" class="set">
+            <span v-if="route.path == '/mywork' && config == false">设置</span><span v-if="config == true">设置</span>
+          </div>
         </x-header>
-        <router-view></router-view>
+        <transition
+        @after-enter="$vux.bus && $vux.bus.$emit('vux:after-view-enter')"
+        :name="viewTransition" :css="!!direction">
+        <router-view class="router-view"></router-view>
+      </transition>
         <tabbar class="vux-tabbar" icon-class="vux-center" slot="bottom">
           <tabbar-item link="/">
             <img slot="icon" src="./assets/home.svg">
             <img slot="icon-active" src="./assets/home_active.svg">
             <span slot="label">首页</span>
           </tabbar-item>
-          <tabbar-item>
-            <img slot="icon" src="./assets/more.svg">
+          <tabbar-item @on-item-click="btnCon">
+            <div class="circle" slot="icon">
+            <img src="./assets/more.svg">
+          </div>
           </tabbar-item>
           <tabbar-item badge="9" link="/mywork">
             <img slot="icon" src="./assets/work.svg">
@@ -66,16 +80,19 @@
 <script>
 import { TransferDom, Loading, XHeader, Drawer, ViewBox, Tabbar, TabbarItem } from 'vux'
 import { mapState, mapActions } from 'vuex'
+import MSett from '@/page/home/msetting'
 export default {
   data () {
     return {
-      drawerVisibility: false
+      drawerVisibility: false,
+      config: false
     }
   },
   directive: {
     TransferDom
   },
   mounted () {
+    console.log(this.name)
     this.handler = () => {
       if (this.path === '/demo') {
         this.box = document.querySelector('#demo_list_box')
@@ -89,13 +106,15 @@ export default {
     Drawer,
     ViewBox,
     Tabbar,
-    TabbarItem
+    TabbarItem,
+    MSett
   },
   computed: {
     ...mapState({
       route: state => state.route,
       path: state => state.route.path,
-      isLoading: state => state.vux.isLoading
+      isLoading: state => state.vux.isLoading,
+      direction: state => state.vux.direction
     }),
     isShowBar () {
       if (/component/.test(this.path)) {
@@ -120,7 +139,7 @@ export default {
     componentName () {
       if (this.route.path) {
         const parts = this.route.path.split('/')
-        if (/component/.test(this.route.path) && parts[2]) return parts[2]
+        if (parts[1]) return parts[1]
       }
     },
     isDemo () {
@@ -129,11 +148,15 @@ export default {
     isTabbarDemo () {
       return /tabbar/.test(this.route.path)
     },
-    title () {
-      if (this.route.path === '/') return 'Home'
-      if (this.route.path === '/project/donate') return 'Donate'
-      if (this.route.path === '/demo') return 'Demo list'
-      return this.componentName ? `Demo/${this.componentName}` : 'Demo/~~'
+    title: {
+      get () {
+        if (this.route.path === '/') return '首页'
+        if (this.route.path === '/mywork') return '工作'
+        return this.componentName ? `Demo/${this.componentName}` : 'Demo/~~'
+      },
+      set (val) {
+        return val
+      }
     },
     viewTransition () {
       if (!this.direction) return ''
@@ -141,6 +164,10 @@ export default {
     }
   },
   methods: {
+    btnCon () {
+      this.config = true
+      this.title = '快捷功能'
+    },
     onShowModeChange (val) {
   /** hide drawer before changing showMode **/
       this.drawerVisibility = false
@@ -161,26 +188,27 @@ export default {
     ...mapActions([
       'updateDemoPosition'
     ])
-  },
-  watch: {
-    path (path) {
-      if (path === '/component/demo') {
-        this.$router.replace('/demo')
-        return
-      }
-      if (path === '/demo') {
-        setTimeout(() => {
-          this.box = document.querySelector('#demo_list_box')
-          if (this.box) {
-            this.box.removeEventListener('scroll', this.handler, false)
-            this.box.addEventListener('scroll', this.handler, false)
-          }
-        }, 1000)
-      } else {
-        this.box && this.box.removeEventListener('scroll', this.handler, false)
-      }
-    }
   }
+  // ,
+  // watch: {
+  //   path (path) {
+  //     if (path === '/component/demo') {
+  //       this.$router.replace('/demo')
+  //       return
+  //     }
+  //     if (path === '/demo') {
+  //       setTimeout(() => {
+  //         this.box = document.querySelector('#demo_list_box')
+  //         if (this.box) {
+  //           this.box.removeEventListener('scroll', this.handler, false)
+  //           this.box.addEventListener('scroll', this.handler, false)
+  //         }
+  //       }, 1000)
+  //     } else {
+  //       this.box && this.box.removeEventListener('scroll', this.handler, false)
+  //     }
+  //   }
+  // }
 }
 </script>
 
@@ -192,12 +220,19 @@ html,body,#app{height:100%;overflow-x:hidden;width: 100%}
 body {background-color: #fbf9fe;}
 .home {
   height: 100%;
+  .homebg{  transition: all 500ms;
+    &.whitebg{background-color:#35495e;}
+  }
 .header{
   position: absolute;
   top:0;
   left:0;
   width: 100%;
   z-index: 100;
+  .set {
+    font-size: 16px;
+    color:white;
+  }
 }
 .left-panel {
   position: absolute;
@@ -255,7 +290,50 @@ figure{
   }
 }
 .vux-tabbar{
-  background:white;
+  background:#f7f7f7;
+  .circle {
+    width: 35px;
+    height: 35px;
+    padding: 10px;
+    border-radius: 50%;
+    background:white;
+    position:relative;
+    left:-15px;
+    top: -10px;
+  }
+  }
 }
+.router-view {
+  width: 100%;
+  top: 46px;
+}
+
+.vux-pop-out-enter-active,
+.vux-pop-out-leave-active,
+.vux-pop-in-enter-active,
+.vux-pop-in-leave-active {
+  will-change: transform;
+  transition: all 500ms;
+  height: 100%;
+  top: 46px;
+  position: absolute;
+  backface-visibility: hidden;
+  perspective: 1000;
+}
+.vux-pop-out-enter {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+.vux-pop-out-leave-active {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+.vux-pop-in-enter {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+.vux-pop-in-leave-active {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
 }
 </style>

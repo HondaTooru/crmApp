@@ -6,7 +6,7 @@ import App from './App'
 import Vuex from 'vuex'
 import router from './router'
 import { sync } from 'vuex-router-sync'
-import { TransferDom, AjaxPlugin, CloseDialogsPlugin, AlertPlugin, LoadingPlugin } from 'vux'
+import { TransferDom, AjaxPlugin, CloseDialogsPlugin, AlertPlugin, LoadingPlugin, BusPlugin } from 'vux'
 import 'font-awesome/css/font-awesome.css'
 Vue.directive('transfer-dom', TransferDom)
 Vue.use(Vuex)
@@ -45,6 +45,7 @@ store.registerModule('vux', {
 Vue.use(LoadingPlugin)
 Vue.use(AlertPlugin)
 Vue.use(AjaxPlugin)
+Vue.use(BusPlugin)
 
 Vue.use(CloseDialogsPlugin, router)
 sync(store, router)

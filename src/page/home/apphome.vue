@@ -18,6 +18,8 @@ import MWork from './mwork'
 import MSchedule from './mschedule'
 export default {
   name: 'apphome',
+  mounted () {
+  },
   components: {
     MSwiper,
     MWork,

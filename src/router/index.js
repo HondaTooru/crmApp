@@ -1,19 +1,20 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import AppHome from '@/page/home/apphome'
-// import MyWork from '@/page/mywork/mywork'
-const MyWork = () => import('@/page/mywork/mywork').then(m => m.default)
+const AppHome = () => import('@/page/home/AppHome')
+const MyWork = () => import('@/page/mywork/mywork')
 
 Vue.use(Router)
 export default new Router({
   routes: [
     {
       path: '/',
+      name: 'app',
       component: AppHome
     },
     {
       path: '/mywork',
-      component: MyWork
+      component: MyWork,
+      props: {appSetting: false}
     }
   ]
 })
