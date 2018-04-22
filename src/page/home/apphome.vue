@@ -1,14 +1,14 @@
 <template>
   <div>
-    <section>
-      <m-swiper></m-swiper>
-    </section>
-    <section>
-      <m-work></m-work>
-    </section>
-    <section>
-      <m-schedule></m-schedule>
-    </section>
+      <section>
+        <m-swiper></m-swiper>
+      </section>
+      <section>
+        <m-work></m-work>
+      </section>
+      <section>
+        <m-schedule></m-schedule>
+      </section>
   </div>
 </template>
 
@@ -18,7 +18,10 @@ import MWork from './mwork'
 import MSchedule from './mschedule'
 export default {
   name: 'apphome',
-  mounted () {
+  data () {
+    return {
+      height: window.innerHeight - 46 - 53
+    }
   },
   components: {
     MSwiper,
@@ -29,11 +32,11 @@ export default {
 </script>
 
 <style lang="less">
-section{
-  background: white;
-  margin: 0 10px;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 10px;
-}
+    section{
+      margin: 0 10px;
+      background: white;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 10px;
+  }
 </style>

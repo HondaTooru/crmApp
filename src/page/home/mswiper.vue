@@ -208,7 +208,7 @@ export default {
     line-height: 40px;
     span.select{
       display: block;
-      width: 72px;
+      width: auto;
       float: right;
       height: 100%;
       position: relative;

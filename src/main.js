@@ -1,4 +1,4 @@
-// The Vue build version to load with the `import` command
+ // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import FastClick from 'fastclick'
@@ -21,11 +21,15 @@ const store = new Vuex.Store({})
 store.registerModule('vux', {
   state: {
     isLoading: false,
+    gobalSett: false,
     direction: shouldUseTransition ? 'forward' : ''
   },
   mutations: {
     updateLoadingStatus (state, payload) {
       state.isLoading = payload.isLoading
+    },
+    updateGobalSett (state, payload) {
+      state.gobalSett = payload.gobalSett
     },
     updateDirection (state, payload) {
       if (!shouldUseTransition) {

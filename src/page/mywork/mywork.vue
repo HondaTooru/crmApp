@@ -1,6 +1,6 @@
 <template>
   <div>
-    <group :gutter="0">
+    <group :gutter="0" v-for="i in 8" :key="i">
       <h3 slot="title" class="main_">销售管理</h3>
       <flexbox class="wlist">
         <flexbox-item>
@@ -17,48 +17,6 @@
         </flexbox-item>
         <flexbox-item>
           <div class="icon icon-4"><i class="fa fa-handshake-o" aria-hidden="true"></i></div>
-          <div class="text">合同</div>
-        </flexbox-item>
-      </flexbox>
-    </group>
-    <group :gutter="0">
-      <h3 slot="title" class="main_">销售支持</h3>
-      <flexbox class="wlist">
-        <flexbox-item>
-          <div class="icon icon-1"><i class="fa fa-crosshairs" aria-hidden="true"></i></div>
-          <div class="text">线索123</div>
-        </flexbox-item>
-        <flexbox-item>
-        <div class="icon icon-2"><i class="fa fa-crosshairs" aria-hidden="true"></i></div>
-        <div class="text">客户</div>
-        </flexbox-item>
-        <flexbox-item>
-          <div class="icon icon-3"><i class="fa fa-crosshairs" aria-hidden="true"></i></div>
-          <div class="text">商机</div>
-        </flexbox-item>
-        <flexbox-item>
-          <div class="icon icon-4"><i class="fa fa-crosshairs" aria-hidden="true"></i></div>
-          <div class="text">合同</div>
-        </flexbox-item>
-      </flexbox>
-    </group>
-    <group :gutter="0">
-      <h3 slot="title" class="main_">技术团队</h3>
-      <flexbox class="wlist">
-        <flexbox-item>
-          <div class="icon icon-1"><i class="fa fa-crosshairs" aria-hidden="true"></i></div>
-          <div class="text">线索123</div>
-        </flexbox-item>
-        <flexbox-item>
-        <div class="icon icon-2"><i class="fa fa-crosshairs" aria-hidden="true"></i></div>
-        <div class="text">客户</div>
-        </flexbox-item>
-        <flexbox-item>
-          <div class="icon icon-3"><i class="fa fa-crosshairs" aria-hidden="true"></i></div>
-          <div class="text">商机</div>
-        </flexbox-item>
-        <flexbox-item>
-          <div class="icon icon-4"><i class="fa fa-crosshairs" aria-hidden="true"></i></div>
           <div class="text">合同</div>
         </flexbox-item>
       </flexbox>

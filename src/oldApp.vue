@@ -38,8 +38,8 @@
           </div>
         </view-box>
       </div>
-       <div class="mainBox homebg" :class="{whitebg: route.path === '/'}">
-        <x-header class="header"
+      <view-box ref="viewBox" body-padding-top="46px" body-padding-bottom="55px" class="homebg" :class="{whitebg: route.path === '/'}">
+        <x-header slot="header" class="header"
         :title="title"
         :transition="headerTransition"
         :left-options="{showBack: false}"
@@ -56,7 +56,7 @@
         :name="viewTransition" :css="!!direction">
         <router-view class="router-view"></router-view>
       </transition>
-        <tabbar class="vux-tabbar" icon-class="vux-center">
+        <tabbar class="vux-tabbar" icon-class="vux-center" slot="bottom">
           <tabbar-item link="/" :selected="route.path == '/' && gobalSett == false">
             <img slot="icon" src="./assets/home.svg">
             <img slot="icon-active" src="./assets/home_active.svg">
@@ -73,7 +73,7 @@
             <span slot="label">工作</span>
           </tabbar-item>
        </tabbar>
-     </div>
+      </view-box>
     </drawer>
   </div>
 </div>
@@ -83,7 +83,6 @@
 import { TransferDom, Loading, XHeader, Drawer, ViewBox, Tabbar, TabbarItem } from 'vux'
 import { mapState, mapActions } from 'vuex'
 import MSett from '@/page/home/msetting'
-
 export default {
   data () {
     return {
@@ -222,7 +221,6 @@ html {-webkit-text-size-adjust:100%}
 body {background-color: #fbf9fe;font-family:-apple-system-font,Helvetica Neue,sans-serif}
 .home {
   height: 100%;
-  overflow: hidden;
   .homebg{  transition: all 500ms;
     &.whitebg{background-color:#35495e;}
   }
@@ -309,13 +307,6 @@ figure{
 .router-view {
   width: 100%;
   top: 46px;
-  bottom: 50px;
-  position: absolute;
-  left:0;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  &::-webkit-scrollbar{display: none;}
-
 }
 
 .vux-pop-out-enter-active,
@@ -345,9 +336,5 @@ figure{
 .vux-pop-in-leave-active {
   opacity: 0;
   transform: translate3d(-100%, 0, 0);
-}
-.mainBox {
-  height: 100%;
-  overflow: hidden;
 }
 </style>
