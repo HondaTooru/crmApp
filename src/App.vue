@@ -269,11 +269,10 @@ body {background-color: #fbf9fe;font-family:-apple-system-font,Helvetica Neue,sa
   }
   .list {
     list-style:  none;
-    font-size: 14px;
+    font-size: 18px;
     margin-top:30px;
     li {
-    line-height: 40px;
-    height: 40px;
+    line-height: 45px;
     padding-left: 35px;
     .fa {
       margin-right: 10px

@@ -53,10 +53,19 @@ Vue.use(ToastPlugin, {type: 'text', position: 'top'})
 Vue.prototype.$http.defaults.baseURL = 'http://admin.sinlu.net'
 // Vue.prototype.$http.defaults.transformRequest = [data => qs.stringify(data)]
 // Vue.prototype.$http.interceptors.request.use(config => {})
-Vue.prototype.$http.interceptors.request.use((config) => {
+Vue.prototype.$http.interceptors.request.use(config => {
+  store.commit('updateLoadingStatus', {isLoading: true})
   return config
-}, (error) => {
-  console.log('错误的传参')
+}, error => {
+  store.commit('updateLoadingStatus', {isLoading: false})
+  return Promise.reject(error)
+})
+
+Vue.prototype.$http.interceptors.response.use(response => {
+  store.commit('updateLoadingStatus', {isLoading: false})
+  return response
+}, error => {
+  store.commit('updateLoadingStatus', {isLoading: false})
   return Promise.reject(error)
 })
 Vue.use(CloseDialogsPlugin, router)

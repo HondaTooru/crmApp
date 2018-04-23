@@ -16,7 +16,6 @@
     </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -40,20 +39,30 @@ export default {
   },
   methods: {
     login () {
-      this.loginState = !this.loginState
-      LoginApi(this.userInfo).then(res => {
-        this.loginState = !this.loginState
-        if (ERR_OK === res.code) {
+      if (this.userInfo.phone.trim()) {
+        if (this.userInfo.password.trim()) {
           this.loginState = !this.loginState
-          localStorage.setItem(USER_KEY, JSON.stringify(res.data))
-          this.$router.push('/')
+          LoginApi(this.userInfo).then(res => {
+            this.loginState = !this.loginState
+            if (ERR_OK === res.code) {
+              this.loginState = !this.loginState
+              localStorage.setItem(USER_KEY, JSON.stringify(res.data))
+              this.$router.push('/')
+            } else {
+              this.$vux.toast.show({
+                text: res.msg,
+                width: '10em'
+              })
+            }
+          })
         } else {
           this.$vux.toast.show({
-            text: res.msg,
-            width: '10em'
+            text: '请输入密码'
           })
         }
-      })
+      } else {
+        this.$vux.toast.show({ text: '请输入手机号码', width: '10em' })
+      }
     }
   }
 }
