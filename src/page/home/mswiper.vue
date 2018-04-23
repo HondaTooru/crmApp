@@ -2,23 +2,23 @@
   <swiper height="235px" dots-position="center" class="mswiper">
     <swiper-item>
       <div class="title vux-1px-b">
-        <span class="select"><popup-picker :data="list" v-model="value"></popup-picker></span>业绩目标</div>
+        <span class="select"><popup-picker :data="list" v-model="value" @on-change="getTagList"></popup-picker></span>业绩目标</div>
       <div class="main aim">
         <h2>赢单商业金额</h2>
         <div class="content">
             <div>
-              <div class="circle">
-                <x-circle :percent="80" :stroke-width="6" :trail-width="6" :stroke-color="['#36D1DC', '#5B86E5']" trail-color="#ececec">
+              <div class="circle" v-if="slideDate">
+                <x-circle :percent="Number(Math.min(100,percent))" :stroke-width="6" :trail-width="6" :stroke-color="['#36D1DC', '#5B86E5']" trail-color="#ececec">
                   <span :style="{color: strokeColor}">{{percent}}%</span>
                 </x-circle>
               </div>
             </div>
             <div>
-              <dl class="dsc">
+              <dl class="dsc" v-if="slideDate">
                 <dt>目标</dt>
-                <dd><span>&yen;</span>0</dd>
+                <dd><span>&yen;</span>{{slideDate.tag || 0}}</dd>
                 <dt>已完成</dt>
-                <dd><span>&yen;</span>0</dd>
+                <dd><span>&yen;</span>{{slideDate.finish || 0}}</dd>
               </dl>
             </div>
         </div>
@@ -26,7 +26,7 @@
     </swiper-item>
     <swiper-item>
       <div class="title vux-1px-b">
-        <span class="select"><popup-picker :data="list" v-model="value"></popup-picker></span>销售业绩</div>
+        <span class="select"><popup-picker :data="list" v-model="value" @on-change="list2"></popup-picker></span>销售业绩</div>
         <div class="main list">
            <flexbox orient="vertical" :gutter="15">
              <flexbox-item>
@@ -171,6 +171,7 @@
 
 <script>
 import { Swiper, SwiperItem, PopupPicker, XCircle, Flexbox, FlexboxItem } from 'vux'
+import { SlideApi, ERR_OK, USER_KEY } from '@/api/api'
 export default {
   name: 'mswiper',
   components: {
@@ -183,10 +184,48 @@ export default {
   },
   data () {
     return {
+      value2: ['你好'],
       value: ['本月'],
       list: [['本月', '上个月', '本季', '上季', '今年', '去年']],
-      percent: 30,
-      strokeColor: '#3FC7FA'
+      transformText: ['month', 'last month', 'three month', 'last three month', 'year', 'last year'],
+      slideDate: null,
+      strokeColor: '#3FC7FA',
+      data: {
+        customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id,
+        is_own: 0,
+        module: 1,
+        time_str: '',
+        uid: JSON.parse(localStorage.getItem(USER_KEY)).id
+      }
+    }
+  },
+  created () {
+    this.getTagList()
+  },
+  mounted () {
+  },
+  methods: {
+    getTagList () {
+      this.data.time_str = this.cuurentDate
+      SlideApi(this.data).then(res => {
+        if (res.code === ERR_OK) {
+          this.slideDate = res.data
+        } else {
+          this.$vux.toast.show({
+            text: res.msg
+          })
+        }
+      })
+    },
+    list2 () {
+    }
+  },
+  computed: {
+    cuurentDate () {
+      return this.transformText[this.list[0].indexOf(this.value[0])]
+    },
+    percent () {
+      return (((this.slideDate.finish || 0) / (this.slideDate.tag || 0)).toFixed(1))
     }
   }
 }

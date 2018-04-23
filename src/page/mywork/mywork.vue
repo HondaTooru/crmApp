@@ -26,10 +26,15 @@
 
 <script>
 import { Group, Flexbox, FlexboxItem } from 'vux'
+import { MenuApi, ERR_OK, USER_KEY } from '@/api/api'
 export default {
   name: 'mywork',
   data () {
     return {
+      menuList: [],
+      params: {
+        customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id
+      }
     }
   },
   components: {
@@ -38,11 +43,19 @@ export default {
     FlexboxItem
   },
   methods: {
+    getMenu () {
+      MenuApi(this.params).then(res => {
+        if (ERR_OK === res.code) {
+          this.menuList = res.data
+        } else {
+          this.$vux.toast.show({
+            text: res.msg
+          })
+        }
+      })
+    }
   },
   created () {
-    this.$http.post(this.HOST + '/crm/api/menu', {customer_id: '810'}).then(data => {
-      console.log(data)
-    })
   }
 }
 </script>

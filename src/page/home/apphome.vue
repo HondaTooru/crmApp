@@ -1,7 +1,7 @@
 <template>
   <div>
       <section>
-        <m-swiper></m-swiper>
+        <m-swiper :info="tagList"></m-swiper>
       </section>
       <section>
         <m-work></m-work>
@@ -16,11 +16,12 @@
 import MSwiper from './mswiper'
 import MWork from './mwork'
 import MSchedule from './mschedule'
+
 export default {
   name: 'apphome',
   data () {
     return {
-      height: window.innerHeight - 46 - 53
+      tagList: null
     }
   },
   components: {

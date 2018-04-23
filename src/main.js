@@ -2,21 +2,18 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import FastClick from 'fastclick'
-import App from './App'
+import App from './test'
 import Vuex from 'vuex'
 import router from './router'
 import { sync } from 'vuex-router-sync'
-import { TransferDom, AjaxPlugin, CloseDialogsPlugin, AlertPlugin, LoadingPlugin, BusPlugin } from 'vux'
+import { TransferDom, AjaxPlugin, CloseDialogsPlugin, AlertPlugin, LoadingPlugin, BusPlugin, ToastPlugin } from 'vux'
 import 'font-awesome/css/font-awesome.css'
 Vue.directive('transfer-dom', TransferDom)
 Vue.use(Vuex)
 
-Vue.prototype.HOST = 'http://admin.sinlu.net'
 FastClick.attach(document.body)
-
 // no transitoin in demo site
 const shouldUseTransition = !/transition=none/.test(location.href)
-
 const store = new Vuex.Store({})
 store.registerModule('vux', {
   state: {
@@ -50,7 +47,18 @@ Vue.use(LoadingPlugin)
 Vue.use(AlertPlugin)
 Vue.use(AjaxPlugin)
 Vue.use(BusPlugin)
+Vue.use(ToastPlugin, {type: 'text', position: 'top'})
 
+// axios 参数转换
+Vue.prototype.$http.defaults.baseURL = 'http://admin.sinlu.net'
+// Vue.prototype.$http.defaults.transformRequest = [data => qs.stringify(data)]
+// Vue.prototype.$http.interceptors.request.use(config => {})
+Vue.prototype.$http.interceptors.request.use((config) => {
+  return config
+}, (error) => {
+  console.log('错误的传参')
+  return Promise.reject(error)
+})
 Vue.use(CloseDialogsPlugin, router)
 sync(store, router)
 // simple history management
@@ -75,10 +83,8 @@ methods.forEach(key => {
 
 router.beforeEach(function (to, from, next) {
   store.commit('updateLoadingStatus', {isLoading: true})
-
   const toIndex = history.getItem(to.path)
   const fromIndex = history.getItem(from.path)
-
   if (toIndex) {
     if (!fromIndex || parseInt(toIndex, 10) > parseInt(fromIndex, 10) || (toIndex === '0' && fromIndex === '0')) {
       store.commit('updateDirection', {direction: 'forward'})
