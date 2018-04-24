@@ -4,6 +4,7 @@ const Index = () => import('@/page/index')
 const Login = () => import('@/page/login')
 const AppHome = () => import('@/page/home/apphome')
 const MyWork = () => import('@/page/mywork/mywork')
+const Clue = () => import('@/page/clue/clue')
 
 Vue.use(Router)
 export default new Router({
@@ -11,10 +12,10 @@ export default new Router({
     {
       path: '/',
       component: Index,
-      // redirect: 'apphome',
       children: [
         { path: '', component: AppHome },
-        { path: 'mywork', component: MyWork }
+        { path: 'mywork', component: MyWork },
+        { path: 'clue', name: 'clue', component: Clue }
       ]
     },
     {

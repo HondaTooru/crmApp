@@ -92,8 +92,10 @@ methods.forEach(key => {
 
 router.beforeEach(function (to, from, next) {
   store.commit('updateLoadingStatus', {isLoading: true})
+
   const toIndex = history.getItem(to.path)
   const fromIndex = history.getItem(from.path)
+
   if (toIndex) {
     if (!fromIndex || parseInt(toIndex, 10) > parseInt(fromIndex, 10) || (toIndex === '0' && fromIndex === '0')) {
       store.commit('updateDirection', {direction: 'forward'})
@@ -123,10 +125,6 @@ router.beforeEach(function (to, from, next) {
 router.afterEach(function (to) {
   isPush = false
   store.commit('updateLoadingStatus', {isLoading: false})
-  // if (process.env.NODE_ENV === 'production') {
-  //   ga && ga('set', 'page', to.fullPath)
-  //   ga && ga('send', 'pageview')
-  // }
 })
 
 Vue.config.productionTip = false

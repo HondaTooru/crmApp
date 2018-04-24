@@ -35,5 +35,5 @@ export default {
 @baseColor:#1cb0f1;
 html,body,#app{height:100%;overflow-x:hidden;width: 100%}
 html {-webkit-text-size-adjust:100%}
-body {background-color: #fbf9fe;font-family:-apple-system-font,Helvetica Neue,sans-serif}
+body {font-family:-apple-system-font,Helvetica Neue,sans-serif}
 </style>

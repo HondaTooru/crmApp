@@ -36,7 +36,7 @@
         <x-header class="header"
         :title="title"
         :transition="headerTransition"
-        :left-options="{showBack: false}"
+        :left-options="{showBack: !(route.path === '/' || route.path === '/mywork')}"
         >
           <figure slot="overwrite-left" @click="drawerVisibility = !drawerVisibility" v-if="(route.path == '/' || route.path == '/mywork') && !gobalSett">
             <img src="../assets/avatar.jpg">
@@ -50,7 +50,7 @@
         :name="viewTransition" :css="!!direction">
         <router-view class="router-view"></router-view>
       </transition>
-        <tabbar class="vux-tabbar" icon-class="vux-center">
+        <tabbar class="vux-tabbar" icon-class="vux-center" v-if="route.path ==='/' || route.path ==='/mywork'">
           <tabbar-item link="/" :selected="route.path == '/' && gobalSett == false">
             <img slot="icon" src="../assets/home.svg">
             <img slot="icon-active" src="../assets/home_active.svg">

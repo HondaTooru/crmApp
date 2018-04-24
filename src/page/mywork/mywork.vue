@@ -1,8 +1,8 @@
 <template>
   <div>
-    <group :gutter="0" v-for="i in 8" :key="i">
+    <group :gutter="0">
       <h3 slot="title" class="main_">销售管理</h3>
-      <flexbox class="wlist">
+      <!-- <flexbox class="wlist" :guuter="0">
         <flexbox-item>
           <div class="icon icon-1"><i class="fa fa-crosshairs" aria-hidden="true"></i></div>
           <div class="text">线索123</div>
@@ -19,6 +19,14 @@
           <div class="icon icon-4"><i class="fa fa-handshake-o" aria-hidden="true"></i></div>
           <div class="text">合同</div>
         </flexbox-item>
+      </flexbox> -->
+      <flexbox :gutter="0" wrap="wrap" class="wlist">
+         <flexbox-item :span="1/4" v-for="item in menuList" :key="item.id">
+           <router-link :to="{ name: 'clue', params: {} }" tag="div">
+           <div class="icon icon-1"><i class="fa fa-crosshairs" aria-hidden="true"></i></div>
+           <div class="text">{{item.showname}}</div>
+           </router-link>
+         </flexbox-item>
       </flexbox>
     </group>
   </div>
@@ -56,6 +64,7 @@ export default {
     }
   },
   created () {
+    this.getMenu()
   }
 }
 </script>
@@ -69,7 +78,7 @@ export default {
   background-color:#f5f5f5;
 }
 .wlist {
-    padding: 15px 0;
+    padding: 15px 0 0;
     .icon {
       width: 50px;
       height: 50px;
@@ -100,7 +109,7 @@ export default {
   }
   .text {
     font-size: 12px;
-    padding-top: 3px;
+    padding: 10px 0 15px;
   }
 }
 
