@@ -1,215 +1,56 @@
 <template>
-  <div id="app">
-    <div v-transfer-dom>
-       <loading v-model="isLoading"></loading>
+ <div class="search vux-1px-b">
+   <div v-transfer-dom>
+  <popup v-model="show3" should-scroll-top-on-show class="val">
+    <div class="pheight">
+      <group>
+        <x-switch title="Multi Popup (first)" v-model="show3"></x-switch>
+        <x-switch title="Multi Popup (second)" v-model="show4"></x-switch>
+      </group>
+      this is the first popup
     </div>
-    <div v-transfer-dom>
-    <m-sett :sett="gobalSett"></m-sett>
-  </div>
-    <div class="home">
-      <drawer
-      width="200px"
-      show-mode="overlay"
-      placement="left"
-      :show.sync="drawerVisibility"
-      :drawer-style="{'background-color':'#35495e', width: '200px'}"
-      >
-      <div slot="drawer" class="left-panel">
-        <view-box>
-          <div>
-            <div class="avatar">
-              <img src="./assets/avatar.jpg" alt="">
-            </div>
-            <div class="info">
-              <p class="name">
-                <span>叶倾城</span><span>高级主管</span>
-              </p>
-              <p class="complany">天河科技</p>
-            </div>
-            <ul class="list">
-              <router-link :to="{ name: '', params: {} }" tag="li"><i class="fa fa-bell" aria-hidden="true"></i>通知中心</router-link>
-              <router-link :to="{ name: '', params: {} }" tag="li"><i class="fa fa-th-large" aria-hidden="true"></i>应用管理</router-link>
-              <router-link :to="{ name: '', params: {} }" tag="li"><i class="fa fa-volume-up" aria-hidden="true"></i>公告</router-link>
-              <router-link :to="{ name: '', params: {} }" tag="li"><i class="fa fa-address-book-o" aria-hidden="true"></i>公司通讯录</router-link>
-              <router-link :to="{ name: '', params: {} }" tag="li"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>常见问题</router-link>
-              <router-link :to="{ name: '', params: {} }" tag="li"><i class="fa fa-user-circle-o" aria-hidden="true"></i>关于我们</router-link>
-              <router-link :to="{ name: '', params: {} }" tag="li"><i class="fa fa-cog" aria-hidden="true"></i>设置</router-link>
-            </ul>
-          </div>
-        </view-box>
-      </div>
-       <div class="mainBox homebg" :class="{whitebg: route.path === '/'}">
-        <x-header class="header"
-        :title="title"
-        :transition="headerTransition"
-        :left-options="{showBack: false}"
-        >
-          <figure slot="overwrite-left" @click="drawerVisibility = !drawerVisibility" v-if="(route.path == '/' || route.path == '/mywork') && !gobalSett">
-            <img src="./assets/avatar.jpg">
-          </figure>
-          <div slot="right" class="set">
-            <span v-if="route.path == '/mywork' && !gobalSett">设置</span><span v-if="gobalSett">设置</span>
-          </div>
-        </x-header>
-        <transition
-        @after-enter="$vux.bus && $vux.bus.$emit('vux:after-view-enter')"
-        :name="viewTransition" :css="!!direction">
-        <router-view class="router-view"></router-view>
-      </transition>
-        <tabbar class="vux-tabbar" icon-class="vux-center">
-          <tabbar-item link="/" :selected="route.path == '/' && gobalSett == false">
-            <img slot="icon" src="./assets/home.svg">
-            <img slot="icon-active" src="./assets/home_active.svg">
-            <span slot="label">首页</span>
-          </tabbar-item>
-          <tabbar-item @on-item-click="$store.commit('updateGobalSett', {gobalSett: true})">
-            <div class="circle" slot="icon">
-            <img src="./assets/more.svg">
-          </div>
-          </tabbar-item>
-          <tabbar-item badge="9" link="/mywork" :selected="route.path == '/mywork' && gobalSett == false">
-            <img slot="icon" src="./assets/work.svg">
-            <img slot="icon-active" src="./assets/work_active.svg">
-            <span slot="label">工作</span>
-          </tabbar-item>
-       </tabbar>
-     </div>
-    </drawer>
-  </div>
+  </popup>
 </div>
+<div v-transfer-dom>
+  <popup v-model="show4" should-scroll-top-on-show heigh="400px">
+    <div class="pheight">
+      <group>
+        <x-switch title="Multi Popup (second)" v-model="show4"></x-switch>
+      </group>
+      this is the second popup
+    </div>
+  </popup>
+</div>
+   <div class="content">
+     <div class="left">
+       <span @click="show3 = !show3">选择类型</span>
+     </div>
+     <div class="right">
+       <input type="text" class="keyword">
+     </div>
+   </div>
+ </div>
 </template>
 
 <script>
-import { TransferDom, Loading, XHeader, Drawer, ViewBox, Tabbar, TabbarItem } from 'vux'
-import { mapState, mapActions } from 'vuex'
-import MSett from '@/page/home/msetting'
+import { Popup, Group, XSwitch, FlexBox, FlexBoxItem } from 'vux'
 
 export default {
+  name: 'search',
   data () {
     return {
-      drawerVisibility: false
+      show3: false,
+      show4: false
     }
   },
-  directive: {
-    TransferDom
-  },
-  mounted () {
-    // this.$store.commit('updateGobalSett', {gobalSett: true})
-    // console.log(this.gobalSett)
-    this.handler = () => {
-      if (this.path === '/demo') {
-        this.box = document.querySelector('#demo_list_box')
-        this.updateDemoPosition(this.box.scrollTop)
-      }
-    }
-  },
+  methods: {},
   components: {
-    Loading,
-    XHeader,
-    Drawer,
-    ViewBox,
-    Tabbar,
-    TabbarItem,
-    MSett
-  },
-  computed: {
-    ...mapState({
-      route: state => state.route,
-      path: state => state.route.path,
-      isLoading: state => state.vux.isLoading,
-      direction: state => state.vux.direction,
-      gobalSett: state => state.vux.gobalSett
-    }),
-    isShowBar () {
-      if (/component/.test(this.path)) {
-        return true
-      }
-      return false
-    },
-    leftOptions () {
-      return {
-        showBack: this.route.path !== '/'
-      }
-    },
-    rightOptions () {
-      return {
-        showMore: true
-      }
-    },
-    headerTransition () {
-      if (!this.direction) return ''
-      return this.direction === 'forward' ? 'vux-header-fade-in-right' : 'vux-header-fade-in-left'
-    },
-    componentName () {
-      if (this.route.path) {
-        const parts = this.route.path.split('/')
-        if (parts[1]) return parts[1]
-      }
-    },
-    isDemo () {
-      return /component|demo/.test(this.route.path)
-    },
-    isTabbarDemo () {
-      return /tabbar/.test(this.route.path)
-    },
-    title: {
-      get () {
-        if ((this.route.path === '/' || this.route.path === '/mywork') && this.gobalSett === true) return '快捷功能'
-        if (this.route.path === '/') return '首页'
-        if (this.route.path === '/mywork') return '工作'
-        return this.componentName ? `Demo/${this.componentName}` : 'Demo/~~'
-      },
-      set (val) {
-        return val
-      }
-    },
-    viewTransition () {
-      if (!this.direction) return ''
-      return 'vux-pop-' + (this.direction === 'forward' ? 'in' : 'out')
-    }
-  },
-  methods: {
-    onShowModeChange (val) {
-  /** hide drawer before changing showMode **/
-      this.drawerVisibility = false
-      setTimeout(one => {
-        this.showModeValue = val
-      }, 400)
-    },
-    onPlacementChange (val) {
-      /** hide drawer before changing position **/
-      this.drawerVisibility = false
-      setTimeout(one => {
-        this.showPlacementValue = val
-      }, 400)
-    },
-    onClickMore () {
-      this.showMenu = true
-    },
-    ...mapActions([
-      'updateDemoPosition'
-    ])
+    Group,
+    XSwitch,
+    Popup,
+    FlexBox,
+    FlexBoxItem
   }
-  // ,
-  // watch: {
-  //   path (path) {
-  //     if (path === '/component/demo') {
-  //       this.$router.replace('/demo')
-  //       return
-  //     }
-  //     if (path === '/demo') {
-  //       setTimeout(() => {
-  //         this.box = document.querySelector('#demo_list_box')
-  //         if (this.box) {
-  //           this.box.removeEventListener('scroll', this.handler, false)
-  //           this.box.addEventListener('scroll', this.handler, false)
-  //         }
-  //       }, 1000)
-  //     } else {
-  //       this.box && this.box.removeEventListener('scroll', this.handler, false)
-  //     }
-  //   }
-  // }
 }
 </script>
 
@@ -219,134 +60,60 @@ export default {
 @baseColor:#1cb0f1;
 html,body,#app{height:100%;overflow-x:hidden;width: 100%}
 html {-webkit-text-size-adjust:100%}
-body {background-color: #fbf9fe;font-family:-apple-system-font,Helvetica Neue,sans-serif}
-.home {
-  height: 100%;
-  overflow: hidden;
-  .homebg{  transition: all 500ms;
-    &.whitebg{background-color:#35495e;}
-  }
-.header{
-  position: absolute;
-  top:0;
-  left:0;
-  width: 100%;
-  z-index: 100;
-  .set {
-    font-size: 16px;
-    color:white;
-  }
+body {font-family:-apple-system-font,Helvetica Neue,sans-serif}
+.pheight {
+  height: 350px
 }
-.left-panel {
-  position: absolute;
-  top:46px;
-  bottom: 55px;
-  width: 100%;
-  color:white;
-  font-size: 16px;
-  .avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin: 0 auto;
-    img {
-      display: block;
-      width: 100%;
-    }
-  }
-  .info {
-    text-align: center;
-    padding: 15px 0;
-    p.name {
+.search {
+  height: 20px;
+  line-height: 20px;
+  overflow: hidden;
+  padding: 10px 0;
+  .content {
+    display: flex;
+    .left {
+      width: 150px;
+      min-width: 150px;
+      text-align: center;
+      position: relative;
+      font-size: 14px;
+      &:after{
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 1px;
+        bottom: 0;
+        border-right: 1px solid #C7C7C7;
+        color: #C7C7C7;
+        transform-origin: 100% 0;
+        transform: scaleX(0.5);
+      }
+      &:before {
+        content: '❯';
+        position: absolute;
+        color:#C7C7C7;
+        right: 30px;
+        transform: rotate(90deg);
+      }
       span {
-        padding: 0 10px
+        width: 100%;
+        display: block;
       }
     }
-    p.complany {
-      color:#afafaf
+    .right {
+      flex:1;
+      padding:0 15px 0 30px;
+      background:url(./assets/Search.svg) no-repeat 5px center/contain;
+      .keyword {
+        appearance:none;
+        border: 0 none;
+        outline: 0 none;
+        height: 100%;
+        float:left;
+        width: 100%
+      }
     }
   }
-  .list {
-    list-style:  none;
-    font-size: 18px;
-    margin-top:30px;
-    li {
-    line-height: 45px;
-    padding-left: 35px;
-    .fa {
-      margin-right: 10px
-    }
-    }
-  }
-}
-figure{
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  overflow: hidden;
-  touch-action: none;
-  transform: translate(0, -8px);
-  img{
-    width:100%
-  }
-}
-.vux-tabbar{
-  background:#f7f7f7;
-  .circle {
-    width: 35px;
-    height: 35px;
-    padding: 10px;
-    border-radius: 50%;
-    background:white;
-    position:relative;
-    left:-15px;
-    top: -10px;
-  }
-  }
-}
-.router-view {
-  width: 100%;
-  top: 46px;
-  bottom: 50px;
-  position: absolute;
-  left:0;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  &::-webkit-scrollbar{display: none;}
-
-}
-
-.vux-pop-out-enter-active,
-.vux-pop-out-leave-active,
-.vux-pop-in-enter-active,
-.vux-pop-in-leave-active {
-  will-change: transform;
-  transition: all 500ms;
-  height: 100%;
-  top: 46px;
-  position: absolute;
-  backface-visibility: hidden;
-  perspective: 1000;
-}
-.vux-pop-out-enter {
-  opacity: 0;
-  transform: translate3d(-100%, 0, 0);
-}
-.vux-pop-out-leave-active {
-  opacity: 0;
-  transform: translate3d(100%, 0, 0);
-}
-.vux-pop-in-enter {
-  opacity: 0;
-  transform: translate3d(100%, 0, 0);
-}
-.vux-pop-in-leave-active {
-  opacity: 0;
-  transform: translate3d(-100%, 0, 0);
-}
-.mainBox {
-  height: 100%;
-  overflow: hidden;
 }
 </style>
