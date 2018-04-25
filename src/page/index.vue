@@ -1,5 +1,12 @@
 <template>
   <div id="app">
+    <div v-transfer-dom>
+        <popup v-model="select" position="bottom" should-rerender-on-show>
+          <group :gutter="0">
+            <radio :options="selectList" @on-change="change" v-model="selectValue.key"></radio>
+          </group>
+        </popup>
+    </div>
     <div class="home">
       <drawer
       width="200px"
@@ -34,15 +41,17 @@
       </div>
        <div class="mainBox homebg" :class="{whitebg: route.path === '/'}">
         <x-header class="header"
-        :title="title"
         :transition="headerTransition"
         :left-options="{showBack: !(route.path === '/' || route.path === '/mywork')}"
         >
+         <div slot="overwrite-title" class="com-title" v-if="route.path !== '/clue'">{{title}}</div>
+         <div slot="overwrite-title" class="com-title" v-if="route.path === '/clue'" @click="select = !select"><span>{{selectValue.value}}</span></div>
           <figure slot="overwrite-left" @click="drawerVisibility = !drawerVisibility" v-if="(route.path == '/' || route.path == '/mywork') && !gobalSett">
             <img src="../assets/avatar.jpg">
           </figure>
           <div slot="right" class="set">
-            <span v-if="route.path == '/mywork' && !gobalSett">设置</span><span v-if="gobalSett">设置</span>
+            <span v-if="route.path == '/mywork' && !gobalSett" @click="gosettingView">设置</span>
+            <span v-if="gobalSett" @click="goSetting">设置</span>
           </div>
         </x-header>
         <transition
@@ -74,13 +83,20 @@
 </template>
 
 <script>
-import { TransferDom, XHeader, Drawer, ViewBox, Tabbar, TabbarItem } from 'vux'
+import { TransferDom, XHeader, Drawer, ViewBox, Tabbar, TabbarItem, Popup, Group, Radio } from 'vux'
 import { mapState, mapActions } from 'vuex'
 
 export default {
+  name: 'club',
   data () {
     return {
-      drawerVisibility: false
+      drawerVisibility: false,
+      select: false,
+      selectValue: {
+        key: 0,
+        value: '全部线索'
+      },
+      selectList: [{key: 0, value: '全部线索'}, {key: 1, value: '我的线索'}, {key: 2, value: '已转客户线索'}]
     }
   },
   directive: {
@@ -99,7 +115,10 @@ export default {
     Drawer,
     ViewBox,
     Tabbar,
-    TabbarItem
+    Popup,
+    TabbarItem,
+    Group,
+    Radio
   },
   computed: {
     ...mapState({
@@ -145,6 +164,9 @@ export default {
         if ((this.route.path === '/' || this.route.path === '/mywork') && this.gobalSett === true) return '快捷功能'
         if (this.route.path === '/') return '首页'
         if (this.route.path === '/mywork') return '工作'
+        if (this.route.path === '/settinglist') return '编辑'
+        if (this.route.path === '/settingview') return '设置'
+        if (this.route.path === '/viewlist') return '功能配置'
         return this.componentName ? `Demo/${this.componentName}` : 'Demo/~~'
       },
       set (val) {
@@ -174,9 +196,22 @@ export default {
     onClickMore () {
       this.showMenu = true
     },
+    goSetting () {
+      this.$store.commit('updateGobalSett', {gobalSett: false})
+      this.$router.push('/settinglist')
+    },
+    gosettingView () {
+      this.$store.commit('updateGobalSett', {gobalSett: false})
+      this.$router.push('/settingview')
+    },
     ...mapActions([
       'updateDemoPosition'
-    ])
+    ]),
+    change (key, value) {
+      this.selectValue.value = value
+      this.select = false
+      this.$vux.bus.$emit('getTypeList', key)
+    }
   }
 }
 </script>
@@ -198,6 +233,23 @@ export default {
   .set {
     font-size: 16px;
     color:white;
+  }
+  .com-title{
+    height: 100%;
+    line-height: 40px;
+    text-align: center;
+    color:white;
+    span {
+      position: relative;
+      &:after {
+        content: '❯';
+        font-size: 12px;
+        color:white;
+        transform: rotate(90deg);
+        position: absolute;
+        right: -14px;
+      }
+    }
   }
 }
 .left-panel {

@@ -33,10 +33,20 @@ export default {
   name: 'clue',
   data () {
     return {
+      setown: 0,
       params: {
         customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id,
         uid: JSON.parse(localStorage.getItem(USER_KEY)).id,
-        page: 1
+        page: 1,
+        my_own: 0,
+        revisit_remind_at: '',
+        status: '',
+        source: '',
+        user_id: '',
+        want_department_id: '',
+        create_time: '',
+        keyword: '',
+        field: ''
       },
       listData: [],
       pullupEnabled: true,
@@ -50,34 +60,42 @@ export default {
     this.list()
   },
   methods: {
-    list (flag) {
+    list (flag, number) {
+      number ? this.params.my_own = number : this.params.my_own = 0
       IndexApi(this.params).then(res => {
-        if (flag) { this.listData = [] }
+        if (flag) this.listData = []
         if (ERR_OK === res.code) {
           this.listData = [...this.listData, ...res.data.tbody]
+          if (res.data.tbody.length < 10) {
+            this.$nextTick(() => {
+              this.$refs.clue.disablePullup()
+            })
+          }
         } else {
-          this.$refs.clue.disablePullup()
-          this.$vux.toast.show({text: res.msg, position: 'bottom'})
+          this.$nextTick(() => {
+            this.$refs.clue.disablePullup()
+            this.$vux.toast.show({text: res.msg, position: 'bottom'})
+          })
         }
       })
     },
     refresh () {
       setTimeout(() => {
         this.params.page = 1
-        this.list(true)
+        this.list(true, this.setown)
         this.$nextTick(() => {
-          setTimeout(() => {
-            this.$refs.clue.donePulldown()
-            this.pullupEnabled && this.$refs.clue.enablePullup()
-          }, 10)
+          this.$refs.clue.enablePullup()
+          this.$refs.clue.reset({top: 0})
         })
       }, 1000)
     },
     loadMore () {
       setTimeout(() => {
         this.params.page ++
-        this.list()
-        this.$refs.clue.donePullup()
+        this.list(false, this.setown)
+        this.$nextTick(() => {
+          this.$refs.clue.donePullup()
+        })
       }, 1000)
     }
   },
@@ -91,6 +109,20 @@ export default {
     vh_ () {
       return window.innerHeight - 46 + 'px'
     }
+  },
+  mounted () {
+    this.$vux.bus.$on('getTypeList', msg => {
+      this.params.page = 1
+      this.setown = msg
+      this.list(true, msg)
+      this.$nextTick(() => {
+        this.$refs.clue.enablePullup()
+        this.$refs.clue.reset({top: 0})
+      })
+    })
+  },
+  destroyed () {
+    this.$vux.bus.$off('getTypeList')
   }
 }
 </script>

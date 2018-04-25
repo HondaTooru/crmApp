@@ -2,28 +2,10 @@
   <div>
     <group :gutter="0">
       <h3 slot="title" class="main_">销售管理</h3>
-      <!-- <flexbox class="wlist" :guuter="0">
-        <flexbox-item>
-          <div class="icon icon-1"><i class="fa fa-crosshairs" aria-hidden="true"></i></div>
-          <div class="text">线索123</div>
-        </flexbox-item>
-        <flexbox-item>
-        <div class="icon icon-2"><i class="fa fa-user" aria-hidden="true"></i></div>
-        <div class="text">客户</div>
-        </flexbox-item>
-        <flexbox-item>
-          <div class="icon icon-3"><i class="fa fa-usd" aria-hidden="true"></i></div>
-          <div class="text">商机</div>
-        </flexbox-item>
-        <flexbox-item>
-          <div class="icon icon-4"><i class="fa fa-handshake-o" aria-hidden="true"></i></div>
-          <div class="text">合同</div>
-        </flexbox-item>
-      </flexbox> -->
       <flexbox :gutter="0" wrap="wrap" class="wlist">
-         <flexbox-item :span="1/4" v-for="item in menuList" :key="item.id">
-           <router-link :to="{ name: 'clue', params: {} }" tag="div">
-           <div class="icon icon-1"><i class="fa fa-crosshairs" aria-hidden="true"></i></div>
+         <flexbox-item :span="1/4" v-for="(item, i) in menuList" :key="item.id">
+           <router-link :to="{ name: item.name }" tag="div">
+           <div class="icon" :class="'icon-'+[i]"><i class="fa" :class="getIcon(item.name)" aria-hidden="true"></i></div>
            <div class="text">{{item.showname}}</div>
            </router-link>
          </flexbox-item>
@@ -40,6 +22,17 @@ export default {
   data () {
     return {
       menuList: [],
+      mlist: {active: 'text', error: 'al'},
+      listIcon: [
+        { icon: 'fa-crosshairs', name: 'clue' },
+        { icon: 'fa-user', name: 'customer' },
+        { icon: 'fa-address-book-o', name: 'contact' },
+        { icon: 'fa-usd', name: 'opportunity' },
+        { icon: 'fa-handshake-o', name: 'contract' },
+        { icon: 'fa-briefcase', name: 'product' },
+        { icon: 'fa-credit-card-alt', name: 'payment' },
+        { icon: 'fa-list-alt', name: 'contract_list' }
+      ],
       params: {
         customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id
       }
@@ -55,16 +48,23 @@ export default {
       MenuApi(this.params).then(res => {
         if (ERR_OK === res.code) {
           this.menuList = res.data
+          localStorage.setItem('MENU_KEY', JSON.stringify(this.menuList))
         } else {
           this.$vux.toast.show({
             text: res.msg
           })
         }
       })
+    },
+    getIcon (el) {
+      let NewArr = this.listIcon.filter(item => item.name === el)
+      return [NewArr[0].icon]
     }
   },
   created () {
     this.getMenu()
+  },
+  computed: {
   }
 }
 </script>
@@ -85,7 +85,7 @@ export default {
       font-size: 26px;
       line-height: 50px;
       margin: 0 auto;
-      background:red;
+      background:#659cad;
       color:white;
       border-radius: 10px;
       &.icon-1{
@@ -101,7 +101,13 @@ export default {
         background-color:#325ebf;
       }
       &.icon-5{
-        background-color:#b77600;
+        background-color:#00a56f;
+      }
+      &.icon-6{
+        background-color:#5d5850;
+      }
+      &.icon-7{
+        background-color:#ea4a85;
       }
     }
     .icon,.text {
