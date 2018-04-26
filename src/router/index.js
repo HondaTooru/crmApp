@@ -16,8 +16,8 @@ export default new Router({
       path: '/',
       component: Index,
       children: [
-        { path: '', component: AppHome },
-        { path: 'mywork', component: MyWork },
+        { path: '', component: AppHome, meta: { keepAlive: true } },
+        { path: 'mywork', component: MyWork, meta: { keepAlive: true } },
         { path: 'clue', name: 'clue', component: Clue },
         { path: 'settinglist', name: 'settinglist', component: SettingList },
         { path: 'settingview', name: 'settingview', component: SettingView },

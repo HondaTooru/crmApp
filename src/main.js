@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import FastClick from 'fastclick'
-import App from './test'
+import App from './App'
 import Vuex from 'vuex'
 import router from './router'
 import { sync } from 'vuex-router-sync'
@@ -92,10 +92,12 @@ methods.forEach(key => {
 
 router.beforeEach(function (to, from, next) {
   store.commit('updateLoadingStatus', {isLoading: true})
-
+  if (!localStorage.getItem('crm_user_data') && to.path !== '/login') {
+    next({name: 'login'})
+    return
+  }
   const toIndex = history.getItem(to.path)
   const fromIndex = history.getItem(from.path)
-
   if (toIndex) {
     if (!fromIndex || parseInt(toIndex, 10) > parseInt(fromIndex, 10) || (toIndex === '0' && fromIndex === '0')) {
       store.commit('updateDirection', {direction: 'forward'})

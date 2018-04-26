@@ -1,55 +1,142 @@
 <template>
  <div class="search vux-1px-b">
    <div v-transfer-dom>
-  <popup v-model="show3" should-scroll-top-on-show class="val">
+  <popup v-model="grouplist" should-scroll-top-on-show class="val">
     <div class="pheight">
-      <group>
-        <x-switch title="Multi Popup (first)" v-model="show3"></x-switch>
-        <x-switch title="Multi Popup (second)" v-model="show4"></x-switch>
+      <group :gutter="0">
+        <div class="item-list" v-for="item in list" :key="item.id">
+         <datetime :title="item.showname" v-if="item.type ==='date' && item.is_selected > 0"></datetime>
+         <popup-picker :title="item.showname" :data="item.data" v-if="item.type !=='date' && item.is_selected > 0" v-model='item.value' @on-change="changeData"></popup-picker>
+        </div>
       </group>
-      this is the first popup
+ <flexbox class="btngroup">
+  <flexbox-item>
+    <x-button type="default" mini  @click.native="setting = !setting">
+      <span><i class="fa fa-wrench" aria-hidden="true"></i>设置</span>
+    </x-button>
+  </flexbox-item>
+  <flexbox-item>
+    <x-button type="primary" mini>
+      <span><i class="fa fa-trash" aria-hidden="true"></i>清空</span>
+    </x-button>
+  </flexbox-item>
+  <flexbox-item>
+    <x-button type="warn" mini>
+      <span><i class="fa fa-check-circle-o" aria-hidden="true"></i>确定</span>
+    </x-button>
+  </flexbox-item>
+</flexbox>
     </div>
   </popup>
 </div>
 <div v-transfer-dom>
-  <popup v-model="show4" should-scroll-top-on-show heigh="400px">
+  <popup v-model="setting" should-scroll-top-on-show>
     <div class="pheight">
-      <group>
-        <x-switch title="Multi Popup (second)" v-model="show4"></x-switch>
+      <group  :gutter="0">
+        <x-switch v-for="item in list" :key="item.id" :title="item.showname" @on-change="defaultSetting" :value-map="['0', '1']" :value="item.id"></x-switch>
       </group>
-      this is the second popup
+      <flexbox class="btngroup">
+       <flexbox-item>
+         <x-button type="default" mini  @click.native="setting = !setting">
+           <span><i class="fa fa-ban" aria-hidden="true"></i>取消</span>
+         </x-button>
+       </flexbox-item>
+       <flexbox-item>
+       </flexbox-item>
+       <flexbox-item>
+         <x-button type="warn" mini>
+           <span><i class="fa fa-check-circle-o" aria-hidden="true"></i>确定</span>
+         </x-button>
+       </flexbox-item>
+     </flexbox>
     </div>
   </popup>
 </div>
    <div class="content">
      <div class="left">
-       <span @click="show3 = !show3">选择类型</span>
+       <span @click="grouplist = !grouplist">选择类型</span>
      </div>
      <div class="right">
-       <input type="text" class="keyword">
+       <form action="" class="input-kw-form">
+       <input class="keyword" type="search" autocomplete="off">
+     </form>
      </div>
    </div>
  </div>
 </template>
 
 <script>
-import { Popup, Group, XSwitch, FlexBox, FlexBoxItem } from 'vux'
+import { Popup, Group, XSwitch, Datetime, PopupPicker, Flexbox, FlexboxItem, XButton } from 'vux'
+import { SearchApi, ERR_OK, USER_KEY } from '@/api/api'
 
 export default {
   name: 'search',
   data () {
     return {
-      show3: false,
-      show4: false
+      stringValue: '100',
+      grouplist: false,
+      setting: false,
+      value: '',
+      list: [],
+      sublist: [],
+      lism: {name: 'ss', value: ['fsdf', 'fsdfaf']},
+      params: {
+        customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id,
+        uid: JSON.parse(localStorage.getItem(USER_KEY)).id,
+        w_type: 'clue'
+      }
     }
   },
-  methods: {},
   components: {
+    Popup,
     Group,
     XSwitch,
-    Popup,
-    FlexBox,
-    FlexBoxItem
+    Datetime,
+    PopupPicker,
+    Flexbox,
+    FlexboxItem,
+    XButton
+  },
+  created () {
+    this.getFiled()
+  },
+  methods: {
+    getFiled () {
+      SearchApi(this.params).then(res => {
+        if (ERR_OK === res.code) {
+          res.data.filter(item => {
+            if (item.field_type === 'date') {
+              this.list.push({id: item.id, showname: item.showname, is_selected: item.is_selected, type: item.field_type})
+            } else {
+              let sbulist = []
+              let mlist = item.data
+              mlist.forEach(res => {
+                if (res.name) {
+                  if (escape(res.name).indexOf('%u') !== -1) {
+                    sbulist.push(res.name)
+                  } else {
+                    sbulist.push(res.showname)
+                  }
+                } else {
+                  sbulist.push(res.username)
+                }
+              })
+              this.list.push({id: item.id, showname: item.showname, is_selected: item.is_selected, type: item.field_type, data: [sbulist]})
+            }
+          })
+        } else {
+          this.$vux.toast.show({
+            text: res.msg
+          })
+        }
+      })
+    },
+    changeData (val) {
+      this.$vux.bus.$emit('changeList', val)
+    },
+    defaultSetting (val) {
+      console.log(val)
+    }
   }
 }
 </script>
@@ -62,7 +149,32 @@ html,body,#app{height:100%;overflow-x:hidden;width: 100%}
 html {-webkit-text-size-adjust:100%}
 body {font-family:-apple-system-font,Helvetica Neue,sans-serif}
 .pheight {
-  height: 350px
+  background:#f3f3f3;
+  .fa {margin-right: 5px}
+  .item-list {
+    position: relative;
+    &:nth-last-of-type {
+      &:after {
+        display: none;
+      }
+    }
+    &:after{
+      content: " ";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 1px;
+    border-bottom: 1px solid #C7C7C7;
+    color: #C7C7C7;
+    transform-origin: 0 100%;
+    transform: scaleY(0.5);
+    }
+  }
+  .btngroup {
+    text-align: center;
+    padding: 10px 0
+  }
 }
 .search {
   height: 20px;
@@ -105,13 +217,18 @@ body {font-family:-apple-system-font,Helvetica Neue,sans-serif}
       flex:1;
       padding:0 15px 0 30px;
       background:url(./assets/Search.svg) no-repeat 5px center/contain;
-      .keyword {
-        appearance:none;
-        border: 0 none;
-        outline: 0 none;
-        height: 100%;
+      .input-kw-form {
+        overflow: hidden;
         float:left;
-        width: 100%
+        height: 100%;
+        .keyword {
+          appearance:none;
+          border: 0 none;
+          outline: 0 none;
+          height: 100%;
+          float:left;
+          width: 100%
+        }
       }
     }
   }
