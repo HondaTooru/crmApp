@@ -5,7 +5,7 @@
     <div class="pheight">
       <group :gutter="0">
         <div class="item-list" v-for="item in list" :key="item.id">
-         <datetime :title="item.showname" v-if="item.type ==='date' && item.is_selected > 0"></datetime>
+         <Calendar :title="item.showname" v-if="item.type ==='date' && item.is_selected > 0" v-model="item.value" @on-change="select"></Calendar>
          <popup-picker :title="item.showname" :data="item.data" v-if="item.type !=='date' && item.is_selected > 0" v-model='item.value' @on-change="changeData"></popup-picker>
         </div>
       </group>
@@ -21,7 +21,7 @@
     </x-button>
   </flexbox-item>
   <flexbox-item>
-    <x-button type="warn" mini>
+    <x-button type="warn" mini @click.native="fix">
       <span><i class="fa fa-check-circle-o" aria-hidden="true"></i>确定</span>
     </x-button>
   </flexbox-item>
@@ -33,7 +33,7 @@
   <popup v-model="setting" should-scroll-top-on-show>
     <div class="pheight">
       <group  :gutter="0">
-        <x-switch v-for="item in list" :key="item.id" :title="item.showname" @on-change="defaultSetting" :value-map="['0', '1']" :value="item.id"></x-switch>
+        <x-switch v-for="item in checkedlist" :key="item.id" :title="item.showname" @on-change="defaultSetting" :value="item.checked"></x-switch>
       </group>
       <flexbox class="btngroup">
        <flexbox-item>
@@ -58,7 +58,7 @@
      </div>
      <div class="right">
        <form action="" class="input-kw-form">
-       <input class="keyword" type="search" autocomplete="off">
+       <input class="keyword" type="search" autocomplete="off" v-model="msg">
      </form>
      </div>
    </div>
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { Popup, Group, XSwitch, Datetime, PopupPicker, Flexbox, FlexboxItem, XButton } from 'vux'
+import { Popup, Group, XSwitch, PopupPicker, Flexbox, FlexboxItem, XButton, Calendar } from 'vux'
 import { SearchApi, ERR_OK, USER_KEY } from '@/api/api'
 
 export default {
@@ -78,7 +78,8 @@ export default {
       setting: false,
       value: '',
       list: [],
-      sublist: [],
+      msg: '111',
+      checkedlist: [],
       lism: {name: 'ss', value: ['fsdf', 'fsdfaf']},
       params: {
         customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id,
@@ -91,7 +92,7 @@ export default {
     Popup,
     Group,
     XSwitch,
-    Datetime,
+    Calendar,
     PopupPicker,
     Flexbox,
     FlexboxItem,
@@ -106,7 +107,7 @@ export default {
         if (ERR_OK === res.code) {
           res.data.filter(item => {
             if (item.field_type === 'date') {
-              this.list.push({id: item.id, showname: item.showname, is_selected: item.is_selected, type: item.field_type})
+              this.list.push({id: item.id, showname: item.showname, is_selected: item.is_selected, type: item.field_type, value: []})
             } else {
               let sbulist = []
               let mlist = item.data
@@ -124,6 +125,13 @@ export default {
               this.list.push({id: item.id, showname: item.showname, is_selected: item.is_selected, type: item.field_type, data: [sbulist]})
             }
           })
+          this.list.filter(item => {
+            if (item.is_selected < 0) {
+              this.checkedlist.push({id: item.id, checked: false, showname: item.showname})
+            } else {
+              this.checkedlist.push({id: item.id, checked: true, showname: item.showname})
+            }
+          })
         } else {
           this.$vux.toast.show({
             text: res.msg
@@ -136,6 +144,16 @@ export default {
     },
     defaultSetting (val) {
       console.log(val)
+    },
+    fix () {
+      console.log(this.list)
+    },
+    select (val) {
+      console.log(val)
+      this.list.forEach(item => {
+        if (item.type === 'type' && item.value && item.value.length > 2) {
+        }
+      })
     }
   }
 }
