@@ -11,8 +11,8 @@ export default {
   data () {
     return {
       comData: {
-        name: 'clue',
-        alias: 'clue'
+        name: 'contract',
+        alias: 'Contract'
       }
     }
   },

@@ -8,6 +8,7 @@ const Clue = () => import('@/page/clue/clue')
 const SettingList = () => import('@/page/setting/settingList')
 const SettingView = () => import('@/page/setting/settingView')
 const ViewList = () => import('@/page/setting/viewList')
+const Contract = () => import('@/page/contract/contract')
 
 Vue.use(Router)
 export default new Router({
@@ -21,7 +22,8 @@ export default new Router({
         { path: 'clue', name: 'clue', component: Clue },
         { path: 'settinglist', name: 'settinglist', component: SettingList },
         { path: 'settingview', name: 'settingview', component: SettingView },
-        { path: 'viewlist', name: 'viewlist', component: ViewList }
+        { path: 'viewlist', name: 'viewlist', component: ViewList },
+        { path: 'contract', name: 'contract', component: Contract }
       ]
     },
     {

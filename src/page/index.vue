@@ -169,6 +169,7 @@ export default {
         if (this.route.path === '/settinglist') return '编辑'
         if (this.route.path === '/settingview') return '设置'
         if (this.route.path === '/viewlist') return '功能配置'
+        if (this.route.path === '/contract') return '合同'
         return this.componentName ? `Demo/${this.componentName}` : 'Demo/~~'
       },
       set (val) {
@@ -332,6 +333,7 @@ figure{
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   &::-webkit-scrollbar{display: none;}
+  &.nobar{bottom:0}
 
 }
 
