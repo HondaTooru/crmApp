@@ -7,14 +7,21 @@
   <popup v-model="grouplist" should-scroll-top-on-show class="val">
     <div class="pheight">
       <group :gutter="0">
+<<<<<<< HEAD
         <div class="item-list" v-for="item in list" :key="item.id">
          <Calendar :popup-header-title="item.showname" :title="item.showname" v-if="item.type ==='date' && item.is_selected > 0" v-model="item.value" @on-change="select" class="nobr"></Calendar>
          <popup-picker :popup-title="item.showname" :title="item.showname" :data="item.data" v-if="item.type !=='date' && item.is_selected > 0" v-model='item.value'></popup-picker>
+=======
+        <div class="item-list" v-for="(item, i) in list" :key="item.id">
+         <!-- <datetime :title="item.showname" v-if="item.type ==='date' && item.is_selected > 0"></datetime> -->
+         <popup-picker :title="item.showname" :data="item.data" v-if="item.type !=='date' && item.is_selected > 0" v-model='item.value' @on-change="changeData"></popup-picker>
+         <calendar placeholder="placeholder" @on-change="onChange" v-if="item.type ==='date' && item.is_selected > 0" v-model="list[i].value" :title="item.showname" :display-format="fotmat" popup-header-title="请选择" disable-future></calendar>
+>>>>>>> e800940cdb8366d6ad8e9cfe4fc8a2e1de556c4c
         </div>
       </group>
  <flexbox class="btngroup">
   <flexbox-item>
-    <x-button type="default" mini  @click.native="setting = !setting">
+    <x-button type="default" mini  @click.native="poupSet">
       <span><i class="fa fa-wrench" aria-hidden="true"></i>设置</span>
     </x-button>
   </flexbox-item>
@@ -36,7 +43,11 @@
   <popup v-model="setting" should-scroll-top-on-show>
     <div class="pheight">
       <group  :gutter="0">
+<<<<<<< HEAD
         <x-switch v-for="item in checkedlist" :key="item.id" :title="item.showname" @on-change="defaultSetting" :value="item.checked"></x-switch>
+=======
+         <x-switch v-for="item in list" :key="item.id" :title="item.showname" @on-change="defaultSetting"></x-switch>
+>>>>>>> e800940cdb8366d6ad8e9cfe4fc8a2e1de556c4c
       </group>
       <flexbox class="btngroup">
        <flexbox-item>
@@ -48,7 +59,7 @@
        </flexbox-item>
        <flexbox-item>
          <x-button type="warn" mini>
-           <span><i class="fa fa-check-circle-o" aria-hidden="true"></i>确定</span>
+           <span><i class="fa fa-check-circle-o" aria-hidden="true" @click="check"></i>确定</span>
          </x-button>
        </flexbox-item>
      </flexbox>
@@ -69,7 +80,11 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 import { Popup, Group, XSwitch, PopupPicker, Flexbox, FlexboxItem, XButton, Calendar, Loading } from 'vux'
+=======
+import { Popup, Group, XSwitch, Datetime, PopupPicker, Flexbox, FlexboxItem, XButton, Checker, CheckerItem, Calendar } from 'vux'
+>>>>>>> e800940cdb8366d6ad8e9cfe4fc8a2e1de556c4c
 import { SearchApi, ERR_OK, USER_KEY } from '@/api/api'
 import { mapState } from 'vuex'
 export default {
@@ -86,9 +101,14 @@ export default {
       setting: false,
       value: '',
       list: [],
+<<<<<<< HEAD
       msg: '111',
       checkedlist: [],
       lism: {name: 'ss', value: ['fsdf', 'fsdfaf']},
+=======
+      sublist: [],
+      lism: [],
+>>>>>>> e800940cdb8366d6ad8e9cfe4fc8a2e1de556c4c
       params: {
         customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id,
         uid: JSON.parse(localStorage.getItem(USER_KEY)).id,
@@ -105,11 +125,18 @@ export default {
     Flexbox,
     FlexboxItem,
     XButton,
+<<<<<<< HEAD
     Loading
+=======
+    Checker,
+    CheckerItem,
+    Calendar
+>>>>>>> e800940cdb8366d6ad8e9cfe4fc8a2e1de556c4c
   },
   created () {
   },
   methods: {
+<<<<<<< HEAD
     defaultSetting (val) {
     },
     fix () {
@@ -133,6 +160,21 @@ export default {
                     } else {
                       sbulist.push(res.showname)
                     }
+=======
+    getFiled () {
+      SearchApi(this.params).then(res => {
+        if (ERR_OK === res.code) {
+          res.data.filter(item => {
+            if (item.field_type === 'date') {
+              this.list.push({id: item.id, showname: item.showname, is_selected: item.is_selected, type: item.field_type, value: []})
+            } else {
+              let sbulist = []
+              let mlist = item.data
+              mlist.forEach(res => {
+                if (res.name) {
+                  if (escape(res.name).indexOf('%u') !== -1) {
+                    sbulist.push(res.name)
+>>>>>>> e800940cdb8366d6ad8e9cfe4fc8a2e1de556c4c
                   } else {
                     sbulist.push(res.username)
                   }
@@ -164,6 +206,26 @@ export default {
           }
         }
       })
+<<<<<<< HEAD
+=======
+    },
+    poupSet () {
+      this.setting = !this.setting
+    },
+    fotmat (value, type) {
+    },
+    changeData (val) {
+      this.$vux.bus.$emit('changeList', val)
+    },
+    defaultSetting (val) {
+      console.log(val)
+    },
+    onChange (val) {
+      val.sort()
+      console.log(val)
+    },
+    check () {
+>>>>>>> e800940cdb8366d6ad8e9cfe4fc8a2e1de556c4c
     }
   }
 }
