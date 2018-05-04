@@ -202,7 +202,9 @@ export default {
     },
     showList () {
       let params = { 'customer_id': this.params.customer_id, uid: this.params.uid }
-      ChooseListApi(params, this.$route.name).then(res => {
+      let newName = this.$route.name
+      if (this.$route.name === 'opportunity') newName = 'Opportunities'
+      ChooseListApi(params, newName).then(res => {
         if (ERR_OK === res.code) {
           res.data.forEach(item => {
             this.cList.push({key: item.name, value: item.showname})

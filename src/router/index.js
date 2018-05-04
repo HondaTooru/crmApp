@@ -9,6 +9,11 @@ const SettingList = () => import('@/page/setting/settingList')
 const SettingView = () => import('@/page/setting/settingView')
 const ViewList = () => import('@/page/setting/viewList')
 const Contract = () => import('@/page/contract/contract')
+const Customer = () => import('@/page/customer/customer')
+const Product = () => import('@/page/product/product')
+const Contact = () => import('@/page/contact/contact')
+const Opportunities = () => import('@/page/opportunities/opportunities')
+const Payment = () => import('@/page/payment/payment')
 
 Vue.use(Router)
 export default new Router({
@@ -19,11 +24,16 @@ export default new Router({
       children: [
         { path: '', component: AppHome, meta: { keepAlive: true } },
         { path: 'mywork', component: MyWork, meta: { keepAlive: true } },
-        { path: 'clue', name: 'clue', component: Clue },
         { path: 'settinglist', name: 'settinglist', component: SettingList },
         { path: 'settingview', name: 'settingview', component: SettingView },
+        { path: 'clue', name: 'clue', component: Clue },
         { path: 'viewlist', name: 'viewlist', component: ViewList },
-        { path: 'contract', name: 'contract', component: Contract }
+        { path: 'contract', name: 'contract', component: Contract },
+        { path: 'customer', name: 'customer', component: Customer },
+        { path: 'product', name: 'product', component: Product },
+        { path: 'contact', name: 'contact', component: Contact },
+        { path: 'opportunity', name: 'opportunity', component: Opportunities },
+        { path: 'payment', name: 'payment', component: Payment }
       ]
     },
     {

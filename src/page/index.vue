@@ -1,12 +1,5 @@
 <template>
   <div id="app">
-    <div v-transfer-dom>
-        <popup v-model="select" position="bottom" should-rerender-on-show>
-          <group :gutter="0">
-            <radio :options="selectList" @on-change="change" v-model="selectValue.key"></radio>
-          </group>
-        </popup>
-    </div>
     <div class="home">
       <drawer
       width="200px"
@@ -44,8 +37,8 @@
         :transition="headerTransition"
         :left-options="{showBack: !(route.path === '/' || route.path === '/mywork')}"
         >
-         <div slot="overwrite-title" class="com-title" v-if="route.path !== '/clue'">{{title}}</div>
-         <div slot="overwrite-title" class="com-title" v-if="route.path === '/clue'" @click="select = !select"><span>{{selectValue.value}}</span></div>
+         <div slot="overwrite-title" class="com-title" v-if="this.dropTitle.indexOf(route.path) === -1">{{title}}</div>
+         <drop-list slot="overwrite-title" class="com-title" v-if="this.dropTitle.indexOf(route.path) !== -1"></drop-list>
           <figure slot="overwrite-left" @click="drawerVisibility = !drawerVisibility" v-if="(route.path == '/' || route.path == '/mywork') && !gobalSett">
             <img src="../assets/avatar.jpg">
           </figure>
@@ -85,11 +78,12 @@
 </template>
 
 <script>
-import { TransferDom, XHeader, Drawer, ViewBox, Tabbar, TabbarItem, Popup, Group, Radio } from 'vux'
+import { XHeader, Drawer, ViewBox, Tabbar, TabbarItem, Popup, Group, Radio } from 'vux'
+import DropList from '@/page/common/dropList'
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  name: 'club',
+  name: 'index',
   data () {
     return {
       drawerVisibility: false,
@@ -98,11 +92,8 @@ export default {
         key: 0,
         value: '全部线索'
       },
-      selectList: [{key: 0, value: '全部线索'}, {key: 1, value: '我的线索'}, {key: 2, value: '已转客户线索'}]
+      dropTitle: ['/clue', '/contract', '/contact', '/customer', '/payment', '/opportunity']
     }
-  },
-  directive: {
-    TransferDom
   },
   mounted () {
     this.handler = () => {
@@ -120,7 +111,8 @@ export default {
     Popup,
     TabbarItem,
     Group,
-    Radio
+    Radio,
+    DropList
   },
   computed: {
     ...mapState({
@@ -169,7 +161,7 @@ export default {
         if (this.route.path === '/settinglist') return '编辑'
         if (this.route.path === '/settingview') return '设置'
         if (this.route.path === '/viewlist') return '功能配置'
-        if (this.route.path === '/contract') return '合同'
+        if (this.route.path === '/product') return '产品列表'
         return this.componentName ? `Demo/${this.componentName}` : 'Demo/~~'
       },
       set (val) {
@@ -209,12 +201,7 @@ export default {
     },
     ...mapActions([
       'updateDemoPosition'
-    ]),
-    change (key, value) {
-      this.selectValue.value = value
-      this.select = false
-      this.$vux.bus.$emit('getTypeList', key)
-    }
+    ])
   }
 }
 </script>

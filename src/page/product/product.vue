@@ -2,11 +2,13 @@
  <div class="nobar">
    <Content :tData="comData">
      <cell is-link slot="list" slot-scope="item">
-       <div class="_no" slot="title">{{item.o.username}}</div>
-       <div slot="after-title" class="_nq">
-         <div class="_ni">{{item.o.customer}}</div>
+       <div class="_np" slot="title">{{item.o.title}}</div>
+       <div slot="after-title" class="_nd">
+         <div class="_ni">{{item.o.cate_id}}</div>
        </div>
        <div class="right">
+         <div>价格：&yen;{{item.o.unit_price}}</div>
+         <div>编号：{{item.o.product_code || '0000'}}</div>
        </div>
      </cell>
    </Content>
@@ -21,8 +23,8 @@ export default {
   data () {
     return {
       comData: {
-        name: 'contact',
-        alias: 'Contact'
+        name: 'product',
+        alias: 'Product'
       }
     }
   },

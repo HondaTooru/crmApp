@@ -7,11 +7,7 @@
          <div class="_nb _nt" v-else-if="item.o.be_approved === 1" v-text="'已通过'"></div>
          <div class="_nb _nf" v-else-if="item.o.be_approved === 2" v-text="'已否决'"></div>
          <div class="_nb _nc" v-else v-text="'已撤销'"></div>
-         <div class="_nk">{{item.o.title}}</div>
-       </div>
-       <div slot="after-title" class="_nn">
-         <div class="_ni">&yen;{{item.o.amount_money}}</div>
-         <div class="_na">{{item.o.customer}}</div>
+         <div class="_nk">{{item.o.username}}</div>
        </div>
        <div class="right">{{item.o.status}}</div>
      </cell>
@@ -23,12 +19,12 @@
 import { Cell } from 'vux'
 import Content from '@/page/common/content'
 export default {
-  name: 'listcontract',
+  name: 'listcustomer',
   data () {
     return {
       comData: {
-        name: 'contract',
-        alias: 'Contract'
+        name: 'customer',
+        alias: 'Customer'
       }
     }
   },
