@@ -67,11 +67,12 @@ export default {
       this.$refs.title.innerText === '点击展开' ? this.$refs.title.innerText = '点击关闭' : this.$refs.title.innerText = '点击展开'
     },
     SaveData () {
-      // this.node.forEach(item => {
-      //   this.saveList.name = item.name
-      //   this.saveList.value = item.value.toString()
-      // })
-      console.log(1)
+      this.note.forEach(item => {
+        this.saveList.name = item.name
+        if (!item.value) item.value = ''
+        this.saveList.value = item.value.toString()
+      })
+      console.log(this.saveList)
     }
   },
   components: {
