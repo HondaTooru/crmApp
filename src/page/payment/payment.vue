@@ -2,8 +2,7 @@
  <div class="nobar">
    <Content :tData="comData">
      <cell is-link slot="list" slot-scope="item">
-       <div class="_nn" slot="title">
-         <div class="_nk">{{item.o.customer}}</div>
+       <div class="_nk" slot="title"><i class="fa fa-user" aria-hidden="true"></i>{{item.o.customer}}
        </div>
        <div slot="after-title" class="_nn">
          <div class="_ni">已回款：&yen;{{item.o.back_money}}</div>
@@ -38,10 +37,12 @@ export default {
 <style lang="less">
 ._nn {
   overflow: hidden;
+  font-size: 12px;
+  color:#6b6b6b;
   &>div {
     display: inline-block;float:left;
     &._nb {background:#35495e;color:white;border-radius: 10px;padding: 2px 10px;margin-right: 10px;font-size:12px}
-    &._ni {padding-right: 10px;position: relative;&:after{
+    &._ni {padding-right: 10px;margin-right: 10px;position: relative;&:after{
       content: "";
       position: absolute;
       right: 0;
@@ -53,10 +54,6 @@ export default {
       transform-origin: 100% 0;
       transform: scale(0.5, 0.8) translateY(-50%);
     }}
-    &._na {padding-left: 10px}
-    &._nt {background:#a26767}
-    &._ns {background:#9a9a9a}
-    &._nc {background:#8c6396}
   }
 }
 </style>

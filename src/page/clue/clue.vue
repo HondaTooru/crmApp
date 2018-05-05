@@ -36,11 +36,11 @@ export default {
   .cl {
     .fa {margin-right: 5px}
     .tel {
-      font-size: 16px;
+      font-size: 14px;
       color:#35495e
     }
     .name {
-      font-size: 14px;
+      font-size: 12px;
       color:#6b6b6b
     }
   }

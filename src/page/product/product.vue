@@ -35,6 +35,8 @@ export default {
 }
 </script>
 
-<style lang="less">
-
+<style lang="less" scoped>
+._np {color:#35495e;}
+._nd {color:#6b6b6b;font-size: 12px}
+.right {font-size: 12px}
 </style>

@@ -32,8 +32,6 @@ export default {
 <style lang="less">
 @import '~vux/src/styles/reset.less';
 @import '~vux/src/styles/1px.less';
-@baseColor:#1cb0f1;
-@cell-font-size: 14px;
 html,body,#app{height:100%;overflow-x:hidden;width: 100%}
 html {-webkit-text-size-adjust:100%}
 body {font-family:-apple-system-font,Helvetica Neue,sans-serif}

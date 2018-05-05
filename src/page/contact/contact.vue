@@ -1,5 +1,5 @@
 <template>
- <div class="nobar">
+ <div class="nobar contact">
    <Content :tData="comData">
      <cell is-link slot="list" slot-scope="item">
        <div class="_no" slot="title"><i class="fa fa-user" aria-hidden="true"></i>{{item.o.username}}</div>
@@ -34,5 +34,7 @@ export default {
 </script>
 
 <style lang="less">
-
+.contact {
+  ._ni {font-size: 12px;color:#6b6b6b}
+}
 </style>
