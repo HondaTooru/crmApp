@@ -2,7 +2,7 @@
  <div class="nobar oppes">
    <Content :tData="comData">
      <cell is-link slot="list" slot-scope="item">
-       <div class="_nz" slot="title">{{item.o.title}}</div>
+       <div class="_nz" slot="title"><i class="fa fa-handshake-o" aria-hidden="true"></i>{{item.o.title}}</div>
        <div slot="after-title" class="_nn">
          <div class="_ni">{{item.o.customer}}</div>
          <div class="_nx">&yen;{{item.o.expected_sales_amount}}</div>
