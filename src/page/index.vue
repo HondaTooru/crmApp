@@ -321,7 +321,7 @@ figure{
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   &::-webkit-scrollbar{display: none;}
-  &.nobar{bottom:0}
+  &.nobar{bottom:0;.fa {margin-right: 5px}}
 
 }
 
