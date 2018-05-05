@@ -1,20 +1,3 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Marketplace
-Explore
- @HondaTooru
-Sign out
-1
-0 0 HondaTooru/crmApp
- Code  Issues 0  Pull requests 0  Projects 0  Wiki  Insights  Settings
-crmApp/src/page/common/content.vue
-c0a2465  17 hours ago
-@HondaTooru HondaTooru 5-5
-
-169 lines (166 sloc)  4.62 KB
 <template>
 <div class="listdata">
   <Search :type="tData.name" @changeList= "list_mm"></Search>
