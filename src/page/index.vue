@@ -35,7 +35,7 @@
           </div>
         </view-box>
       </div>
-       <div class="mainBox homebg" :class="{whitebg: route.path === '/'}">
+       <div class="mainBox">
         <x-header class="header"
         :transition="headerTransition"
         :left-options="{showBack: !(route.path === '/' || route.path === '/mywork')}"
@@ -234,9 +234,6 @@ export default {
 .home {
   height: 100%;
   overflow: hidden;
-  .homebg{  transition: all 500ms;
-    &.whitebg{background-color:#35495e;}
-  }
 .header{
   position: absolute;
   top:0;

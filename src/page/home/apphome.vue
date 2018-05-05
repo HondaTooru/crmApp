@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="crm">
       <section>
         <m-swiper :info="tagList"></m-swiper>
       </section>
@@ -32,7 +32,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
     section{
       margin: 0 10px;
       background: white;
@@ -40,4 +40,5 @@ export default {
       overflow: hidden;
       margin-bottom: 10px;
   }
+  .crm {background:#35495e}
 </style>
