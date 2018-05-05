@@ -58,7 +58,7 @@
   </popup>
 </div>
    <div class="content">
-     <div class="left" @click="chooseType">
+     <div class="left" @click="chooseType" v-if="$route.name !== 'contract_list'">
        <span>筛选</span>
      </div>
      <div class="left" @click="cShow = true">

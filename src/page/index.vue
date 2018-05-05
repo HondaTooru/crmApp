@@ -162,6 +162,7 @@ export default {
         if (this.route.path === '/settingview') return '设置'
         if (this.route.path === '/viewlist') return '功能配置'
         if (this.route.path === '/product') return '产品列表'
+        if (this.route.path === '/contract_list') return '合同清单'
         return this.componentName ? `Demo/${this.componentName}` : 'Demo/~~'
       },
       set (val) {

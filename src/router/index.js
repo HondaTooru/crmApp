@@ -14,6 +14,7 @@ const Product = () => import('@/page/product/product')
 const Contact = () => import('@/page/contact/contact')
 const Opportunities = () => import('@/page/opportunities/opportunities')
 const Payment = () => import('@/page/payment/payment')
+const ContractList = () => import('@/page/contractlist/contractlist')
 
 Vue.use(Router)
 export default new Router({
@@ -33,7 +34,8 @@ export default new Router({
         { path: 'product', name: 'product', component: Product },
         { path: 'contact', name: 'contact', component: Contact },
         { path: 'opportunity', name: 'opportunity', component: Opportunities },
-        { path: 'payment', name: 'payment', component: Payment }
+        { path: 'payment', name: 'payment', component: Payment },
+        { path: 'contract_list', name: 'contract_list', component: ContractList }
       ]
     },
     {

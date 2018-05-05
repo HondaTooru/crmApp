@@ -28,7 +28,7 @@
 <script>
 import { Scroller, Group, Cell, Spinner } from 'vux'
 import Search from '@/page/common/search'
-import { ERR_OK, USER_KEY, IndexApi } from '@/api/api'
+import { ERR_OK, USER_KEY, IndexApi, ContractListApi } from '@/api/api'
 export default {
   name: 'listdata',
   props: {
@@ -60,8 +60,9 @@ export default {
   },
   methods: {
     list (flag) {
-      // number ? this.params.my_own = number : this.params.my_own = 0
-      IndexApi(this.params, this.tData.alias).then(res => {
+      let RequestName = IndexApi
+      if (this.$route.name === 'contract_list') RequestName = ContractListApi
+      RequestName(this.params, this.tData.alias).then(res => {
         if (flag) {
           this.listData = []
           if (this.$refs.scroll) this.$refs.scroll.reset({ top: 0 })
