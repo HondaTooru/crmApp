@@ -50,6 +50,7 @@
           <div slot="right" class="set">
             <span v-if="route.path == '/mywork' && !gobalSett" @click="gosettingView">设置</span>
             <span v-if="gobalSett" @click="goSetting">设置</span>
+            <span v-if="addData.indexOf($route.name) !== -1" class="save" @click="saveAdd"><i aria-hidden="true" class="fa fa-check-circle-o"></i>保存</span>
           </div>
         </x-header>
         <transition
@@ -94,6 +95,7 @@ export default {
       drawerVisibility: false,
       Addmore: false,
       ActionMenu: ['clue', 'customer', 'contact', 'opportunity', 'contract', 'product', 'payment'],
+      addData: ['clueAdd'],
       menus: [
         [{label: '新增线索', link: 'clueAdd'}],
         [{label: '新增客户', link: 'customerAdd'}],
@@ -212,6 +214,9 @@ export default {
       this.$store.commit('updateGobalSett', {gobalSett: false})
       this.$router.push('/settingview')
     },
+    saveAdd () {
+      this.$vux.bus.$emit('Addinfo')
+    },
     AddPage (n, i) {
       if (!n) {
         this.$router.push('/' + i.link)
@@ -241,6 +246,10 @@ export default {
   .set {
     font-size: 16px;
     color:white;
+    .save {
+      font-size: 14px;
+      .fa {margin-right: 5px}
+    }
   }
   .com-title{
     height: 100%;

@@ -9,13 +9,15 @@
      <cell
   is-link
   :border-intent="false"
-  :arrow-direction="showContent001 ? 'up' : 'down'"
-  @click.native="showContent001 = !showContent001">
+  :arrow-direction="showContent ? 'up' : 'down'"
+  @click.native="showContent = !showContent">
   <div slot="title" class="more" @click="slideDown"><i class="fa fa-list" aria-hidden="true"></i><span ref="title">点击展开</span></div>
 </cell>
-  <template v-if="showContent001">
+  <template v-if="showContent">
     <div v-for="m in note" v-if="m.required === 0" class="item">
-      <x-input :title="m.showname" v-model='m.value' v-if="m.field_type !== 'drop'"></x-input>
+      <x-input :title="m.showname" v-model='m.value' v-if="m.field_type === 'text' && m.name !== 'provance' && m.name !== 'address'" text-align="right"></x-input>
+      <datetime v-model="m.value" :title="m.showname" v-if="m.field_type === 'date'" format="YYYY-MM-DD HH:mm"></datetime>
+      <x-address :title="m.showname" v-model="m.value" :list="addressData" placeholder="请选择地址" :show.sync="showAddress"  v-if="m.name === 'address'"></x-address>
       <popup-picker v-if="m.field_type === 'drop'" :popup-title="m.showname" :data="[k[m.name]]" :title="m.showname" v-model="m.value"></popup-picker>
     </div>
   </template>
@@ -25,23 +27,33 @@
 
 <script>
 import { ERR_OK, AddApi, USERID } from '@/api/api'
-import { XInput, Cell, CellBox, PopupPicker } from 'vux'
+import { XInput, Cell, CellBox, PopupPicker, Datetime, XAddress, ChinaAddressV4Data } from 'vux'
 
 export default {
   name: 'addnote',
   data () {
     return {
       parmas: USERID,
-      showContent001: false,
-      note: []
+      showContent: false,
+      note: [],
+      saveList: {},
+      addressData: ChinaAddressV4Data,
+      showAddress: false
     }
   },
   props: {
     k: Object
   },
+  activated () {
+    this.$vux.bus.$on('Addinfo', () => {
+      this.SaveData()
+    })
+  },
+  deactivated () {
+    this.$vux.bus.$off('Addinfo')
+  },
   created () {
     this.list()
-    console.log(this.k.status)
   },
   methods: {
     list () {
@@ -53,13 +65,22 @@ export default {
     },
     slideDown () {
       this.$refs.title.innerText === '点击展开' ? this.$refs.title.innerText = '点击关闭' : this.$refs.title.innerText = '点击展开'
+    },
+    SaveData () {
+      // this.node.forEach(item => {
+      //   this.saveList.name = item.name
+      //   this.saveList.value = item.value.toString()
+      // })
+      console.log(1)
     }
   },
   components: {
     XInput,
     Cell,
     CellBox,
-    PopupPicker
+    PopupPicker,
+    Datetime,
+    XAddress
   }
 }
 </script>

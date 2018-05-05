@@ -14,6 +14,7 @@ export const AllStatusApi = params => { return Vue.http.post('/crm/api/all_statu
 export const AllSourceApi = params => { return Vue.http.post('/crm/api/all_source', Object.assign(USERID, params), formatData).then(res => res.data) }
 export const AllAdminApi = params => { return Vue.http.post('/crm/api/all_admin', Object.assign(USERID, params), formatData).then(res => res.data) }
 export const AllDepartmentApi = params => { return Vue.http.post('/crm/api/all_department', Object.assign(USERID, params), formatData).then(res => res.data) }
+
 export const SearchApi = params => { return Vue.http.post('/crm/Api_2/search_filed', Object.assign(USERID, params)).then(res => res.data) }
 export const SlideApi = params => { return Vue.http.post('/crm/dashboard/taglist', Object.assign(USERID, params)).then(res => res.data) }
 export const MenuApi = params => { return Vue.http.post('/crm/api/menu', Object.assign(USERID, params)).then(res => res.data) }
