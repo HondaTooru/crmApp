@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <div v-transfer-dom>
+    <actionsheet v-model="Addmore" :menus="menus[0]" show-cancel @on-click-menu="AddPage"></actionsheet>
+    </div>
     <div class="home">
       <drawer
       width="200px"
@@ -36,6 +39,8 @@
         <x-header class="header"
         :transition="headerTransition"
         :left-options="{showBack: !(route.path === '/' || route.path === '/mywork')}"
+        :right-options="{showMore: this.dropTitle.indexOf(route.path) !== -1}"
+        @on-click-more="Addmore = !Addmore"
         >
          <div slot="overwrite-title" class="com-title" v-if="this.dropTitle.indexOf(route.path) === -1">{{title}}</div>
          <drop-list slot="overwrite-title" class="com-title" v-if="this.dropTitle.indexOf(route.path) !== -1"></drop-list>
@@ -78,7 +83,7 @@
 </template>
 
 <script>
-import { XHeader, Drawer, ViewBox, Tabbar, TabbarItem, Popup, Group, Radio } from 'vux'
+import { XHeader, Drawer, ViewBox, Tabbar, TabbarItem, Popup, Group, Radio, Actionsheet } from 'vux'
 import DropList from '@/page/common/dropList'
 import { mapState, mapActions } from 'vuex'
 
@@ -87,12 +92,9 @@ export default {
   data () {
     return {
       drawerVisibility: false,
-      select: false,
-      selectValue: {
-        key: 0,
-        value: '全部线索'
-      },
-      dropTitle: ['/clue', '/contract', '/contact', '/customer', '/payment', '/opportunity']
+      Addmore: false,
+      dropTitle: ['/clue', '/contract', '/contact', '/customer', '/payment', '/opportunity'],
+      menus: [ [{label: '新增线索', type: '/clue'}] ]
     }
   },
   mounted () {
@@ -112,7 +114,8 @@ export default {
     TabbarItem,
     Group,
     Radio,
-    DropList
+    DropList,
+    Actionsheet
   },
   computed: {
     ...mapState({
@@ -199,6 +202,10 @@ export default {
     gosettingView () {
       this.$store.commit('updateGobalSett', {gobalSett: false})
       this.$router.push('/settingview')
+    },
+    AddPage (value, key) {
+      console.log(value)
+      console.log(key)
     },
     ...mapActions([
       'updateDemoPosition'

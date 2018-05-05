@@ -5,6 +5,8 @@ const Login = () => import('@/page/login')
 const AppHome = () => import('@/page/home/apphome')
 const MyWork = () => import('@/page/mywork/mywork')
 const Clue = () => import('@/page/clue/clue')
+const ClueAdd = () => import('@/page/clue/clueAdd')
+
 const SettingList = () => import('@/page/setting/settingList')
 const SettingView = () => import('@/page/setting/settingView')
 const ViewList = () => import('@/page/setting/viewList')
@@ -23,11 +25,12 @@ export default new Router({
       path: '/',
       component: Index,
       children: [
-        { path: '', component: AppHome, meta: { keepAlive: true } },
-        { path: 'mywork', component: MyWork, meta: { keepAlive: true } },
+        { path: '', component: AppHome },
+        { path: 'mywork', component: MyWork },
         { path: 'settinglist', name: 'settinglist', component: SettingList },
         { path: 'settingview', name: 'settingview', component: SettingView },
         { path: 'clue', name: 'clue', component: Clue },
+        { path: 'clueAdd', name: 'clueAdd', component: ClueAdd },
         { path: 'viewlist', name: 'viewlist', component: ViewList },
         { path: 'contract', name: 'contract', component: Contract },
         { path: 'customer', name: 'customer', component: Customer },

@@ -6,6 +6,7 @@ export const USER_KEY = 'crm_user_data'
 export const LoginApi = params => { return Vue.http.post('/crm/api/login', params, formatData).then(res => res.data) }
 export const IndexApi = (params, name) => { return Vue.http.post('crm/' + name + '/index', params, formatData).then(res => res.data) }
 export const ContractListApi = params => { return Vue.http.post('/crm/ContractList/contract_list', params, formatData).then(res => res.data) }
+export const AddApi = (params, name) => { return Vue.http.post('/crm/' + name + '/add', params, formatData).then(res => res.data) }
 
 export const SlideApi = params => { return Vue.http.post('/crm/dashboard/taglist', params).then(res => res.data) }
 export const MenuApi = params => { return Vue.http.post('/crm/api/menu', params).then(res => res.data) }

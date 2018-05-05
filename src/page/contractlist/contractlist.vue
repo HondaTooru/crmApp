@@ -16,7 +16,7 @@
 import Content from '@/page/common/content'
 import { Cell } from 'vux'
 export default {
-  name: 'listclue',
+  name: 'ListContractlist',
   data () {
     return {
       comData: {

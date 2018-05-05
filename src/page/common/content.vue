@@ -52,11 +52,17 @@ export default {
   },
   created () {
     this.list()
+  },
+  activated () {
+    this.params.my_own = 0
     this.$vux.bus.$on('getTypeList', msg => {
       this.params.page = 1
       this.params.my_own = msg
       this.list(true)
     })
+  },
+  deactivated () {
+    this.$vux.bus.$off('getTypeList')
   },
   methods: {
     list (flag) {

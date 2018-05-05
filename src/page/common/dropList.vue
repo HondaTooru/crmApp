@@ -44,8 +44,9 @@ export default {
       this.$vux.bus.$emit('getTypeList', key)
     }
   },
-  created () {
-    console.log(this.$route)
+  destroyed () {
+    // console.log(2)
+    this.$vux.bus.$off('getTypeList')
   },
   computed: {
     n () {
