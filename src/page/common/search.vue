@@ -75,7 +75,7 @@
 
 <script>
 import { Popup, XSwitch, PopupPicker, Flexbox, FlexboxItem, XButton, Calendar, Radio, Datetime } from 'vux'
-import { SearchApi, ERR_OK, USERID, ChooseListApi, SavesearchAPi } from '@/api/api'
+import { SearchApi, USERID, ERR_OK, ChooseListApi, SavesearchAPi } from '@/api/api'
 let obj = {}
 let ids = []
 export default {

@@ -28,7 +28,7 @@
 <script>
 import { Scroller, Cell, Spinner } from 'vux'
 import Search from '@/page/common/search'
-import { ERR_OK, USERID, IndexApi, ContractListApi } from '@/api/api'
+import { ERR_OK, IndexApi, ContractListApi } from '@/api/api'
 export default {
   name: 'listdata',
   props: {
@@ -36,7 +36,7 @@ export default {
   },
   data () {
     return {
-      params: Object.assign(USERID, { page: 1, my_own: 0 }),
+      params: { page: 1, my_own: 0 },
       listData: [],
       pullupEnabled: true,
       status: {

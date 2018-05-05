@@ -1,19 +1,40 @@
 <template>
- <div>
-   fasfsf
- </div>
+  <add-note :k="n">
+
+  </add-note>
 </template>
 
 <script>
-export { ERR_OK, AddApi, USERID } from '@/api/api'
+import AddNote from '@/page/common/addnote'
+import { AllStatusApi, ERR_OK } from '@/api/api'
 
 export default {
   name: 'addClue',
   data () {
-    return {}
+    return {
+      n: {
+        name: 'clue',
+        status: [],
+        source: [],
+        user_id: [],
+        want_department_id: []
+      }
+    }
   },
-  created () {},
   methods: {
+    getStatus () {
+      AllStatusApi().then(res => {
+        if (ERR_OK === res.code) {
+          res.data.forEach(item => { this.n.status.push(item.name) })
+        }
+      })
+    }
+  },
+  created () {
+    this.getStatus()
+  },
+  components: {
+    AddNote
   }
 }
 </script>

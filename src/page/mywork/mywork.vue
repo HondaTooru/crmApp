@@ -16,7 +16,7 @@
 
 <script>
 import { Flexbox, FlexboxItem } from 'vux'
-import { MenuApi, ERR_OK, USERID } from '@/api/api'
+import { MenuApi, ERR_OK } from '@/api/api'
 export default {
   name: 'mywork',
   data () {
@@ -32,8 +32,7 @@ export default {
         { icon: 'fa-briefcase', name: 'product' },
         { icon: 'fa-credit-card-alt', name: 'payment' },
         { icon: 'fa-list-alt', name: 'contract_list' }
-      ],
-      params: USERID
+      ]
     }
   },
   components: {
@@ -42,7 +41,7 @@ export default {
   },
   methods: {
     getMenu () {
-      MenuApi(this.params).then(res => {
+      MenuApi().then(res => {
         if (ERR_OK === res.code) {
           this.menuList = res.data
           localStorage.setItem('MENU_KEY', JSON.stringify(this.menuList))
