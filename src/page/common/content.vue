@@ -1,3 +1,20 @@
+Skip to content
+This repository
+Search
+Pull requests
+Issues
+Marketplace
+Explore
+ @HondaTooru
+Sign out
+1
+0 0 HondaTooru/crmApp
+ Code  Issues 0  Pull requests 0  Projects 0  Wiki  Insights  Settings
+crmApp/src/page/common/content.vue
+c0a2465  17 hours ago
+@HondaTooru HondaTooru 5-5
+
+169 lines (166 sloc)  4.62 KB
 <template>
 <div class="listdata">
   <Search :type="tData.name" @changeList= "list_mm"></Search>
@@ -26,9 +43,9 @@
 </template>
 
 <script>
-import { Scroller, Cell, Spinner } from 'vux'
+import { Scroller, Group, Cell, Spinner } from 'vux'
 import Search from '@/page/common/search'
-import { ERR_OK, IndexApi, ContractListApi } from '@/api/api'
+import { ERR_OK, USER_KEY, IndexApi, ContractListApi } from '@/api/api'
 export default {
   name: 'listdata',
   props: {
@@ -36,7 +53,12 @@ export default {
   },
   data () {
     return {
-      params: { page: 1, my_own: 0 },
+      params: {
+        customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id,
+        uid: JSON.parse(localStorage.getItem(USER_KEY)).id,
+        page: 1,
+        my_own: 0
+      },
       listData: [],
       pullupEnabled: true,
       status: {
@@ -47,17 +69,11 @@ export default {
   },
   created () {
     this.list()
-  },
-  activated () {
-    this.params.my_own = 0
     this.$vux.bus.$on('getTypeList', msg => {
       this.params.page = 1
       this.params.my_own = msg
       this.list(true)
     })
-  },
-  deactivated () {
-    this.$vux.bus.$off('getTypeList')
   },
   methods: {
     list (flag) {
@@ -73,7 +89,7 @@ export default {
           res.data.tbody ? _k = res.data.tbody : _k = res.data.body
           this.listData = [...this.listData, ..._k]
           if (_k.length < 15) {
-            setTimeout(() => { this.$refs.scroll.disablePullup() }, 100)
+            setTimeout(() => { if (this.$refs.scroll) this.$refs.scroll.disablePullup() }, 100)
             this.$vux.toast.show({text: '没有更多数据~', position: 'bottom'})
           } else if (_k.length >= 15) {
             if (this.$refs.scroll) {
@@ -108,6 +124,7 @@ export default {
   },
   components: {
     Scroller,
+    Group,
     Cell,
     Spinner,
     Search

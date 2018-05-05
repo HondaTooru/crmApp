@@ -26,14 +26,17 @@
 </template>
 
 <script>
-import { ERR_OK, AddApi, USERID } from '@/api/api'
+import { ERR_OK, AddApi, USER_KEY } from '@/api/api'
 import { XInput, Cell, CellBox, PopupPicker, Datetime, XAddress, ChinaAddressV4Data } from 'vux'
 
 export default {
   name: 'addnote',
   data () {
     return {
-      parmas: USERID,
+      parmas: {
+        customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id,
+        uid: JSON.parse(localStorage.getItem(USER_KEY)).id
+      },
       showContent: false,
       note: [],
       saveList: {},

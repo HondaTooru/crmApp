@@ -1,3 +1,20 @@
+Skip to content
+This repository
+Search
+Pull requests
+Issues
+Marketplace
+Explore
+ @HondaTooru
+Sign out
+1
+0 0 HondaTooru/crmApp
+ Code  Issues 0  Pull requests 0  Projects 0  Wiki  Insights  Settings
+crmApp/src/page/common/search.vue
+273f9d4  2 days ago
+@HondaTooru HondaTooru 5-3
+
+327 lines (324 sloc)  9.11 KB
 <template>
  <div class="search vux-1px-b">
  <div v-transfer-dom>
@@ -58,7 +75,7 @@
   </popup>
 </div>
    <div class="content">
-     <div class="left" @click="chooseType" v-if="$route.name !== 'contract_list'">
+     <div class="left" @click="chooseType">
        <span>筛选</span>
      </div>
      <div class="left" @click="cShow = true">
@@ -74,8 +91,8 @@
 </template>
 
 <script>
-import { Popup, XSwitch, PopupPicker, Flexbox, FlexboxItem, XButton, Calendar, Radio, Datetime } from 'vux'
-import { SearchApi, USERID, ERR_OK, ChooseListApi, SavesearchAPi } from '@/api/api'
+import { Popup, Group, XSwitch, PopupPicker, Flexbox, FlexboxItem, XButton, Calendar, Radio, Datetime } from 'vux'
+import { SearchApi, ERR_OK, USER_KEY, ChooseListApi, SavesearchAPi } from '@/api/api'
 let obj = {}
 let ids = []
 export default {
@@ -95,11 +112,15 @@ export default {
       defaultRaio: '',
       keyword: '',
       newParmas: {},
-      params: USERID
+      params: {
+        customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id,
+        uid: JSON.parse(localStorage.getItem(USER_KEY)).id
+      }
     }
   },
   components: {
     Popup,
+    Group,
     XSwitch,
     Calendar,
     PopupPicker,
