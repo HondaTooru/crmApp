@@ -5,7 +5,7 @@ const Login = () => import('@/page/login')
 const AppHome = () => import('@/page/home/apphome')
 const MyWork = () => import('@/page/mywork/mywork')
 const Clue = () => import('@/page/clue/clue')
-const ClueAdd = () => import('@/page/clue/clueAdd')
+const AddClue = () => import('@/page/clue/clueAdd')
 
 const SettingList = () => import('@/page/setting/settingList')
 const SettingView = () => import('@/page/setting/settingView')
@@ -30,7 +30,8 @@ export default new Router({
         { path: 'settinglist', name: 'settinglist', component: SettingList },
         { path: 'settingview', name: 'settingview', component: SettingView },
         { path: 'clue', name: 'clue', component: Clue },
-        { path: 'clueAdd', name: 'clueAdd', component: ClueAdd },
+        { path: 'clueAdd', name: 'clueAdd', component: AddClue },
+
         { path: 'viewlist', name: 'viewlist', component: ViewList },
         { path: 'contract', name: 'contract', component: Contract },
         { path: 'customer', name: 'customer', component: Customer },

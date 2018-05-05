@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div v-transfer-dom>
-    <actionsheet v-model="Addmore" :menus="menus[0]" show-cancel @on-click-menu="AddPage"></actionsheet>
+    <actionsheet v-model="Addmore" :menus="menus[ActionMenu.indexOf($route.name) || 0]" show-cancel @on-click-menu="AddPage"></actionsheet>
     </div>
     <div class="home">
       <drawer
@@ -39,7 +39,7 @@
         <x-header class="header"
         :transition="headerTransition"
         :left-options="{showBack: !(route.path === '/' || route.path === '/mywork')}"
-        :right-options="{showMore: this.dropTitle.indexOf(route.path) !== -1}"
+        :right-options="{showMore: this.ActionMenu.indexOf(route.name) !== -1}"
         @on-click-more="Addmore = !Addmore"
         >
          <div slot="overwrite-title" class="com-title" v-if="this.dropTitle.indexOf(route.path) === -1">{{title}}</div>
@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import { XHeader, Drawer, ViewBox, Tabbar, TabbarItem, Popup, Group, Radio, Actionsheet } from 'vux'
+import { XHeader, Drawer, ViewBox, Tabbar, TabbarItem, Popup, Radio, Actionsheet } from 'vux'
 import DropList from '@/page/common/dropList'
 import { mapState, mapActions } from 'vuex'
 
@@ -93,8 +93,17 @@ export default {
     return {
       drawerVisibility: false,
       Addmore: false,
-      dropTitle: ['/clue', '/contract', '/contact', '/customer', '/payment', '/opportunity'],
-      menus: [ [{label: '新增线索', type: '/clue'}] ]
+      ActionMenu: ['clue', 'customer', 'contact', 'opportunity', 'contract', 'product', 'payment'],
+      menus: [
+        [{label: '新增线索', link: 'clueAdd'}],
+        [{label: '新增客户', link: 'customerAdd'}],
+        [{label: '新增联系人', link: 'contactAdd'}],
+        [{label: '新增商机', link: 'opportunityAdd'}],
+        [{label: '新增合同', link: 'customerAdd'}],
+        [{label: '新增产品', link: 'customerAdd'}],
+        [{label: '新增回款计划', link: 'paymentAdd'}, {label: '新增回款记录', link: 'paymentNote'}, {label: '新增开票记录', link: 'paymentMark'}]
+      ],
+      dropTitle: ['/clue', '/contract', '/contact', '/customer', '/payment', '/opportunity']
     }
   },
   mounted () {
@@ -112,7 +121,6 @@ export default {
     Tabbar,
     Popup,
     TabbarItem,
-    Group,
     Radio,
     DropList,
     Actionsheet
@@ -166,6 +174,7 @@ export default {
         if (this.route.path === '/viewlist') return '功能配置'
         if (this.route.path === '/product') return '产品列表'
         if (this.route.path === '/contract_list') return '合同清单'
+        if (this.route.path === '/clueAdd') return '新增线索'
         return this.componentName ? `Demo/${this.componentName}` : 'Demo/~~'
       },
       set (val) {
@@ -203,9 +212,10 @@ export default {
       this.$store.commit('updateGobalSett', {gobalSett: false})
       this.$router.push('/settingview')
     },
-    AddPage (value, key) {
-      console.log(value)
-      console.log(key)
+    AddPage (n, i) {
+      if (!n) {
+        this.$router.push('/' + i.link)
+      }
     },
     ...mapActions([
       'updateDemoPosition'

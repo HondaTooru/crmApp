@@ -1,6 +1,8 @@
 <template>
- <div>
-   fasfsf
+ <div class="mark">
+
+
+
  </div>
 </template>
 
@@ -8,7 +10,7 @@
 export { ERR_OK, AddApi, USERID } from '@/api/api'
 
 export default {
-  name: 'addClue',
+  name: 'addnote',
   data () {
     return {}
   },

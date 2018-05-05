@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import qs from 'qs'
 const formatData = { transformRequest: data => qs.stringify(data) }
+
 export const ERR_OK = 1
 export const USER_KEY = 'crm_user_data'
+export const USERID = { customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id, uid: JSON.parse(localStorage.getItem(USER_KEY)).id }
 export const LoginApi = params => { return Vue.http.post('/crm/api/login', params, formatData).then(res => res.data) }
 export const IndexApi = (params, name) => { return Vue.http.post('crm/' + name + '/index', params, formatData).then(res => res.data) }
 export const ContractListApi = params => { return Vue.http.post('/crm/ContractList/contract_list', params, formatData).then(res => res.data) }

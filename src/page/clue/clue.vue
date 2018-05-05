@@ -33,7 +33,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
   .cl {
     .fa {margin-right: 5px}
     .tel {

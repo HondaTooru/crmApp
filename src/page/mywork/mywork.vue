@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import { Group, Flexbox, FlexboxItem } from 'vux'
-import { MenuApi, ERR_OK, USER_KEY } from '@/api/api'
+import { Flexbox, FlexboxItem } from 'vux'
+import { MenuApi, ERR_OK, USERID } from '@/api/api'
 export default {
   name: 'mywork',
   data () {
@@ -33,13 +33,10 @@ export default {
         { icon: 'fa-credit-card-alt', name: 'payment' },
         { icon: 'fa-list-alt', name: 'contract_list' }
       ],
-      params: {
-        customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id
-      }
+      params: USERID
     }
   },
   components: {
-    Group,
     Flexbox,
     FlexboxItem
   },

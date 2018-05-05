@@ -26,9 +26,9 @@
 </template>
 
 <script>
-import { Scroller, Group, Cell, Spinner } from 'vux'
+import { Scroller, Cell, Spinner } from 'vux'
 import Search from '@/page/common/search'
-import { ERR_OK, USER_KEY, IndexApi, ContractListApi } from '@/api/api'
+import { ERR_OK, USERID, IndexApi, ContractListApi } from '@/api/api'
 export default {
   name: 'listdata',
   props: {
@@ -36,12 +36,7 @@ export default {
   },
   data () {
     return {
-      params: {
-        customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id,
-        uid: JSON.parse(localStorage.getItem(USER_KEY)).id,
-        page: 1,
-        my_own: 0
-      },
+      params: Object.assign(USERID, { page: 1, my_own: 0 }),
       listData: [],
       pullupEnabled: true,
       status: {
@@ -113,7 +108,6 @@ export default {
   },
   components: {
     Scroller,
-    Group,
     Cell,
     Spinner,
     Search

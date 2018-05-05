@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { Cell, Group, Badge } from 'vux'
+import { Cell, Badge } from 'vux'
 export default {
   name: 'mschedule',
   data () {
@@ -28,7 +28,6 @@ export default {
   },
   components: {
     Cell,
-    Group,
     Badge
   }
 }

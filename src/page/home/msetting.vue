@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { Popup, Group, Swiper, SwiperItem, ViewBox } from 'vux'
+import { Popup, Swiper, SwiperItem, ViewBox } from 'vux'
 export default {
   name: 'msetting',
   props: {
@@ -42,7 +42,6 @@ export default {
   },
   components: {
     Popup,
-    Group,
     Swiper,
     SwiperItem,
     ViewBox

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { XInput, Group, XButton } from 'vux'
+import { XInput, XButton } from 'vux'
 import { LoginApi, ERR_OK, USER_KEY } from '@/api/api'
 export default {
   name: 'login',
@@ -34,7 +34,6 @@ export default {
   },
   components: {
     XInput,
-    Group,
     XButton
   },
   methods: {

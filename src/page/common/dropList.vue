@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { Popup, Radio, Group } from 'vux'
+import { Popup, Radio } from 'vux'
 export default {
   name: 'dropList',
   data () {
@@ -31,8 +31,7 @@ export default {
   },
   components: {
     Popup,
-    Radio,
-    Group
+    Radio
   },
   methods: {
     showDrop () {
@@ -45,7 +44,6 @@ export default {
     }
   },
   destroyed () {
-    // console.log(2)
     this.$vux.bus.$off('getTypeList')
   },
   computed: {
