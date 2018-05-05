@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import qs from 'qs'
 const formatData = { transformRequest: data => qs.stringify(data) }
-const USER = localStorage.getItem('crm_user_data') || ''
+const USER = JSON.parse(localStorage.getItem('crm_user_data')) || ''
 export const ERR_OK = 1
 export const USER_KEY = 'crm_user_data'
 export const USERID = { customer_id: USER.customer_id, uid: USER.id }
