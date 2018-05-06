@@ -298,11 +298,10 @@ export default {
   }
   .list {
     list-style:  none;
-    font-size: 14px;
-    margin-top:30px;
+    font-size: 16px;
     li {
-    line-height: 40px;
-    height: 40px;
+    line-height: 48px;
+    height: 48px;
     padding-left: 35px;
     .fa {
       margin-right: 10px
