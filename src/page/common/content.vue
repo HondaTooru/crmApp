@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { Scroller, Group, Cell, Spinner } from 'vux'
+import { Scroller, Spinner } from 'vux'
 import Search from '@/page/common/search'
 import { ERR_OK, USER_KEY, IndexApi, ContractListApi } from '@/api/api'
 export default {
@@ -113,8 +113,6 @@ export default {
   },
   components: {
     Scroller,
-    Group,
-    Cell,
     Spinner,
     Search
   },

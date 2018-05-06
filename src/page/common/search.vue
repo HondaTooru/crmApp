@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { Popup, Group, XSwitch, PopupPicker, Flexbox, FlexboxItem, XButton, Calendar, Radio, Datetime } from 'vux'
+import { Popup, XSwitch, PopupPicker, Flexbox, FlexboxItem, XButton, Calendar, Radio, Datetime } from 'vux'
 import { SearchApi, ERR_OK, USER_KEY, ChooseListApi, SavesearchAPi } from '@/api/api'
 let obj = {}
 let ids = []
@@ -103,7 +103,6 @@ export default {
   },
   components: {
     Popup,
-    Group,
     XSwitch,
     Calendar,
     PopupPicker,

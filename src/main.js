@@ -6,7 +6,7 @@ import App from './test'
 import Vuex from 'vuex'
 import router from './router'
 import { sync } from 'vuex-router-sync'
-import { TransferDom, AjaxPlugin, CloseDialogsPlugin, AlertPlugin, LoadingPlugin, BusPlugin, ToastPlugin, Group } from 'vux'
+import { TransferDom, AjaxPlugin, CloseDialogsPlugin, AlertPlugin, LoadingPlugin, BusPlugin, ToastPlugin, Group, Cell } from 'vux'
 import 'font-awesome/css/font-awesome.css'
 Vue.directive('transfer-dom', TransferDom)
 Vue.use(Vuex)
@@ -49,6 +49,7 @@ Vue.use(AjaxPlugin)
 Vue.use(BusPlugin)
 Vue.use(ToastPlugin, {type: 'text', position: 'top'})
 Vue.component('group', Group)
+Vue.component('Cell', Cell)
 
 // axios 参数转换
 Vue.prototype.$http.defaults.baseURL = 'http://admin.sinlu.net'

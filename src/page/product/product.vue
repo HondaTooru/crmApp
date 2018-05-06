@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import { Cell } from 'vux'
 import Content from '@/page/common/content'
 export default {
   name: 'listproduct',
@@ -29,8 +28,7 @@ export default {
     }
   },
   components: {
-    Content,
-    Cell
+    Content
   }
 }
 </script>

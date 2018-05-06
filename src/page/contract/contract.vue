@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import { Cell } from 'vux'
 import Content from '@/page/common/content'
 export default {
   name: 'listcontract',
@@ -33,8 +32,7 @@ export default {
     }
   },
   components: {
-    Content,
-    Cell
+    Content
   }
 }
 </script>

@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import { Group, Cell } from 'vux'
 
 export default {
   name: 'seettingview',
@@ -17,10 +16,6 @@ export default {
         {id: 0, name: '功能配置'}
       ]
     }
-  },
-  components: {
-    Group,
-    Cell
   }
 }
 </script>

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { Cell, Badge } from 'vux'
+import { Badge } from 'vux'
 export default {
   name: 'mwork',
   data () {
@@ -24,7 +24,6 @@ export default {
     }
   },
   components: {
-    Cell,
     Badge
   }
 }

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { XSwitch, Group } from 'vux'
+import { XSwitch } from 'vux'
 export default {
   name: 'settingList',
   data () {
@@ -17,8 +17,7 @@ export default {
     }
   },
   components: {
-    XSwitch,
-    Group
+    XSwitch
   }
 }
 </script>

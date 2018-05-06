@@ -27,7 +27,7 @@
 
 <script>
 import { ERR_OK, AddApi, USER_KEY } from '@/api/api'
-import { XInput, Cell, CellBox, PopupPicker, Datetime, XAddress, ChinaAddressV4Data } from 'vux'
+import { XInput, CellBox, PopupPicker, Datetime, XAddress, ChinaAddressV4Data } from 'vux'
 
 export default {
   name: 'addnote',
@@ -80,7 +80,6 @@ export default {
   },
   components: {
     XInput,
-    Cell,
     CellBox,
     PopupPicker,
     Datetime,

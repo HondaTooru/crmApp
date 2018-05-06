@@ -14,7 +14,6 @@
 
 <script>
 import Content from '@/page/common/content'
-import { Cell } from 'vux'
 export default {
   name: 'ListContractlist',
   data () {
@@ -26,8 +25,7 @@ export default {
     }
   },
   components: {
-    Content,
-    Cell
+    Content
   }
 }
 </script>
