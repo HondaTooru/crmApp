@@ -171,7 +171,7 @@
 
 <script>
 import { Swiper, SwiperItem, PopupPicker, XCircle, Flexbox, FlexboxItem } from 'vux'
-import { SlideApi, ERR_OK, USER_KEY } from '@/api/api'
+import { SlideApi, ERR_OK } from '@/api/api'
 export default {
   name: 'mswiper',
   components: {
@@ -191,11 +191,9 @@ export default {
       slideDate: null,
       strokeColor: '#3FC7FA',
       data: {
-        customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id,
         is_own: 0,
         module: 1,
-        time_str: '',
-        uid: JSON.parse(localStorage.getItem(USER_KEY)).id
+        time_str: ''
       }
     }
   },

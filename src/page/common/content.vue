@@ -28,7 +28,7 @@
 <script>
 import { Scroller, Spinner } from 'vux'
 import Search from '@/page/common/search'
-import { ERR_OK, USER_KEY, IndexApi, ContractListApi } from '@/api/api'
+import { ERR_OK, IndexApi, ContractListApi } from '@/api/api'
 export default {
   name: 'listdata',
   props: {
@@ -37,8 +37,6 @@ export default {
   data () {
     return {
       params: {
-        customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id,
-        uid: JSON.parse(localStorage.getItem(USER_KEY)).id,
         page: 1,
         my_own: 0
       },

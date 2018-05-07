@@ -16,8 +16,8 @@ export const ERR_OK = 1
 export const oppoApi = () => { return Vue.http.all(oparmas.map(opRequest)).then(Vue.http.spread((q, w, e) => [q, w, e])) }
 export const CustomerApi = () => { return Vue.http.all(prems.map(mRequest)).then(Vue.http.spread((q, w, e, r, y) => [q, w, e, r, y])) }
 export const LoginApi = params => { return Vue.http.post('/crm/api/login', params, formatData).then(res => res.data) }
-export const IndexApi = (params, name) => { return Vue.http.post('crm/' + name + '/index', params, formatData).then(res => res.data) }
-export const ContractListApi = params => { return Vue.http.post('/crm/ContractList/contract_list', params, formatData).then(res => res.data) }
+export const IndexApi = (params, name) => { return Vue.http.post('crm/' + name + '/index', Object.assign({}, USERID, params), formatData).then(res => res.data) }
+export const ContractListApi = params => { return Vue.http.post('/crm/ContractList/contract_list', Object.assign({}, USERID, params), formatData).then(res => res.data) }
 export const AddApi = name => { return Vue.http.post('/crm/' + name + '/add', USERID, formatData).then(res => res.data) }
 export const SaveAddApi = (parmas, name, o) => { return Vue.http.post('/crm/' + name + '/' + o, Object.assign({}, USERID, parmas), formatData).then(res => res.data) }
 const AllStatusApi = () => { return Vue.http.post('/crm/api/all_status', USERID, formatData).then(res => res.data) }
