@@ -5,7 +5,9 @@ export const USER_KEY = 'crm_user_data'
 const formatData = { transformRequest: data => qs.stringify(data) }
 const urls = '/crm/api/all_customer_type'
 const prems = [ {name: 'customer_status'}, {name: 'customer_source'}, {name: 'industry'}, {name: 'customer_type'}, {name: 'size'} ]
-const USERID = { customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id, uid: JSON.parse(localStorage.getItem(USER_KEY)).id }
+const USER = JSON.parse(localStorage.getItem('crm_user_data')) || ''
+const USERID = { customer_id: USER.customer_id, uid: USER.id }
+
 const mRequest = parmas => { return Vue.http.post(urls, Object.assign({}, USERID, parmas)).then(res => res.data) }
 
 export const ERR_OK = 1
