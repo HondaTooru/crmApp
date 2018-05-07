@@ -2,7 +2,7 @@
  <div class="mark nobar" id="box">
    <group :gutter="0" title="必填信息">
       <div v-for="m in note" v-if="m.required === 1" class="item">
-        <x-input v-if="m.field_type === 'text'" :title="m.showname" v-model='m.value' :is-type="m.name.indexOf('tel') !== -1 ? 'china-mobile' : ''" text-align="right" :type="m.name.indexOf('tel') !== -1 ? 'tel' : 'text'" required></x-input>
+        <x-input v-if="m.field_type === 'text' || m.field_type === 'decimal'" :title="m.showname" v-model='m.value' :is-type="m.name.indexOf('tel') !== -1 ? 'china-mobile' : ''" text-align="right" :type="m.name.indexOf('tel') !== -1 ? 'tel' : 'text'" required></x-input>
         <datetime v-model="m.value" :title="m.showname" v-if="m.field_type === 'date'" format="YYYY-MM-DD HH:mm"></datetime>
         <checklist :title="m.showname" :options="sexList" v-model="m.value" :max="1" v-if="m.field_type === 'radio'"></checklist>
         <popup-picker v-if="m.field_type === 'drop'" :popup-title="m.showname" :data="[k[m.name]]" :title="m.showname" v-model="m.value"></popup-picker>
@@ -38,7 +38,7 @@ export default {
     return {
       showContent: false,
       unless: ['provance', 'city', 'area', 'imgs'],
-      unlessId: ['pre_user_id', 'pre_department_id', 'parent_customer'],
+      unlessId: ['pre_user_id', 'pre_department_id', 'parent_customer', 'customer', 'user_id_2', 'per_department', 'per_user'],
       note: [],
       saveList: [],
       addressData: ChinaAddressV4Data,
@@ -91,7 +91,7 @@ export default {
       })
       let t = { field_data: JSON.stringify(this.saveList) }
       let s = 'save_add'
-      if (this.k.name === 'customer') s = 'add_save'
+      if (this.k.name === 'customer' || this.k.name === 'opportunities') s = 'add_save'
       console.log(t)
       SaveAddApi(t, this.k.name, s).then(res => {
         if (ERR_OK === res.code) {
