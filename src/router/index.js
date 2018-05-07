@@ -12,6 +12,8 @@ const SettingView = () => import('@/page/setting/settingView')
 const ViewList = () => import('@/page/setting/viewList')
 const Contract = () => import('@/page/contract/contract')
 const Customer = () => import('@/page/customer/customer')
+const AddCustomer = () => import('@/page/customer/customerAdd')
+
 const Product = () => import('@/page/product/product')
 const Contact = () => import('@/page/contact/contact')
 const Opportunities = () => import('@/page/opportunities/opportunities')
@@ -35,6 +37,8 @@ export default new Router({
         { path: 'viewlist', name: 'viewlist', component: ViewList },
         { path: 'contract', name: 'contract', component: Contract },
         { path: 'customer', name: 'customer', component: Customer },
+        { path: 'customerAdd', name: 'customerAdd', component: AddCustomer },
+
         { path: 'product', name: 'product', component: Product },
         { path: 'contact', name: 'contact', component: Contact },
         { path: 'opportunity', name: 'opportunity', component: Opportunities },

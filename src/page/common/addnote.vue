@@ -2,7 +2,8 @@
  <div class="mark nobar" id="box">
    <group :gutter="0" title="必填信息">
       <div v-for="m in note" v-if="m.required === 1" class="item">
-        <x-input :title="m.showname" v-model='m.value'></x-input>
+        <x-input v-if="m.field_type === 'text'" :title="m.showname" v-model='m.value' :is-type="m.name.indexOf('tel') !== -1 ? 'china-mobile' : ''" text-align="right" :type="m.name.indexOf('tel') !== -1 ? 'tel' : 'text'" required></x-input>
+        <datetime v-model="m.value" :title="m.showname" v-if="m.field_type === 'date'" format="YYYY-MM-DD HH:mm"></datetime>
       </div>
    </group>
    <group :gutter="0" title="选填信息">
@@ -14,10 +15,10 @@
   <div slot="title" class="more" @click="slideDown"><i class="fa fa-list" aria-hidden="true"></i><span ref="title">点击展开</span></div>
 </cell>
   <template v-if="showContent">
-    <div v-for="m in note" v-if="m.required === 0" class="item">
-      <x-input :title="m.showname" v-model='m.value' v-if="m.field_type === 'text' && m.name !== 'provance' && m.name !== 'address'" text-align="right"></x-input>
+    <div v-for="m in note" v-if="m.required === 0 && unless.indexOf(m.name) === -1" class="item">
+      <x-input :is-type="m.name.indexOf('tel') !== -1 ? 'china-mobile' : ''" :placeholder="'请输入' + m.showname" :title="m.showname" v-model='m.value' v-if="m.field_type === 'text' && m.name !== 'address'" text-align="right" :type="m.name.indexOf('tel') !== -1 ? 'tel' : 'text'"></x-input>
       <datetime v-model="m.value" :title="m.showname" v-if="m.field_type === 'date'" format="YYYY-MM-DD HH:mm"></datetime>
-      <x-address :title="m.showname" v-model="m.value" :list="addressData" placeholder="请选择地址" :show.sync="showAddress"  v-if="m.name === 'address'"></x-address>
+      <x-address  @on-shadow-change="onShadowChange" :title="m.showname" v-model="m.value" :list="addressData" placeholder="请选择地址" :show.sync="showAddress"  v-if="m.name === 'address'"></x-address>
       <popup-picker v-if="m.field_type === 'drop'" :popup-title="m.showname" :data="[k[m.name]]" :title="m.showname" v-model="m.value"></popup-picker>
     </div>
   </template>
@@ -26,7 +27,7 @@
 </template>
 
 <script>
-import { ERR_OK, AddApi, USER_KEY } from '@/api/api'
+import { ERR_OK, AddApi, USER_KEY, SaveAddApi } from '@/api/api'
 import { XInput, CellBox, PopupPicker, Datetime, XAddress, ChinaAddressV4Data } from 'vux'
 
 export default {
@@ -38,8 +39,10 @@ export default {
         uid: JSON.parse(localStorage.getItem(USER_KEY)).id
       },
       showContent: false,
+      unless: ['provance', 'city', 'area', 'imgs'],
+      unlessId: ['pre_user_id', 'pre_department_id'],
       note: [],
-      saveList: {},
+      saveList: [],
       addressData: ChinaAddressV4Data,
       showAddress: false
     }
@@ -54,6 +57,7 @@ export default {
   },
   deactivated () {
     this.$vux.bus.$off('Addinfo')
+    this.showContent = false
   },
   created () {
     this.list()
@@ -62,20 +66,45 @@ export default {
     list () {
       AddApi(this.parmas, this.k.name).then(res => {
         if (ERR_OK === res.code) {
-          this.note = res.data.thead
+          let data = res.data.thead
+          if (!res.data.thead) data = res.data.header
+          data.forEach(item => {
+            if (this.unlessId.indexOf(item.name) !== -1) item.field_type = 'drop'
+          })
+          this.note = data
         }
       })
     },
     slideDown () {
       this.$refs.title.innerText === '点击展开' ? this.$refs.title.innerText = '点击关闭' : this.$refs.title.innerText = '点击展开'
     },
-    SaveData () {
+    onShadowChange (ids, names) {
       this.note.forEach(item => {
-        this.saveList.name = item.name
-        if (!item.value) item.value = ''
-        this.saveList.value = item.value.toString()
+        if (item.name === 'provance') item.value = names[0]
+        if (item.name === 'city') item.value = names[1]
+        if (item.name === 'city') item.value = names[2]
       })
-      console.log(this.saveList)
+    },
+    SaveData () {
+      this.saveList = []
+      this.note.forEach(item => {
+        this.saveList.push({name: item.name, value: !item.value ? '' : item.value.toString()})
+      })
+      this.parmas.field_data = JSON.stringify(this.saveList)
+      SaveAddApi(this.parmas, this.k.name).then(res => {
+        if (ERR_OK === res.code) {
+          this.$vux.toast.show({
+            text: res.msg,
+            type: 'success',
+            position: 'center',
+            onHide: () => {
+              this.$router.back()
+            }
+          })
+        } else {
+          this.$vux.toast.show({ text: '必填信息不能为空~', position: 'bottom', width: '10em' })
+        }
+      })
     }
   },
   components: {
