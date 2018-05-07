@@ -24,8 +24,8 @@ const AllAdminApi = () => { return Vue.http.post('/crm/api/all_admin', USERID, f
 const AllDepartmentApi = () => { return Vue.http.post('/crm/api/all_department', USERID, formatData).then(res => res.data) }
 export const AllClueAddAPi = () => { return Vue.http.all([AllStatusApi(), AllSourceApi(), AllAdminApi(), AllDepartmentApi()]).then(Vue.http.spread((s, e, c, m) => [s, e, c, m])) }
 
-export const SearchApi = params => { return Vue.http.post('/crm/Api_2/search_filed', params).then(res => res.data) }
-export const SlideApi = params => { return Vue.http.post('/crm/dashboard/taglist', params).then(res => res.data) }
-export const MenuApi = params => { return Vue.http.post('/crm/api/menu', params).then(res => res.data) }
-export const SavesearchAPi = params => { return Vue.http.post('/crm/Api_2/save_own_search_field', params).then(res => res.data) }
-export const ChooseListApi = (params, name) => { return Vue.http.post('/crm/' + name + '/table_field', params).then(res => res.data) }
+export const SearchApi = parmas => { return Vue.http.post('/crm/Api_2/search_filed', Object.assign({}, USERID, parmas)).then(res => res.data) }
+export const SlideApi = parmas => { return Vue.http.post('/crm/dashboard/taglist', Object.assign({}, USERID, parmas)).then(res => res.data) }
+export const MenuApi = parmas => { return Vue.http.post('/crm/api/menu', Object.assign({}, USERID, parmas)).then(res => res.data) }
+export const SavesearchAPi = parmas => { return Vue.http.post('/crm/Api_2/save_own_search_field', Object.assign({}, USERID, parmas)).then(res => res.data) }
+export const ChooseListApi = name => { return Vue.http.post('/crm/' + name + '/table_field', USERID).then(res => res.data) }

@@ -75,7 +75,7 @@
 
 <script>
 import { Popup, XSwitch, PopupPicker, Flexbox, FlexboxItem, XButton, Calendar, Radio, Datetime } from 'vux'
-import { SearchApi, ERR_OK, USER_KEY, ChooseListApi, SavesearchAPi } from '@/api/api'
+import { SearchApi, ERR_OK, ChooseListApi, SavesearchAPi } from '@/api/api'
 let obj = {}
 let ids = []
 export default {
@@ -94,11 +94,7 @@ export default {
       list: [],
       defaultRaio: '',
       keyword: '',
-      newParmas: {},
-      params: {
-        customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id,
-        uid: JSON.parse(localStorage.getItem(USER_KEY)).id
-      }
+      newParmas: {}
     }
   },
   components: {
@@ -159,8 +155,7 @@ export default {
     chooseType () {
       obj = {}
       if (!this.list.length) {
-        this.params.w_type = this.type
-        SearchApi(this.params).then(res => {
+        SearchApi({w_type: this.type}).then(res => {
           if (ERR_OK === res.code) {
             this.grouplist = !this.grouplist
             res.data.filter(item => {
@@ -184,11 +179,11 @@ export default {
                 this.list.push({id: item.id, name: item.name, showname: item.showname, is_selected: item.is_selected, type: item.field_type, data: [sbulist], value: [], checked: 1})
               }
             })
-            this.newParmas = this.params
             this.list.forEach(item => {
               if (item.is_selected === 1) ids.push(item.id)
             })
             this.newParmas.ids = ids
+            this.newParmas.w_type = this.type
           } else {
             this.$vux.toast.show({
               text: res.msg
@@ -200,10 +195,9 @@ export default {
       }
     },
     showList () {
-      let params = { 'customer_id': this.params.customer_id, uid: this.params.uid }
       let newName = this.$route.name
       if (this.$route.name === 'opportunity') newName = 'Opportunities'
-      ChooseListApi(params, newName).then(res => {
+      ChooseListApi(newName).then(res => {
         if (ERR_OK === res.code) {
           res.data.forEach(item => {
             this.cList.push({key: item.name, value: item.showname})
