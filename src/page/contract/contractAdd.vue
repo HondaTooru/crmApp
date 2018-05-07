@@ -4,7 +4,7 @@
 
 <script>
 import AddNote from '@/page/common/addnote'
-import { AllAdminApi, ERR_OK, AllCustomer, PayWayApi, ContractTypeApi, ContractStatus } from '@/api/api'
+import { CListApi } from '@/api/api'
 
 export default {
   name: 'contractAdd',
@@ -17,65 +17,25 @@ export default {
         customer: [],
         pay_way: [],
         con_type: [],
-        pi_status: []
+        pi_status: [],
+        opporttunity: []
       }
     }
   },
   methods: {
-    getAllCustomer () {
-      AllAdminApi().then(res => {
-        if (ERR_OK === res.code) {
-          res.data.forEach(item => {
-            this.n.user_id.push(item.username)
-          })
-        }
-      })
-      this.n.user_id_2 = this.n.user_id
-    },
-    CustomerList () {
-      AllCustomer().then(res => {
-        if (ERR_OK === res.code) {
-          res.data.forEach(item => {
-            this.n.customer.push(item.username)
-          })
-        }
-      })
-    },
-    getPayWay () {
-      PayWayApi({name: 'customer_source'}).then(res => {
-        if (ERR_OK === res.code) {
-          res.data.forEach(item => {
-            this.n.pay_way.push(item.showname)
-          })
-        }
-      })
-    },
-    getContract () {
-      ContractTypeApi().then(res => {
-        if (ERR_OK === res.code) {
-          res.data.forEach(item => {
-            this.n.con_type.push(item.showname)
-          })
-        }
-      })
-    },
-    getContractStatus () {
-      ContractStatus().then(res => {
-        if (ERR_OK === res.code) {
-          res.data.forEach(item => {
-            this.n.pi_status.push(item.showname)
-          })
-        }
+    getList () {
+      CListApi().then(res => {
+        res[0].data.forEach(item => { this.n.pay_way.push(item.showname) })
+        res[1].data.forEach(item => { this.n.con_type.push(item.showname) })
+        res[2].data.forEach(item => { this.n.pi_status.push(item.showname) })
+        res[3].data.forEach(item => { this.n.customer.push(item.username) })
+        res[4].data.forEach(item => { this.n.user_id.push(item.username) })
+        this.n.user_id_2 = this.n.user_id
       })
     }
   },
   created () {
-    console.log(this.n.pay_way)
-    this.getAllCustomer()
-    this.CustomerList()
-    this.getPayWay()
-    this.getContract()
-    this.getContractStatus()
+    this.getList()
   },
   components: {
     AddNote

@@ -95,7 +95,7 @@ export default {
       drawerVisibility: false,
       Addmore: false,
       ActionMenu: ['clue', 'customer', 'contact', 'opportunity', 'contract', 'product', 'payment'],
-      addData: ['clueAdd', 'customerAdd', 'contactAdd', 'opportunityAdd'],
+      addData: ['clueAdd', 'customerAdd', 'contactAdd', 'opportunityAdd', 'contractAdd'],
       menus: [
         [{label: '新增线索', link: 'clueAdd'}],
         [{label: '新增客户', link: 'customerAdd'}],
@@ -178,6 +178,7 @@ export default {
         if (this.route.path === '/contract_list') return '合同清单'
         if (this.route.path === '/clueAdd') return '新增线索'
         if (this.route.path === '/customerAdd') return '新增客户'
+        if (this.route.path === '/contractAdd') return '新增合同'
         return this.componentName ? `Demo/${this.componentName}` : 'Demo/~~'
       },
       set (val) {
