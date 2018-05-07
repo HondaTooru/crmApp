@@ -12,7 +12,9 @@ export default {
     return {
       n: {
         name: 'customer',
-        status: []
+        status: [],
+        source: [],
+        customer_type: []
       },
       parmas: {
         customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id,
@@ -24,6 +26,9 @@ export default {
     getList () {
       CustomerApi().then(res => {
         console.log(res)
+        res[0].data.forEach(item => { this.n.status.push(item.showname) })
+        res[1].data.forEach(item => { this.n.source.push(item.showname) })
+        res[2].data.forEach(item => { this.n.status.push(item.showname) })
       })
     }
   },

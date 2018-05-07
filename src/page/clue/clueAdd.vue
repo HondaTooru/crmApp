@@ -4,7 +4,7 @@
 
 <script>
 import AddNote from '@/page/common/addnote'
-import { ERR_OK, USER_KEY, AllClueAddAPi } from '@/api/api'
+import { ERR_OK, AllClueAddAPi } from '@/api/api'
 
 export default {
   name: 'addClue',
@@ -18,16 +18,12 @@ export default {
         want_department_id: [],
         pre_user_id: [],
         pre_department_id: []
-      },
-      parmas: {
-        customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id,
-        uid: JSON.parse(localStorage.getItem(USER_KEY)).id
       }
     }
   },
   methods: {
     getList () {
-      AllClueAddAPi(this.parmas).then(res => {
+      AllClueAddAPi().then(res => {
         if (ERR_OK === res[0].code) { res[0].data.forEach(item => { this.n.status.push(item.name) }) }
         if (ERR_OK === res[1].code) { res[1].data.forEach(item => { this.n.source.push(item.name) }) }
         if (ERR_OK === res[2].code) { res[2].data.forEach(item => { this.n.user_id.push(item.username) }) }

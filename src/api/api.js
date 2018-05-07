@@ -18,12 +18,12 @@ export const ContractListApi = params => { return Vue.http.post('/crm/ContractLi
 export const AddApi = (params, name) => { return Vue.http.post('/crm/' + name + '/add', params, formatData).then(res => res.data) }
 export const SaveAddApi = (params, name) => { return Vue.http.post('/crm/' + name + '/save_add', params, formatData).then(res => res.data) }
 
-const AllStatusApi = params => { return Vue.http.post('/crm/api/all_status', params, formatData).then(res => res.data) }
-const AllSourceApi = params => { return Vue.http.post('/crm/api/all_source', params, formatData).then(res => res.data) }
-const AllAdminApi = params => { return Vue.http.post('/crm/api/all_admin', params, formatData).then(res => res.data) }
-const AllDepartmentApi = params => { return Vue.http.post('/crm/api/all_department', params, formatData).then(res => res.data) }
+const AllStatusApi = () => { return Vue.http.post('/crm/api/all_status', USERID, formatData).then(res => res.data) }
+const AllSourceApi = () => { return Vue.http.post('/crm/api/all_source', USERID, formatData).then(res => res.data) }
+const AllAdminApi = () => { return Vue.http.post('/crm/api/all_admin', USERID, formatData).then(res => res.data) }
+const AllDepartmentApi = () => { return Vue.http.post('/crm/api/all_department', USERID, formatData).then(res => res.data) }
+export const AllClueAddAPi = () => { return Vue.http.all([AllStatusApi(), AllSourceApi(), AllAdminApi(), AllDepartmentApi()]).then(Vue.http.spread((s, e, c, m) => [s, e, c, m])) }
 
-export const AllClueAddAPi = params => { return Vue.http.all([AllStatusApi(params), AllSourceApi(params), AllAdminApi(params), AllDepartmentApi(params)]).then(Vue.http.spread((s, e, c, m) => [s, e, c, m])) }
 export const SearchApi = params => { return Vue.http.post('/crm/Api_2/search_filed', params).then(res => res.data) }
 export const SlideApi = params => { return Vue.http.post('/crm/dashboard/taglist', params).then(res => res.data) }
 export const MenuApi = params => { return Vue.http.post('/crm/api/menu', params).then(res => res.data) }
