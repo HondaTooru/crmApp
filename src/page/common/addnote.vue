@@ -4,6 +4,7 @@
       <div v-for="m in note" v-if="m.required === 1" class="item">
         <x-input v-if="m.field_type === 'text'" :title="m.showname" v-model='m.value' :is-type="m.name.indexOf('tel') !== -1 ? 'china-mobile' : ''" text-align="right" :type="m.name.indexOf('tel') !== -1 ? 'tel' : 'text'" required></x-input>
         <datetime v-model="m.value" :title="m.showname" v-if="m.field_type === 'date'" format="YYYY-MM-DD HH:mm"></datetime>
+        <checklist :title="m.showname" :options="sexList" v-model="sexVal" :max="1" v-if="m.field_type === 'radio'" @on-change="changeSex"></checklist>
       </div>
    </group>
    <group :gutter="0" title="选填信息">
@@ -27,24 +28,22 @@
 </template>
 
 <script>
-import { ERR_OK, AddApi, USER_KEY, SaveAddApi } from '@/api/api'
-import { XInput, CellBox, PopupPicker, Datetime, XAddress, ChinaAddressV4Data } from 'vux'
+import { ERR_OK, AddApi, SaveAddApi } from '@/api/api'
+import { XInput, CellBox, PopupPicker, Datetime, XAddress, ChinaAddressV4Data, Checklist } from 'vux'
 
 export default {
   name: 'addnote',
   data () {
     return {
-      parmas: {
-        customer_id: JSON.parse(localStorage.getItem(USER_KEY)).customer_id,
-        uid: JSON.parse(localStorage.getItem(USER_KEY)).id
-      },
       showContent: false,
       unless: ['provance', 'city', 'area', 'imgs'],
-      unlessId: ['pre_user_id', 'pre_department_id'],
+      unlessId: ['pre_user_id', 'pre_department_id', 'parent_customer'],
       note: [],
       saveList: [],
       addressData: ChinaAddressV4Data,
-      showAddress: false
+      showAddress: false,
+      sexVal: ['男'],
+      sexList: ['男', '女']
     }
   },
   props: {
@@ -64,7 +63,7 @@ export default {
   },
   methods: {
     list () {
-      AddApi(this.parmas, this.k.name).then(res => {
+      AddApi(this.k.name).then(res => {
         if (ERR_OK === res.code) {
           let data = res.data.thead
           if (!res.data.thead) data = res.data.header
@@ -78,20 +77,27 @@ export default {
     slideDown () {
       this.$refs.title.innerText === '点击展开' ? this.$refs.title.innerText = '点击关闭' : this.$refs.title.innerText = '点击展开'
     },
+    changeSex (val) {
+      this.saveList.push({name: 'sex', value: val})
+    },
     onShadowChange (ids, names) {
       this.note.forEach(item => {
         if (item.name === 'provance') item.value = names[0]
         if (item.name === 'city') item.value = names[1]
-        if (item.name === 'city') item.value = names[2]
+        if (item.name === 'area') item.value = names[2]
       })
     },
     SaveData () {
       this.saveList = []
       this.note.forEach(item => {
+        if (this.k.name === 'Contact' && item.name === 'sex') this.saveList.push({name: item.name, value: '男'})
         this.saveList.push({name: item.name, value: !item.value ? '' : item.value.toString()})
       })
-      this.parmas.field_data = JSON.stringify(this.saveList)
-      SaveAddApi(this.parmas, this.k.name).then(res => {
+      let t = { field_data: JSON.stringify(this.saveList) }
+      let s = 'save_add'
+      if (this.k.name === 'customer') s = 'add_save'
+      console.log(t)
+      SaveAddApi(t, this.k.name, s).then(res => {
         if (ERR_OK === res.code) {
           this.$vux.toast.show({
             text: res.msg,
@@ -112,7 +118,8 @@ export default {
     CellBox,
     PopupPicker,
     Datetime,
-    XAddress
+    XAddress,
+    Checklist
   }
 }
 </script>

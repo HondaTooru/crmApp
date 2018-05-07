@@ -16,6 +16,7 @@ const AddCustomer = () => import('@/page/customer/customerAdd')
 
 const Product = () => import('@/page/product/product')
 const Contact = () => import('@/page/contact/contact')
+const AddContact = () => import('@/page/contact/contactAdd')
 const Opportunities = () => import('@/page/opportunities/opportunities')
 const Payment = () => import('@/page/payment/payment')
 const ContractList = () => import('@/page/contractlist/contractlist')
@@ -41,6 +42,8 @@ export default new Router({
 
         { path: 'product', name: 'product', component: Product },
         { path: 'contact', name: 'contact', component: Contact },
+        { path: 'contactAdd', name: 'contactAdd', component: AddContact },
+
         { path: 'opportunity', name: 'opportunity', component: Opportunities },
         { path: 'payment', name: 'payment', component: Payment },
         { path: 'contract_list', name: 'contract_list', component: ContractList }
