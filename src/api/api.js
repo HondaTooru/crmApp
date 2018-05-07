@@ -34,4 +34,5 @@ export const ChooseListApi = name => { return Vue.http.post('/crm/' + name + '/t
 const PayWayApi = params => { return Vue.http.post('/crm/api/all_pay_way', Object.assign({}, USERID, params)).then(res => res.data) }
 const ContractTypeApi = () => { return Vue.http.post('/crm/api/all_contract_type', Object.assign({}, USERID)).then(res => res.data) }
 const ContractStatusApi = () => { return Vue.http.post('/crm/api/all_contract_status', Object.assign({}, USERID)).then(res => res.data) }
+export const contactList = () => { return Vue.http.all([AllAdminApi(), AllCustomer()]).then(Vue.http.spread((r, e) => [r, e])) }
 export const CListApi = () => { return Vue.http.all([PayWayApi(), ContractTypeApi(), ContractStatusApi(), AllCustomer(), AllAdminApi()]).then(Vue.http.spread((q, e, s, r, t) => [q, e, s, r, t])) }

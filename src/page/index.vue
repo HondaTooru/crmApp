@@ -179,6 +179,7 @@ export default {
         if (this.route.path === '/clueAdd') return '新增线索'
         if (this.route.path === '/customerAdd') return '新增客户'
         if (this.route.path === '/contractAdd') return '新增合同'
+        if (this.route.path === '/contactAdd') return '新增联系人'
         return this.componentName ? `Demo/${this.componentName}` : 'Demo/~~'
       },
       set (val) {

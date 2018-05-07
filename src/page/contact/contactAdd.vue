@@ -4,7 +4,7 @@
 
 <script>
 import AddNote from '@/page/common/addnote'
-import { AllAdminApi, ERR_OK, AllCustomer } from '@/api/api'
+import { contactList } from '@/api/api'
 
 export default {
   name: 'addContact',
@@ -18,28 +18,15 @@ export default {
     }
   },
   methods: {
-    getAllCustomer () {
-      AllAdminApi().then(res => {
-        if (ERR_OK === res.code) {
-          res.data.forEach(item => {
-            this.n.user_id.push(item.username)
-          })
-        }
-      })
-    },
-    CustomerList () {
-      AllCustomer().then(res => {
-        if (ERR_OK === res.code) {
-          res.data.forEach(item => {
-            this.n.customer.push(item.username)
-          })
-        }
+    getList () {
+      contactList().then(res => {
+        res[0].data.forEach(item => { this.n.user_id.push(item.username) })
+        res[1].data.forEach(item => { this.n.customer.push(item.username) })
       })
     }
   },
   created () {
-    this.getAllCustomer()
-    this.CustomerList()
+    this.getList()
   },
   components: {
     AddNote
