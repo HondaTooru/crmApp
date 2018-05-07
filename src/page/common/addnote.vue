@@ -4,7 +4,8 @@
       <div v-for="m in note" v-if="m.required === 1" class="item">
         <x-input v-if="m.field_type === 'text'" :title="m.showname" v-model='m.value' :is-type="m.name.indexOf('tel') !== -1 ? 'china-mobile' : ''" text-align="right" :type="m.name.indexOf('tel') !== -1 ? 'tel' : 'text'" required></x-input>
         <datetime v-model="m.value" :title="m.showname" v-if="m.field_type === 'date'" format="YYYY-MM-DD HH:mm"></datetime>
-        <checklist :title="m.showname" :options="sexList" v-model="sexVal" :max="1" v-if="m.field_type === 'radio'" @on-change="changeSex"></checklist>
+        <checklist :title="m.showname" :options="sexList" v-model="m.value" :max="1" v-if="m.field_type === 'radio'"></checklist>
+        <popup-picker v-if="m.field_type === 'drop'" :popup-title="m.showname" :data="[k[m.name]]" :title="m.showname" v-model="m.value"></popup-picker>
       </div>
    </group>
    <group :gutter="0" title="选填信息">
@@ -42,7 +43,6 @@ export default {
       saveList: [],
       addressData: ChinaAddressV4Data,
       showAddress: false,
-      sexVal: ['男'],
       sexList: ['男', '女']
     }
   },
@@ -77,9 +77,6 @@ export default {
     slideDown () {
       this.$refs.title.innerText === '点击展开' ? this.$refs.title.innerText = '点击关闭' : this.$refs.title.innerText = '点击展开'
     },
-    changeSex (val) {
-      this.saveList.push({name: 'sex', value: val})
-    },
     onShadowChange (ids, names) {
       this.note.forEach(item => {
         if (item.name === 'provance') item.value = names[0]
@@ -90,7 +87,6 @@ export default {
     SaveData () {
       this.saveList = []
       this.note.forEach(item => {
-        if (this.k.name === 'Contact' && item.name === 'sex') this.saveList.push({name: item.name, value: '男'})
         this.saveList.push({name: item.name, value: !item.value ? '' : item.value.toString()})
       })
       let t = { field_data: JSON.stringify(this.saveList) }
