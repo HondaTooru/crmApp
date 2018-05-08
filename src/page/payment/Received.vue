@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="nobar">
     <div v-transfer-dom>
      <popup v-model="sw" max-height="50%">
        <div>
@@ -24,8 +24,8 @@
        <group :gutter="0" title="添加期数">
          <x-input title="期数" :value="nw.qishu" text-align="right" disabled></x-input>
          <datetime v-model="nw.plan_back_date" title="计划回款日期"></datetime>
-         <x-input title="计划回款占比" type="number" v-model="nw.plan_back_rate" text-align="right"></x-input>
-         <x-input title="计划回款金额" type="number" v-model="nw.plan_back_rate" text-align="right"></x-input>
+         <x-input title="计划回款占百分比" type="number" v-model.number="nw.plan_back_rate" text-align="right"></x-input>
+         <x-input title="计划回款金额" type="number" v-model.number="nw.plan_back_rate * (all / 100 )" text-align="right"></x-input>
          <x-input title="备注" v-model="nw.remark" text-align="right"></x-input>
        </group>
        <div class="btn_add">
@@ -58,9 +58,9 @@
     <tr v-for="i in tabelList" :key="i.id" v-if="tabelList.length">
       <td>{{i.qishu}}</td>
       <td>{{i.plan_back_date}}</td>
+      <td>{{i.plan_back_rate}}%</td>
       <td>{{i.plan_back_money}}</td>
-      <td>{{i.plan_back_rate}}</td>
-      <td>{{i.remark}}</td>
+      <td><p>{{i.remark}}</p></td>
     </tr>
   </tbody>
 </x-table>
@@ -159,6 +159,13 @@ export default {
     XDialog,
     XInput,
     Datetime
+  },
+  filters: {
+    percent: function (val) {
+      if (!val) return ''
+      val = val.toString() + '%'
+      return val
+    }
   }
 }
 </script>
@@ -173,10 +180,13 @@ export default {
       min-width: 110px;
       -webkit-overflow-scrolling:touch
     }
+    td {
+      p {line-height: 20px;text-align: left;margin: 5px}
+    }
   }
 }
 .line {margin: 15px}
-.btn {margin: 20px 15px 0}
+.btn {margin: 20px 15px}
 .btn_add{margin: 15px}
 .close{position: absolute;top:0px;right: 0px;}
 </style>
