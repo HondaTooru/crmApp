@@ -16,12 +16,14 @@ const Customer = () => import('@/page/customer/customer')
 const AddCustomer = () => import('@/page/customer/customerAdd')
 
 const Product = () => import('@/page/product/product')
+const ProductAdd = () => import('@/page/product/productAdd')
 const Contact = () => import('@/page/contact/contact')
 const AddContact = () => import('@/page/contact/contactAdd')
 
 const Opportunities = () => import('@/page/opportunities/opportunities')
 const OpportunitiesAdd = () => import('@/page/opportunities/opportunitiesAdd')
 const Payment = () => import('@/page/payment/payment')
+const Received = () => import('@/page/payment/Received')
 const ContractList = () => import('@/page/contractlist/contractlist')
 
 Vue.use(Router)
@@ -45,12 +47,14 @@ export default new Router({
         { path: 'customerAdd', name: 'customerAdd', component: AddCustomer },
 
         { path: 'product', name: 'product', component: Product },
+        { path: 'productAdd', name: 'productAdd', component: ProductAdd },
         { path: 'contact', name: 'contact', component: Contact },
         { path: 'contactAdd', name: 'contactAdd', component: AddContact },
 
         { path: 'opportunity', name: 'opportunity', component: Opportunities },
         { path: 'opportunityAdd', name: 'opportunityAdd', component: OpportunitiesAdd },
         { path: 'payment', name: 'payment', component: Payment },
+        { path: 'received', name: 'received', component: Received },
         { path: 'contract_list', name: 'contract_list', component: ContractList }
       ]
     },

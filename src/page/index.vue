@@ -95,7 +95,7 @@ export default {
       drawerVisibility: false,
       Addmore: false,
       ActionMenu: ['clue', 'customer', 'contact', 'opportunity', 'contract', 'product', 'payment'],
-      addData: ['clueAdd', 'customerAdd', 'contactAdd', 'opportunityAdd', 'contractAdd'],
+      addData: ['clueAdd', 'customerAdd', 'contactAdd', 'opportunityAdd', 'contractAdd', 'productAdd'],
       menus: [
         [{label: '新增线索', link: 'clueAdd'}],
         [{label: '新增客户', link: 'customerAdd'}],
@@ -103,7 +103,7 @@ export default {
         [{label: '新增商机', link: 'opportunityAdd'}],
         [{label: '新增合同', link: 'contractAdd'}],
         [{label: '新增产品', link: 'productAdd'}],
-        [{label: '新增回款计划', link: 'paymentAdd'}, {label: '新增回款记录', link: 'paymentNote'}, {label: '新增开票记录', link: 'paymentMark'}]
+        [{label: '新增回款计划', link: 'Received'}, {label: '新增回款记录', link: 'paymentNote'}, {label: '新增开票记录', link: 'paymentMark'}]
       ],
       dropTitle: ['/clue', '/contract', '/contact', '/customer', '/payment', '/opportunity']
     }
@@ -180,6 +180,8 @@ export default {
         if (this.route.path === '/customerAdd') return '新增客户'
         if (this.route.path === '/contractAdd') return '新增合同'
         if (this.route.path === '/contactAdd') return '新增联系人'
+        if (this.route.path === '/productAdd') return '新增产品'
+        if (this.route.path === '/Received') return '新增汇款计划'
         return this.componentName ? `Demo/${this.componentName}` : 'Demo/~~'
       },
       set (val) {
