@@ -69,7 +69,6 @@
 <x-button type="warn" :disabled="!this.eu.title" @click.native="su = !su">添加期数</x-button>
 </div>
   </div>
-
 </template>
 
 <script>

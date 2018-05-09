@@ -35,7 +35,10 @@ export const SlideApi = parmas => { return Vue.http.post('/crm/dashboard/taglist
 export const MenuApi = parmas => { return Vue.http.post('/crm/api/menu', Object.assign({}, USERID, parmas)).then(res => res.data) }
 export const SavesearchAPi = parmas => { return Vue.http.post('/crm/Api_2/save_own_search_field', Object.assign({}, USERID, parmas)).then(res => res.data) }
 export const ChooseListApi = name => { return Vue.http.post('/crm/' + name + '/table_field', USERID).then(res => res.data) }
-const PayWayApi = params => { return Vue.http.post('/crm/api/all_pay_way', Object.assign({}, USERID, params)).then(res => res.data) }
+const PayWayApi = parmas => { return Vue.http.post('/crm/api/all_pay_way', Object.assign({}, USERID, parmas)).then(res => res.data) }
+const PayTypeApi = parmas => { return Vue.http.post('/crm/api/all_pay_type', Object.assign({}, USERID, parmas)).then(res => res.data) }
+export const payRecord = () => { return Vue.http.all([PayWayApi(), PayTypeApi(), AllAdminApi(), AllCustomer()]).then(Vue.http.spread((q, e, r, s) => [q, e, r, s])) }
+export const addRecordApi = parmas => { return Vue.http.post('/crm/payment/add_plan_record', Object.assign({}, USERID, parmas)).then(res => res) }
 const ContractTypeApi = () => { return Vue.http.post('/crm/api/all_contract_type', Object.assign({}, USERID)).then(res => res.data) }
 const ContractStatusApi = () => { return Vue.http.post('/crm/api/all_contract_status', Object.assign({}, USERID)).then(res => res.data) }
 export const contactList = () => { return Vue.http.all([AllAdminApi(), AllCustomer()]).then(Vue.http.spread((r, e) => [r, e])) }
