@@ -16,8 +16,8 @@
 
 <script>
 import { Datetime, PopupPicker, XButton, XInput, dateFormat } from 'vux'
-import { payRecord, addRecordApi, ERR_OK } from '@/api/api'
-
+import { payRecord } from '@/api/api'
+// , addRecordApi, ERR_OK
 export default {
   name: 'paymentrecord',
   data () {
