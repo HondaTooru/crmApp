@@ -94,7 +94,6 @@ export default {
       let t = { field_data: JSON.stringify(this.saveList) }
       let s = 'save_add'
       if (this.k.name === 'customer' || this.k.name === 'opportunities' || this.k.name === 'contract') s = 'add_save'
-      console.log(t)
       SaveAddApi(t, this.k.name, s).then(res => {
         if (ERR_OK === res.code) {
           this.$vux.toast.show({

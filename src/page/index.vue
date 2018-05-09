@@ -56,7 +56,7 @@
         <transition
         @after-enter="$vux.bus && $vux.bus.$emit('vux:after-view-enter')"
         :name="viewTransition" :css="!!direction">
-        <keep-alive>
+        <keep-alive :exclude="['received', 'paymentrecord']">
         <router-view class="router-view"></router-view>
         </keep-alive>
       </transition>
@@ -95,7 +95,7 @@ export default {
       drawerVisibility: false,
       Addmore: false,
       ActionMenu: ['clue', 'customer', 'contact', 'opportunity', 'contract', 'product', 'payment'],
-      addData: ['clueAdd', 'customerAdd', 'contactAdd', 'opportunityAdd', 'contractAdd', 'productAdd'],
+      addData: ['clueAdd', 'customerAdd', 'contactAdd', 'opportunityAdd', 'contractAdd', 'productAdd', 'received'],
       menus: [
         [{label: '新增线索', link: 'clueAdd'}],
         [{label: '新增客户', link: 'customerAdd'}],
@@ -103,7 +103,7 @@ export default {
         [{label: '新增商机', link: 'opportunityAdd'}],
         [{label: '新增合同', link: 'contractAdd'}],
         [{label: '新增产品', link: 'productAdd'}],
-        [{label: '新增回款计划', link: 'Received'}, {label: '新增回款记录', link: 'paymentNote'}, {label: '新增开票记录', link: 'paymentMark'}]
+        [{label: '新增回款计划', link: 'Received'}, {label: '新增回款记录', link: 'paymentRecord'}, {label: '新增开票记录', link: 'paymentMark'}]
       ],
       dropTitle: ['/clue', '/contract', '/contact', '/customer', '/payment', '/opportunity']
     }

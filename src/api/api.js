@@ -17,7 +17,7 @@ export const oppoApi = () => { return Vue.http.all(oparmas.map(opRequest)).then(
 export const pContractApi = parmas => { return Vue.http.post('/crm/Payment/contract', Object.assign({}, USERID, parmas)).then(res => res.data) }
 export const pContractInfoApi = params => { return Vue.http.post('/crm/Payment/contract_info', Object.assign({}, USERID, params)).then(res => res.data) }
 export const qishuApi = params => { return Vue.http.post('/crm/Payment/qishu', Object.assign({}, USERID, params)).then(res => res.data) }
-export const AddqishuApi = params => { return Vue.http.post('/crm/Payment/add_plan_save', Object.assign({}, USERID, params)).then(res => res.data) }
+export const AddqishuApi = params => { return Vue.http.post('/crm/Payment/add_plan_save', Object.assign({}, USERID, params), formatData).then(res => res.data) }
 export const CustomerApi = () => { return Vue.http.all(prems.map(mRequest)).then(Vue.http.spread((q, w, e, r, y) => [q, w, e, r, y])) }
 export const LoginApi = params => { return Vue.http.post('/crm/api/login', params, formatData).then(res => res.data) }
 export const IndexApi = (params, name) => { return Vue.http.post('crm/' + name + '/index', Object.assign({}, USERID, params), formatData).then(res => res.data) }

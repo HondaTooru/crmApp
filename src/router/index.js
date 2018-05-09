@@ -24,6 +24,7 @@ const Opportunities = () => import('@/page/opportunities/opportunities')
 const OpportunitiesAdd = () => import('@/page/opportunities/opportunitiesAdd')
 const Payment = () => import('@/page/payment/payment')
 const Received = () => import('@/page/payment/Received')
+const paymentRecord = () => import('@/page/payment/paymentRecord')
 const ContractList = () => import('@/page/contractlist/contractlist')
 
 Vue.use(Router)
@@ -54,7 +55,8 @@ export default new Router({
         { path: 'opportunity', name: 'opportunity', component: Opportunities },
         { path: 'opportunityAdd', name: 'opportunityAdd', component: OpportunitiesAdd },
         { path: 'payment', name: 'payment', component: Payment },
-        { path: 'received', name: 'received', component: Received },
+        { path: 'received', name: 'received', component: Received, meta: {keepAlive: true} },
+        { path: 'paymentRecord', name: 'paymentRecord', component: paymentRecord },
         { path: 'contract_list', name: 'contract_list', component: ContractList }
       ]
     },
