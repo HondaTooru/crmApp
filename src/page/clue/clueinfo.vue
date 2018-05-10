@@ -45,7 +45,7 @@
         <router-link :to="{ name: '', params: {} }" tag="h2">
           <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>销售团队
         </router-link>
-        <group :gutter="0">
+        <group :gutter="0" label-width="5em">
           <cell title="所属部门" :value="item.detail.sale_team.department"></cell>
           <cell title="负责人" :value="item.detail.sale_team.fuzeren"></cell>
         </group>

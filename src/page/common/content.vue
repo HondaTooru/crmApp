@@ -50,8 +50,6 @@ export default {
   },
   created () {
     this.list()
-  },
-  activated () {
     this.params.my_own = 0
     this.$vux.bus.$on('getTypeList', msg => {
       this.params.page = 1
@@ -59,7 +57,7 @@ export default {
       this.list(true)
     })
   },
-  deactivated () {
+  beforeDestroy () {
     this.$vux.bus.$off('getTypeList')
   },
   methods: {

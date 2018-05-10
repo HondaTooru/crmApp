@@ -42,7 +42,7 @@
         :right-options="{showMore: this.ActionMenu.indexOf(route.name) !== -1}"
         @on-click-more="Addmore = !Addmore"
         >
-         <div slot="overwrite-title" class="com-title" v-if="this.dropTitle.indexOf(route.path) === -1">{{title}}</div>
+         <div slot="overwrite-title" class="com-title" v-if="this.dropTitle.indexOf(route.path) === -1">{{ gobalSett ? title : $route.meta.title }}</div>
          <drop-list slot="overwrite-title" class="com-title" v-if="this.dropTitle.indexOf(route.path) !== -1"></drop-list>
           <figure slot="overwrite-left" @click="drawerVisibility = !drawerVisibility" v-if="(route.path == '/' || route.path == '/mywork') && !gobalSett">
             <img src="../assets/avatar.jpg">
@@ -56,7 +56,7 @@
         <transition
         @after-enter="$vux.bus && $vux.bus.$emit('vux:after-view-enter')"
         :name="viewTransition" :css="!!direction">
-        <keep-alive :exclude="['received', 'paymentrecord', 'paymentmark', 'addClue', 'addContact', 'contractAdd', 'addCustomer', 'productAdd', 'addoppo', 'clueinfo']">
+        <keep-alive :include="['apphome', 'mywork']">
         <router-view class="router-view"></router-view>
         </keep-alive>
       </transition>
@@ -87,6 +87,7 @@
 import { XHeader, Drawer, ViewBox, Tabbar, TabbarItem, Popup, Radio, Actionsheet } from 'vux'
 import DropList from '@/page/common/dropList'
 import { mapState, mapActions } from 'vuex'
+import { ActionMenu, AddData, Menus, DropTitle } from '@/page/setting/menu'
 
 export default {
   name: 'index',
@@ -94,18 +95,10 @@ export default {
     return {
       drawerVisibility: false,
       Addmore: false,
-      ActionMenu: ['clue', 'customer', 'contact', 'opportunity', 'contract', 'product', 'payment'],
-      addData: ['clueAdd', 'customerAdd', 'contactAdd', 'opportunityAdd', 'contractAdd', 'productAdd', 'received'],
-      menus: [
-        [{label: '新增线索', link: 'clueAdd'}],
-        [{label: '新增客户', link: 'customerAdd'}],
-        [{label: '新增联系人', link: 'contactAdd'}],
-        [{label: '新增商机', link: 'opportunityAdd'}],
-        [{label: '新增合同', link: 'contractAdd'}],
-        [{label: '新增产品', link: 'productAdd'}],
-        [{label: '新增回款计划', link: 'Received'}, {label: '新增回款记录', link: 'paymentRecord'}, {label: '新增开票记录', link: 'paymentMark'}]
-      ],
-      dropTitle: ['/clue', '/contract', '/contact', '/customer', '/payment', '/opportunity']
+      ActionMenu: ActionMenu,
+      addData: AddData,
+      menus: Menus,
+      dropTitle: DropTitle
     }
   },
   mounted () {
@@ -169,21 +162,21 @@ export default {
     title: {
       get () {
         if ((this.route.path === '/' || this.route.path === '/mywork') && this.gobalSett === true) return '快捷功能'
-        if (this.route.path === '/') return '首页'
-        if (this.route.path === '/mywork') return '工作'
-        if (this.route.path === '/settinglist') return '编辑'
-        if (this.route.path === '/settingview') return '设置'
-        if (this.route.path === '/viewlist') return '功能配置'
-        if (this.route.path === '/product') return '产品列表'
-        if (this.route.path === '/contract_list') return '合同清单'
-        if (this.route.path === '/clueAdd') return '新增线索'
-        if (this.route.path === '/customerAdd') return '新增客户'
-        if (this.route.path === '/contractAdd') return '新增合同'
-        if (this.route.path === '/contactAdd') return '新增联系人'
-        if (this.route.path === '/productAdd') return '新增产品'
-        if (this.route.path === '/Received') return '新增回款计划'
-        if (this.route.path === '/paymentRecord') return '新增回款记录'
-        if (this.route.path === '/paymentMark') return '新增开票记录'
+        // if (this.route.path === '/') return '首页'
+        // if (this.route.path === '/mywork') return '工作'
+        // if (this.route.path === '/settinglist') return '编辑'
+        // if (this.route.path === '/settingview') return '设置'
+        // if (this.route.path === '/viewlist') return '功能配置'
+        // if (this.route.path === '/product') return '产品列表'
+        // if (this.route.path === '/contract_list') return '合同清单'
+        // if (this.route.path === '/clueAdd') return '新增线索'
+        // if (this.route.path === '/customerAdd') return '新增客户'
+        // if (this.route.path === '/contractAdd') return '新增合同'
+        // if (this.route.path === '/contactAdd') return '新增联系人'
+        // if (this.route.path === '/productAdd') return '新增产品'
+        // if (this.route.path === '/Received') return '新增回款计划'
+        // if (this.route.path === '/paymentRecord') return '新增回款记录'
+        // if (this.route.path === '/paymentMark') return '新增开票记录'
         return this.componentName ? `Demo/${this.componentName}` : 'Demo/~~'
       },
       set (val) {
