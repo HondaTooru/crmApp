@@ -6,6 +6,7 @@ const AppHome = () => import('@/page/home/apphome')
 const MyWork = () => import('@/page/mywork/mywork')
 const Clue = () => import('@/page/clue/clue')
 const AddClue = () => import('@/page/clue/clueAdd')
+const ClueInfo = () => import('@/page/clue/clueinfo')
 
 const SettingList = () => import('@/page/setting/settingList')
 const SettingView = () => import('@/page/setting/settingView')
@@ -24,7 +25,8 @@ const Opportunities = () => import('@/page/opportunities/opportunities')
 const OpportunitiesAdd = () => import('@/page/opportunities/opportunitiesAdd')
 const Payment = () => import('@/page/payment/payment')
 const Received = () => import('@/page/payment/Received')
-const paymentRecord = () => import('@/page/payment/paymentRecord')
+const PaymentRecord = () => import('@/page/payment/paymentRecord')
+const PaymentMark = () => import('@/page/payment/paymentMark')
 const ContractList = () => import('@/page/contractlist/contractlist')
 
 Vue.use(Router)
@@ -39,6 +41,7 @@ export default new Router({
         { path: 'settinglist', name: 'settinglist', component: SettingList },
         { path: 'settingview', name: 'settingview', component: SettingView },
         { path: 'clue', name: 'clue', component: Clue },
+        { path: 'clueinfo/:id', name: 'clueinfo', component: ClueInfo },
         { path: 'clueAdd', name: 'clueAdd', component: AddClue },
 
         { path: 'viewlist', name: 'viewlist', component: ViewList },
@@ -55,8 +58,9 @@ export default new Router({
         { path: 'opportunity', name: 'opportunity', component: Opportunities },
         { path: 'opportunityAdd', name: 'opportunityAdd', component: OpportunitiesAdd },
         { path: 'payment', name: 'payment', component: Payment },
-        { path: 'received', name: 'received', component: Received, meta: {keepAlive: true} },
-        { path: 'paymentRecord', name: 'paymentRecord', component: paymentRecord },
+        { path: 'received', name: 'received', component: Received },
+        { path: 'paymentRecord', name: 'paymentRecord', component: PaymentRecord },
+        { path: 'paymentMark', name: 'paymentMark', component: PaymentMark },
         { path: 'contract_list', name: 'contract_list', component: ContractList }
       ]
     },

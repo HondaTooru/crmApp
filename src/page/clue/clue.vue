@@ -1,7 +1,7 @@
 <template>
  <div class="nobar clue">
    <Content :tData="comData">
-       <cell is-link slot="list" slot-scope="item">
+       <cell is-link slot="list" slot-scope="item" :link="'clueinfo/'+ item.o.id">
          <div class="cl" slot="title">
            <div class="tel"><i class="fa fa-user" aria-hidden="true"></i>{{item.o.username}}</div>
            <div class="name"><i class="fa fa-phone" aria-hidden="true"></i>{{item.o.telphone}}</div>

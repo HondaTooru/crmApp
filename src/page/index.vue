@@ -56,7 +56,7 @@
         <transition
         @after-enter="$vux.bus && $vux.bus.$emit('vux:after-view-enter')"
         :name="viewTransition" :css="!!direction">
-        <keep-alive :exclude="['received', 'paymentrecord']">
+        <keep-alive :exclude="['received', 'paymentrecord', 'paymentmark', 'addClue', 'addContact', 'contractAdd', 'addCustomer', 'productAdd', 'addoppo', 'clueinfo']">
         <router-view class="router-view"></router-view>
         </keep-alive>
       </transition>
@@ -181,7 +181,9 @@ export default {
         if (this.route.path === '/contractAdd') return '新增合同'
         if (this.route.path === '/contactAdd') return '新增联系人'
         if (this.route.path === '/productAdd') return '新增产品'
-        if (this.route.path === '/Received') return '新增汇款计划'
+        if (this.route.path === '/Received') return '新增回款计划'
+        if (this.route.path === '/paymentRecord') return '新增回款记录'
+        if (this.route.path === '/paymentMark') return '新增开票记录'
         return this.componentName ? `Demo/${this.componentName}` : 'Demo/~~'
       },
       set (val) {
@@ -349,6 +351,7 @@ figure{
   -webkit-overflow-scrolling: touch;
   &::-webkit-scrollbar{display: none;}
   &.nobar{bottom:0;.fa {margin-right: 5px}}
+  &.blackbg {background-color:#35495e;color:white;}
 
 }
 

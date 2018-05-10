@@ -47,7 +47,7 @@ Vue.use(LoadingPlugin)
 Vue.use(AlertPlugin)
 Vue.use(AjaxPlugin)
 Vue.use(BusPlugin)
-Vue.use(ToastPlugin, {type: 'text', position: 'top'})
+Vue.use(ToastPlugin, {type: 'text', position: 'center'})
 Vue.component('group', Group)
 Vue.component('Cell', Cell)
 

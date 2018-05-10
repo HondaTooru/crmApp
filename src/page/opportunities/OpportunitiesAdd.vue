@@ -7,7 +7,7 @@ import AddNote from '@/page/common/addnote'
 import { ERR_OK, AllCustomer, oppoApi, AllAdminApi, AllDepartmentApi } from '@/api/api'
 
 export default {
-  name: 'addCustomer',
+  name: 'addoppo',
   data () {
     return {
       n: {

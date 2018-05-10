@@ -10,6 +10,7 @@ const oparmas = [ {stype: 'opportunity_source'}, {stype: 'sale_stage'}, {stype: 
 const USER = JSON.parse(localStorage.getItem('crm_user_data')) || ''
 const USERID = { customer_id: USER.customer_id, uid: USER.id }
 
+export const DetailApi = (pamras, name) => { return Vue.http.post('/crm/' + name + '/detail', Object.assign({}, USERID, pamras)).then(res => res.data) }
 const mRequest = parmas => { return Vue.http.post(urls, Object.assign({}, USERID, parmas)).then(res => res.data) }
 const opRequest = parmas => { return Vue.http.post(oppo, Object.assign({}, USERID, parmas)).then(res => res.data) }
 export const ERR_OK = 1
@@ -24,8 +25,10 @@ export const IndexApi = (params, name) => { return Vue.http.post('crm/' + name +
 export const ContractListApi = params => { return Vue.http.post('/crm/ContractList/contract_list', Object.assign({}, USERID, params), formatData).then(res => res.data) }
 export const AddApi = (name, acct) => { return Vue.http.post('/crm/' + name + '/add' + acct, USERID, formatData).then(res => res.data) }
 export const SaveAddApi = (parmas, name, o) => { return Vue.http.post('/crm/' + name + '/' + o, Object.assign({}, USERID, parmas), formatData).then(res => res.data) }
-const AllStatusApi = () => { return Vue.http.post('/crm/api/all_status', USERID, formatData).then(res => res.data) }
+export const AllStatusApi = () => { return Vue.http.post('/crm/api/all_status', USERID, formatData).then(res => res.data) }
 const AllSourceApi = () => { return Vue.http.post('/crm/api/all_source', USERID, formatData).then(res => res.data) }
+export const CludEdit = params => { return Vue.http.post('/crm/clue/edit', Object.assign({}, params, USERID)).then(res => res.data) }
+
 export const AllDepartmentApi = () => { return Vue.http.post('/crm/api/all_department', USERID, formatData).then(res => res.data) }
 export const AllAdminApi = () => { return Vue.http.post('/crm/api/all_admin', USERID, formatData).then(res => res.data) }
 export const AllClueAddAPi = () => { return Vue.http.all([AllStatusApi(), AllSourceApi(), AllAdminApi(), AllDepartmentApi()]).then(Vue.http.spread((s, e, c, m) => [s, e, c, m])) }
@@ -38,8 +41,13 @@ export const ChooseListApi = name => { return Vue.http.post('/crm/' + name + '/t
 const PayWayApi = parmas => { return Vue.http.post('/crm/api/all_pay_way', Object.assign({}, USERID, parmas)).then(res => res.data) }
 const PayTypeApi = parmas => { return Vue.http.post('/crm/api/all_pay_type', Object.assign({}, USERID, parmas)).then(res => res.data) }
 export const payRecord = () => { return Vue.http.all([PayWayApi(), PayTypeApi(), AllAdminApi(), AllCustomer()]).then(Vue.http.spread((q, e, r, s) => [q, e, r, s])) }
-export const addRecordApi = parmas => { return Vue.http.post('/crm/payment/add_plan_record', Object.assign({}, USERID, parmas)).then(res => res) }
+export const addRecordApi = parmas => { return Vue.http.post('/crm/payment/add_plan_record', Object.assign({}, USERID, parmas)).then(res => res.data) }
 const ContractTypeApi = () => { return Vue.http.post('/crm/api/all_contract_type', Object.assign({}, USERID)).then(res => res.data) }
 const ContractStatusApi = () => { return Vue.http.post('/crm/api/all_contract_status', Object.assign({}, USERID)).then(res => res.data) }
+const Tickettype = () => { return Vue.http.post('/crm/api/all_ticket_type', Object.assign({}, USERID)).then(res => res.data) }
 export const contactList = () => { return Vue.http.all([AllAdminApi(), AllCustomer()]).then(Vue.http.spread((r, e) => [r, e])) }
+export const PaymentMark = () => { return Vue.http.all([AllAdminApi(), AllCustomer(), pContractApi(), Tickettype()]).then(Vue.http.spread((r, e, q, s) => [r, e, q, s])) }
+export const AddTicket = parmas => { return Vue.http.post('/crm/payment/add_ticket', Object.assign({}, USERID, parmas)).then(res => res.data) }
+export const RevisitApi = params => { return Vue.http.post('/crm/revisit/index', Object.assign({}, USERID, params)).then(res => res.data) }
+
 export const CListApi = () => { return Vue.http.all([PayWayApi(), ContractTypeApi(), ContractStatusApi(), AllCustomer(), AllAdminApi()]).then(Vue.http.spread((q, e, s, r, t) => [q, e, s, r, t])) }
