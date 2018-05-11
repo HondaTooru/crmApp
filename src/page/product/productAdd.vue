@@ -10,7 +10,8 @@ export default {
   data () {
     return {
       n: {
-        name: 'product'
+        name: 'product',
+        user_id: []
       }
     }
   },

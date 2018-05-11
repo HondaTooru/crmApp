@@ -162,21 +162,6 @@ export default {
     title: {
       get () {
         if ((this.route.path === '/' || this.route.path === '/mywork') && this.gobalSett === true) return '快捷功能'
-        // if (this.route.path === '/') return '首页'
-        // if (this.route.path === '/mywork') return '工作'
-        // if (this.route.path === '/settinglist') return '编辑'
-        // if (this.route.path === '/settingview') return '设置'
-        // if (this.route.path === '/viewlist') return '功能配置'
-        // if (this.route.path === '/product') return '产品列表'
-        // if (this.route.path === '/contract_list') return '合同清单'
-        // if (this.route.path === '/clueAdd') return '新增线索'
-        // if (this.route.path === '/customerAdd') return '新增客户'
-        // if (this.route.path === '/contractAdd') return '新增合同'
-        // if (this.route.path === '/contactAdd') return '新增联系人'
-        // if (this.route.path === '/productAdd') return '新增产品'
-        // if (this.route.path === '/Received') return '新增回款计划'
-        // if (this.route.path === '/paymentRecord') return '新增回款记录'
-        // if (this.route.path === '/paymentMark') return '新增开票记录'
         return this.componentName ? `Demo/${this.componentName}` : 'Demo/~~'
       },
       set (val) {
