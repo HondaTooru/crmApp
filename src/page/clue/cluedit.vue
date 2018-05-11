@@ -8,7 +8,7 @@
      <x-input title="手机" v-model="infos.body.telphone1" text-align="right" :show-clear="false"></x-input>
      <x-input title="邮编" v-model="infos.body.code" text-align="right" :show-clear="false"></x-input>
      <x-input title="微信号" v-model="infos.body.wechat" text-align="right" :show-clear="false"></x-input>
-     <x-input title="旺旺号" v-model="infos.body.weibo" text-align="right" :show-clear="false"></x-input>
+     <x-input title="旺旺号" v-model="infos.body.alinum" text-align="right" :show-clear="false"></x-input>
      <x-input title="微博" v-model="infos.body.weibo" text-align="right" :show-clear="false"></x-input>
      <x-address title="地址" :list="addressData" v-model="address"></x-address>
    </group>
@@ -18,19 +18,22 @@
      <x-input title="职位" v-model="infos.body.job" text-align="right" :show-clear="false"></x-input>
      <x-input title="位置" v-model="infos.body.position" text-align="right" :show-clear="false"></x-input>
      <x-input title="邮编" v-model="infos.body.code" text-align="right" :show-clear="false"></x-input>
-     <popup-picker title="跟进状态" :data="[list.status]" v-model="status"></popup-picker>
-     <popup-picker title="部门" :data="[list.department]" v-model="department"></popup-picker>
-     <popup-picker title="线索来源" :data="[list.source]" v-model="source"></popup-picker>
+     <popup-picker title="跟进状态" :data="[list.status]" v-model="status" v-if="list.status.length"></popup-picker>
+     <popup-picker title="部门" :data="[list.department]" v-model="department" v-if="list.department.length"></popup-picker>
+     <popup-picker title="线索来源" :data="[list.source]" v-model="source" v-if="list.source.length"></popup-picker>
      <multi-player :people="people" @on-checkShow="select" @on-selectPerson="selctpeople"></multi-player>
-     <popup-picker title="前负责人" :data="[list.preuserid]" v-model="preuser"></popup-picker>
-     <datetime title="下次跟进时间" v-model="infos.body.revisit_remind_at"></datetime>
+     <popup-picker title="前负责人" :data="[list.preuserid]" v-model="preuser" v-if="list.preuserid.length"></popup-picker>
+     <datetime title="下次跟进时间" v-model="infos.body.revisit_remind_at" format="YYYY-MM-DD HH:mm"></datetime>
    </group>
+   <div class="delbtn">
+   <x-button type="warn" @click.native="del" :disabled="enableBtn">删除</x-button>
+   </div>
  </div>
 </template>
 
 <script>
-import { XInput, PopupPicker, XAddress, Datetime, ChinaAddressV4Data } from 'vux'
-import { AllClueAddAPi } from '@/api/api'
+import { XInput, PopupPicker, XAddress, Datetime, ChinaAddressV4Data, XButton } from 'vux'
+import { AllClueAddAPi, EditSave, DelThis, ERR_OK } from '@/api/api'
 import MultiPlayer from '@/page/common/multiplayer'
 
 export default {
@@ -51,12 +54,19 @@ export default {
         checks: []
       },
       infos: JSON.parse(localStorage.getItem('DETAIL_INFO')) || '',
-      addressData: ChinaAddressV4Data
+      addressData: ChinaAddressV4Data,
+      itemList: [],
+      enableBtn: false
     }
   },
   created () {
     this.getList()
-    console.log(this.infos)
+    this.$vux.bus.$on('Addinfo', () => {
+      this.saveData()
+    })
+  },
+  beforeDestroy () {
+    this.$vux.bus.$off('Addinfo')
   },
   methods: {
     getList () {
@@ -70,11 +80,48 @@ export default {
         this.people.names = this.infos.body.user_id
       })
     },
+    del () {
+      let _that = this
+      this.enableBtn = true
+      DelThis({row_id: this.$route.params.id}).then(res => {
+        if (ERR_OK === res.code) {
+          this.$vux.toast.show({
+            text: res.msg,
+            onHide () {
+              _that.$router.replace('/clue')
+            }
+          })
+        } else {
+          this.enableBtn = false
+          this.$vux.toast.show({ text: res.msg })
+        }
+      })
+    },
     select () {
       this.people.xm = !this.people.xm
     },
     selctpeople (value) {
       this.people.names = value.toString()
+    },
+    saveData () {
+      this.infos.body.user_id = this.people.names
+      for (let i in this.infos.body) {
+        this.itemList.push({name: i, value: this.infos.body[i]})
+      }
+      let g = []
+      let _that = this
+      g.field_data = JSON.stringify(this.itemList)
+      g.row_id = this.$route.params.id
+      EditSave(g).then(res => {
+        if (ERR_OK === res.code) {
+          this.$vux.toast.show({
+            text: res.msg,
+            onHide () {
+              _that.$router.back()
+            }
+          })
+        }
+      })
     }
   },
   components: {
@@ -82,7 +129,8 @@ export default {
     PopupPicker,
     XAddress,
     Datetime,
-    MultiPlayer
+    MultiPlayer,
+    XButton
   },
   computed: {
     address: {
@@ -90,20 +138,20 @@ export default {
       set (val) { this.infos.body.address = val.toString() }
     },
     status: {
-      get () { return this.infos.body.status.split(',') },
+      get () { return [this.infos.body.status] },
       set (val) { this.infos.body.status = val.toString() }
     },
     department: {
-      get () { return this.infos.body.want_department_id.split(',') },
-      set (val) { this.infos.body.want_department_id.toString() }
-    },
-    preuser: {
-      get () { return this.infos.body.pre_user_id.split(',') },
-      set (val) { this.infos.body.pre_user_id.toString() }
+      get () { return [this.infos.body.want_department_id] },
+      set (val) { this.infos.body.want_department_id = val.toString() }
     },
     source: {
-      get () { return this.infos.body.source.split(',') },
-      set (val) { this.infos.body.source.toString() }
+      get () { return [this.infos.body.source] },
+      set (val) { this.infos.body.source = val.toString() }
+    },
+    preuser: {
+      get () { return [this.infos.body.pre_department_id] },
+      set (val) { this.infos.body.pre_department_id = val.toString() }
     }
   }
 }
@@ -115,6 +163,9 @@ export default {
     border-width: 2px;
     transform: scaleY(.4);
     border-color:#ececec
+  }
+  .delbtn {
+    margin: 15px
   }
 }
 </style>

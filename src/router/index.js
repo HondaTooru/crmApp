@@ -45,7 +45,7 @@ export default new Router({
         { path: 'clue', name: 'clue', component: Clue },
         { path: 'clueinfo/:id', name: 'clueinfo', component: ClueInfo, meta: { title: '线索详情' } },
         { path: 'clueAdd', name: 'clueAdd', component: AddClue, meta: { title: '新增线索' } },
-        { path: 'cluedit', name: 'cluedit', component: ClueEdit, meta: { title: '线索详情' } },
+        { path: 'cluedit/:id', name: 'cluedit', component: ClueEdit, meta: { title: '线索详情' } },
         { path: 'task/:id', name: 'task', component: TaskList, meta: { title: '任务列表' } },
         { path: 'viewlist', name: 'viewlist', component: ViewList, meta: { title: '功能设置' } },
         { path: 'contract', name: 'contract', component: Contract },

@@ -4,7 +4,7 @@
         {{people.names}}
         <div v-transfer-dom>
            <popup max-height="50%" v-model="people.xm" :popup-style="{zIndex: '5006'}">
-              <checklist :options="people.list" @on-change="select" :value="people.checks ? people.checks : []"></checklist>
+              <checklist :options="people.list" @on-change="select" :value="people.checks"></checklist>
            </popup>
         </div>
       </div>

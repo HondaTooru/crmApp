@@ -20,6 +20,8 @@ export const pContractInfoApi = params => { return Vue.http.post('/crm/Payment/c
 export const TaskListApi = params => { return Vue.http.post('/crm/api/task', Object.assign({}, USERID, params)).then(res => res.data) }
 export const TaskDone = params => { return Vue.http.post('/crm/api/task_done', Object.assign({}, USERID, params)).then(res => res.data) }
 export const TaskAdd = params => { return Vue.http.post('/crm/api/task_add', Object.assign({}, USERID, params), formatData).then(res => res.data) }
+export const EditSave = params => { return Vue.http.post('/crm/clue/edit_save', Object.assign({}, USERID, params)).then(res => res.data) }
+export const DelThis = params => { return Vue.http.post('/crm/clue/del', Object.assign({}, USERID, params)).then(res => res.data) }
 
 export const qishuApi = params => { return Vue.http.post('/crm/Payment/qishu', Object.assign({}, USERID, params)).then(res => res.data) }
 export const AddqishuApi = params => { return Vue.http.post('/crm/Payment/add_plan_save', Object.assign({}, USERID, params), formatData).then(res => res.data) }

@@ -51,7 +51,7 @@
             <span v-if="route.path == '/mywork' && !gobalSett" @click="gosettingView">设置</span>
             <span v-if="gobalSett" @click="goSetting">设置</span>
             <span v-if="addData.indexOf($route.name) !== -1" class="save" @click="saveAdd"><i aria-hidden="true" class="fa fa-check-circle-o"></i>保存</span>
-            <span v-if="addBtn.indexOf($route.name) !== -1" class="addbtn" @click="addBtns">新增</span>
+            <span v-if="addBtn.indexOf($route.name) !== -1" class="save" @click="addBtns">新增</span>
           </div>
         </x-header>
         <transition
@@ -331,8 +331,9 @@ figure{
   height: 100%;
   -webkit-overflow-scrolling: touch;
   &::-webkit-scrollbar{display: none;}
-  &.nobar{padding-bottom: 0;}
+  &.nobar{padding-bottom: 0;
   .fa {margin-right: 5px}
+  }
   &.blackbg {background-color:#35495e;color:white;}
 
 }

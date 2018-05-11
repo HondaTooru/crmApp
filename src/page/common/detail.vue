@@ -22,13 +22,17 @@ export default {
   },
   methods: {
     getDatail () {
+      let _that = this
       DetailApi({row_id: this.$route.params.id}, this.ax).then(res => {
         if (ERR_OK === res.code) {
           this.info = res.data
           localStorage.setItem('DETAIL_INFO', JSON.stringify(res.data))
         } else {
           this.$vux.toast.show({
-            text: res.msg
+            text: res.msg,
+            onHide () {
+              _that.$router.back()
+            }
           })
         }
       })

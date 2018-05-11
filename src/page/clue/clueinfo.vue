@@ -8,7 +8,7 @@
           </group>
         </popup>
       </div>
-      <router-link :to="{ name: 'cluedit'}" tag="div" class="title">
+      <router-link :to="'/cluedit/' + $route.params.id" tag="div" class="title">
         <div class="mm">
           <p class="user"><i class="fa fa-user" aria-hidden="true"></i>{{item.detail.body.username}}</p>
           <p class="dsc">{{item.detail.body.company}}</p>
