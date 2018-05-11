@@ -19,14 +19,13 @@ export default {
   },
   created () {
     this.getDatail()
-    console.log(this.info)
-    console.log(this.$route)
   },
   methods: {
     getDatail () {
       DetailApi({row_id: this.$route.params.id}, this.ax).then(res => {
         if (ERR_OK === res.code) {
           this.info = res.data
+          localStorage.setItem('DETAIL_INFO', JSON.stringify(res.data))
         } else {
           this.$vux.toast.show({
             text: res.msg

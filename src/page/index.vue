@@ -51,6 +51,7 @@
             <span v-if="route.path == '/mywork' && !gobalSett" @click="gosettingView">设置</span>
             <span v-if="gobalSett" @click="goSetting">设置</span>
             <span v-if="addData.indexOf($route.name) !== -1" class="save" @click="saveAdd"><i aria-hidden="true" class="fa fa-check-circle-o"></i>保存</span>
+            <span v-if="addBtn.indexOf($route.name) !== -1" class="addbtn" @click="addBtns">新增</span>
           </div>
         </x-header>
         <transition
@@ -87,7 +88,7 @@
 import { XHeader, Drawer, ViewBox, Tabbar, TabbarItem, Popup, Radio, Actionsheet } from 'vux'
 import DropList from '@/page/common/dropList'
 import { mapState, mapActions } from 'vuex'
-import { ActionMenu, AddData, Menus, DropTitle } from '@/page/setting/menu'
+import { ActionMenu, AddData, Menus, DropTitle, addBtn } from '@/page/setting/menu'
 
 export default {
   name: 'index',
@@ -97,6 +98,7 @@ export default {
       Addmore: false,
       ActionMenu: ActionMenu,
       addData: AddData,
+      addBtn: addBtn,
       menus: Menus,
       dropTitle: DropTitle
     }
@@ -202,10 +204,11 @@ export default {
     saveAdd () {
       this.$vux.bus.$emit('Addinfo')
     },
+    addBtns () {
+      this.$vux.bus.$emit('AddBtn')
+    },
     AddPage (n, i) {
-      if (!n) {
-        this.$router.push('/' + i.link)
-      }
+      this.$router.push('/' + i.link)
     },
     ...mapActions([
       'updateDemoPosition'
@@ -321,18 +324,18 @@ figure{
 }
 .router-view {
   width: 100%;
-  top: 46px;
-  bottom: 50px;
-  position: absolute;
-  left:0;
+  padding-top: 46px;
+  padding-bottom: 50px;
   overflow: auto;
+  box-sizing: border-box;
+  height: 100%;
   -webkit-overflow-scrolling: touch;
   &::-webkit-scrollbar{display: none;}
-  &.nobar{bottom:0;.fa {margin-right: 5px}}
+  &.nobar{padding-bottom: 0;}
+  .fa {margin-right: 5px}
   &.blackbg {background-color:#35495e;color:white;}
 
 }
-
 .vux-pop-out-enter-active,
 .vux-pop-out-leave-active,
 .vux-pop-in-enter-active,
@@ -340,7 +343,7 @@ figure{
   will-change: transform;
   transition: all 500ms;
   height: 100%;
-  top: 46px;
+  top: 0;
   position: absolute;
   backface-visibility: hidden;
   perspective: 1000;

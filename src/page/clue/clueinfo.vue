@@ -8,7 +8,7 @@
           </group>
         </popup>
       </div>
-      <router-link :to="{ name: '', params: {} }" tag="div" class="title">
+      <router-link :to="{ name: 'cluedit'}" tag="div" class="title">
         <div class="mm">
           <p class="user"><i class="fa fa-user" aria-hidden="true"></i>{{item.detail.body.username}}</p>
           <p class="dsc">{{item.detail.body.company}}</p>
@@ -22,10 +22,10 @@
           <div class="name" ref="status">{{item.detail.body.status}}</div>
           <div class="tag"><x-icon type="ios-arrow-forward" size="16" fill="white"></x-icon></div>
         </div>
-        <div class="list">
+        <router-link :to="'/task/' + $route.params.id" tag="div" class="list">
           <div class="name">任务</div>
           <div class="tag"><x-icon type="ios-arrow-forward" size="16" fill="white"></x-icon></div>
-        </div>
+        </router-link>
       </div>
       <div class="section">
         <router-link :to="{ name: '', params: {} }" tag="h2">
@@ -41,7 +41,7 @@
           </div>
         </group>
       </div>
-      <div class="section top">
+      <div class="section top" v-for="i in 5">
         <router-link :to="{ name: '', params: {} }" tag="h2">
           <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>销售团队
         </router-link>
@@ -51,11 +51,8 @@
         </group>
       </div>
       <div class="caidan">
-        <div class="item"><i class="fa fa-pencil" aria-hidden="true"></i></div>
-        <div class="item"><i class="fa fa-phone" aria-hidden="true"></i></div>
-        <div class="more">
-          <span class="line"></span>
-        </div>
+        <router-link :to="{ name: '', params: {} }" tag="div" class="item"><i class="fa fa-pencil" aria-hidden="true"></i>写跟进</router-link>
+        <div class="item"><i class="fa fa-phone" aria-hidden="true"></i>电话</div>
       </div>
     </div>
   </detail-content>
@@ -120,6 +117,8 @@ export default {
 <style lang="less" scoped>
 .content {
   font-size: 16px;
+  position:relative;
+  padding-bottom: 50px;
   .title {
     position: relative;
     padding: 10px 15px;
@@ -136,7 +135,7 @@ export default {
     }
     .tag {
       position: absolute;
-      right: 0;
+      right: 10px;
       top: 50%;
       transform: translateY(-50%);
     }
@@ -223,41 +222,24 @@ export default {
   .caidan {
     width: 40px;
     height: 40px;
-    bottom: 5%;
-    right: 5%;
-    opacity: .8;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    opacity: 1;
     position: fixed;
     z-index: 99;
-    background:#da6464;
-    border-radius: 50%;
     overflow: hidden;
+    display: flex;
     .item {
-      display: none;
-    }
-    .more {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top:0;
-      left:0;
-      display: block;
-      &:after, &:before{
-        width: 2px;
-        background:white;
-        height: 100%;
-        position: absolute;
-        content: '';
-        left: 50%;
-        top: 50%;
-      }
-      &:after {
-        transform: translate(-50%,-50%) scaleX(.6) rotate(90deg);
-      }
-      &:before {
-        transform: translate(-50%,-50%) scaleY(.5);
+      background:#da6464;
+      flex:1;
+      text-align: center;
+      line-height: 40px;
+      &:nth-of-type(2){
+        background:#676666;
+        margin-left: 10px
       }
     }
-
   }
 }
 </style>

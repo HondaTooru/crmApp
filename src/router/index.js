@@ -6,7 +6,9 @@ const AppHome = () => import('@/page/home/apphome')
 const MyWork = () => import('@/page/mywork/mywork')
 const Clue = () => import('@/page/clue/clue')
 const AddClue = () => import('@/page/clue/clueAdd')
+const ClueEdit = () => import('@/page/clue/cluedit')
 const ClueInfo = () => import('@/page/clue/clueinfo')
+const TaskList = () => import('@/page/clue/task')
 
 const SettingList = () => import('@/page/setting/settingList')
 const SettingView = () => import('@/page/setting/settingView')
@@ -43,7 +45,8 @@ export default new Router({
         { path: 'clue', name: 'clue', component: Clue },
         { path: 'clueinfo/:id', name: 'clueinfo', component: ClueInfo, meta: { title: '线索详情' } },
         { path: 'clueAdd', name: 'clueAdd', component: AddClue, meta: { title: '新增线索' } },
-
+        { path: 'cluedit', name: 'cluedit', component: ClueEdit, meta: { title: '线索详情' } },
+        { path: 'task/:id', name: 'task', component: TaskList, meta: { title: '任务列表' } },
         { path: 'viewlist', name: 'viewlist', component: ViewList, meta: { title: '功能设置' } },
         { path: 'contract', name: 'contract', component: Contract },
         { path: 'contractAdd', name: 'contractAdd', component: AddContract, meta: { title: '新增合同' } },
