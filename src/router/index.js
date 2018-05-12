@@ -9,6 +9,7 @@ const AddClue = () => import('@/page/clue/clueAdd')
 const ClueEdit = () => import('@/page/clue/cluedit')
 const ClueInfo = () => import('@/page/clue/clueinfo')
 const TaskList = () => import('@/page/clue/task')
+const AllRevisit = () => import('@/page/clue/allrevisit')
 
 const SettingList = () => import('@/page/setting/settingList')
 const SettingView = () => import('@/page/setting/settingView')
@@ -47,6 +48,7 @@ export default new Router({
         { path: 'clueAdd', name: 'clueAdd', component: AddClue, meta: { title: '新增线索' } },
         { path: 'cluedit/:id', name: 'cluedit', component: ClueEdit, meta: { title: '线索详情' } },
         { path: 'task/:id', name: 'task', component: TaskList, meta: { title: '任务列表' } },
+        { path: 'allrevisit/:id', name: 'allrevisit', component: AllRevisit, meta: { title: '跟进记录' } },
         { path: 'viewlist', name: 'viewlist', component: ViewList, meta: { title: '功能设置' } },
         { path: 'contract', name: 'contract', component: Contract },
         { path: 'contractAdd', name: 'contractAdd', component: AddContract, meta: { title: '新增合同' } },

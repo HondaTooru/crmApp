@@ -28,7 +28,7 @@
         </router-link>
       </div>
       <div class="section">
-        <router-link :to="{ name: '', params: {} }" tag="h2">
+        <router-link :to="'/allrevisit/' + $route.params.id" tag="h2">
           <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>跟进记录({{len}})
         </router-link>
         <group :gutter="0">
@@ -41,7 +41,7 @@
           </div>
         </group>
       </div>
-      <div class="section top" v-for="i in 5">
+      <div class="section top">
         <router-link :to="{ name: '', params: {} }" tag="h2">
           <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>销售团队
         </router-link>
@@ -82,6 +82,7 @@ export default {
       RevisitApi({row_id: this.$route.params.id, record_type: 'lead'}).then(res => {
         this.rList = res.data[0]
         this.len = res.data.length
+        localStorage.setItem('REVISIT_ALL', JSON.stringify(res.data))
       })
     },
     getStatus () {

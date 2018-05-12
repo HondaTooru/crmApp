@@ -2,7 +2,7 @@
 <div class="listdata">
   <Search :type="tData.name" @changeList= "list_mm"></Search>
   <div :style="{height: vh_}" class="_mm">
-  <scroller v-if="listData.length" :height="vh_" lock-x scrollbar-y use-pullup use-pulldown :scrollbar-x="false" @on-pullup-loading="loadMore" @on-pulldown-loading="refresh" ref="scroll" v-model="status">
+  <scroller v-if="listData.length" :height="vh_" lock-x use-pullup use-pulldown :scrollbar-x="false" @on-pullup-loading="loadMore" @on-pulldown-loading="refresh" ref="scroll" v-model="status">
       <group :gutter="0">
         <div v-for="m in listData" :key="m.id" class="_oo">
           <slot :o="m" name="list"></slot>

@@ -66,7 +66,7 @@
      </div>
      <div class="right">
        <form action="" class="input-kw-form" @submit.prevent="searchWord">
-       <input class="keyword" type="search" autocomplete="off" v-model="keyword">
+       <input class="keyword" type="search" autocomplete="off" v-model="keyword" placeholder="请输入关键词">
      </form>
      </div>
    </div>

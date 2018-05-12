@@ -87,6 +87,7 @@ export default {
         if (ERR_OK === res.code) {
           this.$vux.toast.show({
             text: res.msg,
+            type: 'success',
             onHide () {
               _that.$router.replace('/clue')
             }
@@ -116,10 +117,13 @@ export default {
         if (ERR_OK === res.code) {
           this.$vux.toast.show({
             text: res.msg,
+            type: 'success',
             onHide () {
               _that.$router.back()
             }
           })
+        } else {
+          this.$vux.toast.show({text: res.msg})
         }
       })
     }
