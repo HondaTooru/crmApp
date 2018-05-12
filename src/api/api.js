@@ -25,6 +25,7 @@ export const DelThis = params => { return Vue.http.post('/crm/clue/del', Object.
 export const DelVisit = params => { return Vue.http.post('/crm/revisit/del_visit_record', Object.assign({}, USERID, params)).then(res => res.data) }
 export const DelComment = params => { return Vue.http.post('/crm/revisit/del_comment', Object.assign({}, USERID, params)).then(res => res.data) }
 export const SaveComment = params => { return Vue.http.post('/crm/revisit/save_comment', Object.assign({}, USERID, params)).then(res => res.data) }
+export const WriteRecord = params => { return Vue.http.post('/crm/api/visit_record_write', Object.assign({}, USERID, params), formatData).then(res => res.data) }
 
 export const qishuApi = params => { return Vue.http.post('/crm/Payment/qishu', Object.assign({}, USERID, params)).then(res => res.data) }
 export const AddqishuApi = params => { return Vue.http.post('/crm/Payment/add_plan_save', Object.assign({}, USERID, params), formatData).then(res => res.data) }
@@ -35,6 +36,9 @@ export const ContractListApi = params => { return Vue.http.post('/crm/ContractLi
 export const AddApi = (name, acct) => { return Vue.http.post('/crm/' + name + '/add' + acct, USERID, formatData).then(res => res.data) }
 export const SaveAddApi = (parmas, name, o) => { return Vue.http.post('/crm/' + name + '/' + o, Object.assign({}, USERID, parmas), formatData).then(res => res.data) }
 export const AllStatusApi = () => { return Vue.http.post('/crm/api/all_status', USERID, formatData).then(res => res.data) }
+export const AllVisitApi = () => { return Vue.http.post('/crm/api/all_visit', USERID, formatData).then(res => res.data) }
+export const WhiteClueList = () => { return Vue.http.all([AllVisitApi(), AllStatusApi()]).then(Vue.http.spread((q, e) => [q, e])) }
+
 const AllSourceApi = () => { return Vue.http.post('/crm/api/all_source', USERID, formatData).then(res => res.data) }
 export const CludEdit = params => { return Vue.http.post('/crm/clue/edit', Object.assign({}, params, USERID)).then(res => res.data) }
 

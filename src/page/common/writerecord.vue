@@ -1,27 +1,27 @@
 <template>
 <div class="nobar">
    <group :gutter="0">
-     <x-textarea :max="200" placeholder="请输入跟进类容"></x-textarea>
-     <popup-picker title="跟进类型" :data="[]"></popup-picker>
-     <datetime title="实际跟进时间" format="YYYY-MM-DD HH:mm"></datetime>
+     <x-textarea :max="200" placeholder="请输入跟进类容" v-model="params.record"></x-textarea>
+     <popup-picker title="跟进类型" :data="[listVisits]" v-if="listVisits.length" v-model="k.revisit_way"></popup-picker>
+     <datetime title="实际跟进时间" format="YYYY-MM-DD HH:mm" v-model="params.revisit_time"></datetime>
      <cell title="线索" disabled></cell>
-     <popup-picker title="跟进状态" :data="[]"></popup-picker>
-     <datetime title="下次跟进时间" format="YYYY-MM-DD HH:mm"></datetime>
+     <popup-picker title="跟进状态" :data="[listStauts]" v-if="listStauts.length" v-model="k.status"></popup-picker>
+     <datetime title="下次跟进时间" format="YYYY-MM-DD HH:mm" v-model="params.revisit_next_time"></datetime>
      <multi-player :people="people" @on-checkShow="select" @on-selectPerson="selctpeople"></multi-player>
    </group>
-   <div class="savebtn">
-   <x-button type="warn" @click.native="saveRecord">保存</x-button>
-   </div>
 </div>
 </template>
 
 <script>
-import { XTextarea, PopupPicker, Datetime, XButton } from 'vux'
-import { AllAdminApi, ERR_OK } from '@/api/api'
+import { XTextarea, PopupPicker, Datetime } from 'vux'
+import { AllAdminApi, WriteRecord, WhiteClueList, ERR_OK } from '@/api/api'
 import MultiPlayer from '@/page/common/multiplayer'
 
 export default {
   name: 'writecommon',
+  props: {
+    recordtype: Object
+  },
   data () {
     return {
       people: {
@@ -29,6 +29,22 @@ export default {
         names: '',
         title: '通知他人',
         list: []
+      },
+      listStauts: [],
+      listVisits: [],
+      k: {
+        status: [],
+        revisit_way: []
+      },
+      params: {
+        revisit_time: '',
+        record: '',
+        revisit_next_time: '',
+        customer: JSON.parse(localStorage.getItem('DETAIL_INFO')).body.username,
+        row_id: this.$route.params.id,
+        contact: '',
+        record_type: this.recordtype.name,
+        tip_uids: []
       }
     }
   },
@@ -36,18 +52,49 @@ export default {
     XTextarea,
     Datetime,
     PopupPicker,
-    XButton,
     MultiPlayer
+  },
+  created () {
+    this.getList()
+    this.$vux.bus.$on('Addinfo', () => {
+      let _that = this
+      let g = Object.assign({}, this.k, this.params)
+      for (let i in g) { if (typeof g[i] === 'object' && i !== 'tip_uids') g[i] = g[i].toString() }
+      WriteRecord(g).then(res => {
+        if (ERR_OK === res.code) {
+          this.$vux.toast.show({
+            text: res.msg,
+            type: 'success',
+            onHide () {
+              _that.$router.back()
+            }
+          })
+        } else {
+          this.$vux.toast.show({
+            text: res.msg
+          })
+        }
+      })
+    })
+  },
+  beforeDestroy () {
+    this.$vux.bus.$off('Addinfo')
   },
   methods: {
     saveRecord () {},
+    getList () {
+      WhiteClueList().then(res => {
+        res[0].data.forEach(item => { this.listVisits.push(item.name) })
+        res[1].data.forEach(item => { this.listStauts.push(item.name) })
+      })
+    },
     select () {
       if (!this.people.list.length) {
         AllAdminApi().then(res => {
           if (ERR_OK === res.code) {
             this.people.xm = !this.people.xm
             res.data.forEach(item => {
-              this.people.list.push(item.username)
+              this.people.list.push({key: item.id, value: item.username})
             })
           }
         })
@@ -55,13 +102,14 @@ export default {
         this.people.xm = !this.people.xm
       }
     },
-    selctpeople (value) {
-      this.people.names = value.toString().trim()
+    selctpeople (value, label) {
+      this.people.names = label.toString().trim()
+      this.params.tip_uids = value
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.savebtn {margin: 15px}
+
 </style>

@@ -5,8 +5,8 @@
      <x-input title="公司名称" v-model="infos.body.company" text-align="right" :show-clear="false"></x-input>
    </group>
    <group :gutter="0" title="联系信息">
-     <x-input title="手机" v-model="infos.body.telphone1" text-align="right" :show-clear="false"></x-input>
-     <x-input title="邮编" v-model="infos.body.code" text-align="right" :show-clear="false"></x-input>
+     <x-input title="手机" v-model="infos.body.telphone1" is-type="china-mobile" text-align="right" :show-clear="false"></x-input>
+     <x-input title="邮箱" v-model="infos.body.email" is-type="email" text-align="right" :show-clear="false"></x-input>
      <x-input title="微信号" v-model="infos.body.wechat" text-align="right" :show-clear="false"></x-input>
      <x-input title="旺旺号" v-model="infos.body.alinum" text-align="right" :show-clear="false"></x-input>
      <x-input title="微博" v-model="infos.body.weibo" text-align="right" :show-clear="false"></x-input>
@@ -18,11 +18,11 @@
      <x-input title="职位" v-model="infos.body.job" text-align="right" :show-clear="false"></x-input>
      <x-input title="位置" v-model="infos.body.position" text-align="right" :show-clear="false"></x-input>
      <x-input title="邮编" v-model="infos.body.code" text-align="right" :show-clear="false"></x-input>
-     <popup-picker title="跟进状态" :data="[list.status]" v-model="status" v-if="list.status.length"></popup-picker>
-     <popup-picker title="部门" :data="[list.department]" v-model="department" v-if="list.department.length"></popup-picker>
-     <popup-picker title="线索来源" :data="[list.source]" v-model="source" v-if="list.source.length"></popup-picker>
+     <popup-picker title="跟进状态" :data="[list.status]" v-model="k.status" v-if="list.status.length"></popup-picker>
+     <popup-picker title="部门" :data="[list.department]" v-model="k.want_department_id" v-if="list.department.length"></popup-picker>
+     <popup-picker title="线索来源" :data="[list.source]" v-model="k.source" v-if="list.source.length"></popup-picker>
      <multi-player :people="people" @on-checkShow="select" @on-selectPerson="selctpeople"></multi-player>
-     <popup-picker title="前负责人" :data="[list.preuserid]" v-model="preuser" v-if="list.preuserid.length"></popup-picker>
+     <popup-picker title="前负责人" :data="[list.preuserid]" v-model="k.pre_user_id" v-if="list.preuserid.length"></popup-picker>
      <datetime title="下次跟进时间" v-model="infos.body.revisit_remind_at" format="YYYY-MM-DD HH:mm"></datetime>
    </group>
    <div class="delbtn">
@@ -56,10 +56,18 @@ export default {
       infos: JSON.parse(localStorage.getItem('DETAIL_INFO')) || '',
       addressData: ChinaAddressV4Data,
       itemList: [],
-      enableBtn: false
+      enableBtn: false,
+      k: {
+        status: [],
+        want_department_id: [],
+        source: [],
+        pre_user_id: []
+      }
     }
   },
   created () {
+    let data = JSON.parse(localStorage.getItem('DETAIL_INFO')) || ''
+    for (let i in data.body) { if (this.k[i] && data.body[i]) this.k[i].push(data.body[i]) }
     this.getList()
     this.$vux.bus.$on('Addinfo', () => {
       this.saveData()
@@ -107,6 +115,7 @@ export default {
     saveData () {
       this.infos.body.user_id = this.people.names
       for (let i in this.infos.body) {
+        if (this.k[i]) this.infos.body[i] = this.k[i].toString()
         this.itemList.push({name: i, value: this.infos.body[i]})
       }
       let g = []
@@ -140,22 +149,6 @@ export default {
     address: {
       get () { return this.infos.body.address.split(',') },
       set (val) { this.infos.body.address = val.toString() }
-    },
-    status: {
-      get () { return [this.infos.body.status] },
-      set (val) { this.infos.body.status = val.toString() }
-    },
-    department: {
-      get () { return [this.infos.body.want_department_id] },
-      set (val) { this.infos.body.want_department_id = val.toString() }
-    },
-    source: {
-      get () { return [this.infos.body.source] },
-      set (val) { this.infos.body.source = val.toString() }
-    },
-    preuser: {
-      get () { return [this.infos.body.pre_department_id] },
-      set (val) { this.infos.body.pre_department_id = val.toString() }
     }
   }
 }

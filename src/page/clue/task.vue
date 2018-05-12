@@ -118,7 +118,6 @@ export default {
       })
     },
     saveTask () {
-      console.log(this.k)
       let g = Object.assign({}, this.k, this.params)
       g.ti_remaind = g.ti_remaind.toString()
       TaskAdd(g).then(res => {

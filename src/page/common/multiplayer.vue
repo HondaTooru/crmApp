@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     select (value, label) {
-      this.$emit('on-selectPerson', value)
+      this.$emit('on-selectPerson', value, label)
     }
   },
   components: {
