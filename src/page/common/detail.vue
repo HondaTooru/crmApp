@@ -1,6 +1,9 @@
 <template>
-  <div class="nobar blackbg">
+  <div class="nobar blackbg hastool">
+    <div class="main_o">
     <slot :detail="info" name="detail" v-if="info"></slot>
+    </div>
+    <slot name="toolbar"></slot>
   </div>
 </template>
 
@@ -42,4 +45,21 @@ export default {
 </script>
 
 <style lang="less">
+.nobar {
+  &.blackbg {
+    &.hastool {
+      overflow: hidden;
+      padding-bottom: 50px;
+      &>.main_o{
+        width: 100%;
+        padding-top: 0;
+        padding-bottom:0;
+        overflow: auto;
+        box-sizing: border-box;
+        height: 100%;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+  }
+}
 </style>

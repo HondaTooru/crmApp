@@ -50,9 +50,15 @@
           <cell title="负责人" :value="item.detail.sale_team.fuzeren"></cell>
         </group>
       </div>
-      <div class="caidan">
-        <router-link :to="{ name: '', params: {} }" tag="div" class="item"><i class="fa fa-pencil" aria-hidden="true"></i>写跟进</router-link>
-        <div class="item"><i class="fa fa-phone" aria-hidden="true"></i>电话</div>
+    </div>
+    <div class="caidan" slot="toolbar">
+      <router-link :to="{ name: '', params: {} }" tag="div" class="item">
+        <span class="icon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+        <span class="text">写跟进</span>
+      </router-link>
+      <div class="item">
+        <span class="icon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
+        <span class="text">电话</span>
       </div>
     </div>
   </detail-content>
@@ -119,7 +125,7 @@ export default {
 .content {
   font-size: 16px;
   position:relative;
-  padding-bottom: 50px;
+  padding-bottom: 10px;
   .title {
     position: relative;
     padding: 10px 15px;
@@ -220,26 +226,28 @@ export default {
       padding: 10px 0
     }
   }
-  .caidan {
-    width: 40px;
-    height: 40px;
-    bottom: 0;
-    width: 100%;
-    left: 0;
-    opacity: 1;
-    position: fixed;
-    z-index: 99;
-    overflow: hidden;
-    display: flex;
-    .item {
-      background:#da6464;
-      flex:1;
-      text-align: center;
-      line-height: 40px;
-      &:nth-of-type(2){
-        background:#676666;
-        margin-left: 10px
-      }
+}
+.caidan {
+  width: 52px;
+  height: 52px;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  opacity: 1;
+  position: absolute;
+  z-index: 99;
+  overflow: hidden;
+  display: flex;
+  box-shadow: 1px 1px 20px 0px #35495e;
+  border-top: 1px solid #6b6b6b;
+  .item {
+    background:#35495e;
+    flex:1;
+    text-align: center;
+    span {
+      display: block;
+      &.icon{padding: 5px 0 0 0; .fa {font-size: 27px;margin:0}}
+      &.text{ font-size: 10px}
     }
   }
 }

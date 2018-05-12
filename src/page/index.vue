@@ -62,21 +62,21 @@
         </keep-alive>
       </transition>
         <tabbar class="vux-tabbar" icon-class="vux-center" v-if="route.path ==='/' || route.path ==='/mywork'">
-          <tabbar-item link="/" :selected="route.path == '/' && gobalSett == false">
-            <img slot="icon" src="../assets/home.svg">
-            <img slot="icon-active" src="../assets/home_active.svg">
-            <span slot="label">首页</span>
-          </tabbar-item>
-          <tabbar-item @on-item-click="$store.commit('updateGobalSett', {gobalSett: true})">
-            <div class="circle" slot="icon">
-            <img src="../assets/more.svg">
-          </div>
-          </tabbar-item>
-          <tabbar-item badge="9" link="/mywork" :selected="route.path == '/mywork' && gobalSett == false">
-            <img slot="icon" src="../assets/work.svg">
-            <img slot="icon-active" src="../assets/work_active.svg">
-            <span slot="label">工作</span>
-          </tabbar-item>
+            <tabbar-item link="/" :selected="route.path == '/' && gobalSett == false">
+              <img slot="icon" src="../assets/home.svg">
+              <img slot="icon-active" src="../assets/home_active.svg">
+              <span slot="label">首页</span>
+            </tabbar-item>
+            <tabbar-item @on-item-click="$store.commit('updateGobalSett', {gobalSett: true})">
+              <div class="circle" slot="icon">
+              <img src="../assets/more.svg">
+            </div>
+            </tabbar-item>
+            <tabbar-item badge="9" link="/mywork" :selected="route.path == '/mywork' && gobalSett == false">
+              <img slot="icon" src="../assets/work.svg">
+              <img slot="icon-active" src="../assets/work_active.svg">
+              <span slot="label">工作</span>
+            </tabbar-item>
        </tabbar>
      </div>
     </drawer>

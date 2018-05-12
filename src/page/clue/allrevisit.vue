@@ -1,6 +1,6 @@
 <template>
 <div class="nobar">
-  <group :gutter="0" class="revisitlist">
+  <group :gutter="0" class="revisitlist" v-if="list.length">
     <cell v-for="item in list" :key="item.id" :border-intent="false" align-items="flex-start">
     <img slot="icon" class="avatar" :src="item.avatar">
     <div slot="title">
@@ -9,7 +9,7 @@
     <div slot="inline-desc" class="coments" v-if="item.comment.count">
        <div class="item" v-for="m in item.comment.data" :key="m.id">
          <span class="date"><i class="fa fa-clock-o" aria-hidden="true"></i>{{m.create_time}}</span>
-         <i class="fa fa-trash-o" aria-hidden="true" v-if="m.is_own" @click="delReply(item)"></i>
+         <i class="fa fa-trash-o" aria-hidden="true" v-if="m.is_own" @click="delReply(item,m)"></i>
          <span>{{m.user_info.username}}：</span>{{m.content}}</div>
     </div>
     <div slot="after-title">
@@ -20,8 +20,9 @@
     </div>
   </cell>
   </group>
+  <empty-data v-if="!list.length"></empty-data>
   <div v-transfer-dom>
-    <x-dialog v-model="showComments" class="dialog-demo">
+    <x-dialog v-model="showComments">
       <x-icon type="ios-close-outline" style="fill:#35495e;" class="close" size="32" @click.native="showComments = !showComments"></x-icon>
       <group :gutter="0" title="评论内容">
         <x-textarea ref="msg" :max="50" placeholder="评论内容" v-model="visitId.content" @on-focus="onEvent('focus')" @on-blur="onEvent('blur')"></x-textarea>
@@ -36,6 +37,7 @@
 
 <script>
 import { XDialog, XTextarea, XButton } from 'vux'
+import EmptyData from '@/page/common/emptyData'
 import { DelVisit, DelComment, SaveComment, RevisitApi, ERR_OK } from '@/api/api'
 
 export default {
@@ -105,7 +107,7 @@ export default {
             type: 'success'
           })
         } else {
-          this.$vux.toast.show({ text: res.msg, width: '11em' })
+          this.$vux.toast.show({ text: res.msg, width: '15em' })
         }
       })
     }
@@ -113,7 +115,8 @@ export default {
   components: {
     XDialog,
     XTextarea,
-    XButton
+    XButton,
+    EmptyData
   },
   computed: {
     isClick () {

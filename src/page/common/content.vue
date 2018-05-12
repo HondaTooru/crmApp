@@ -21,6 +21,7 @@
         <span v-show="status.pulldownStatus === 'loading'"><spinner type="lines"></spinner></span>
      </div>
    </scroller>
+   <empty-data v-if="!listData.length"></empty-data>
  </div>
 </div>
 </template>
@@ -28,6 +29,7 @@
 <script>
 import { Scroller, Spinner } from 'vux'
 import Search from '@/page/common/search'
+import EmptyData from '@/page/common/emptyData'
 import { ERR_OK, IndexApi, ContractListApi } from '@/api/api'
 export default {
   name: 'listdata',
@@ -110,7 +112,8 @@ export default {
   components: {
     Scroller,
     Spinner,
-    Search
+    Search,
+    EmptyData
   },
   computed: {
     vh_ () {
