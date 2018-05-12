@@ -44,6 +44,7 @@ export default {
   name: 'allrevisit',
   data () {
     return {
+      flag: true,
       visitId: {visit_id: '', content: ''},
       showComments: false,
       list: JSON.parse(localStorage.getItem('REVISIT_ALL'))
@@ -51,7 +52,9 @@ export default {
   },
   methods: {
     delvisit (item) {
+      if (!this.flag) return
       DelVisit({visit_id: item.id}).then(res => {
+        this.flag = !this.flag
         this.list.splice(this.list.indexOf(item), 1)
         if (ERR_OK === res.code) {
           this.$vux.toast.show({
@@ -66,7 +69,9 @@ export default {
       })
     },
     delReply (item, m) {
+      if (!this.flag) return
       DelComment({visit_id: item.id, comment_id: m.id}).then(res => {
+        this.flag = !this.flag
         item.comment.data.splice(item.comment.data.indexOf(m), 1)
         if (ERR_OK === res.code) {
           this.$vux.toast.show({

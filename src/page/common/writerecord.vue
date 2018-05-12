@@ -59,7 +59,16 @@ export default {
     this.$vux.bus.$on('Addinfo', () => {
       let _that = this
       let g = Object.assign({}, this.k, this.params)
-      for (let i in g) { if (typeof g[i] === 'object' && i !== 'tip_uids') g[i] = g[i].toString() }
+      for (let i in g) {
+        if (!g[i] && i !== 'contact') {
+          this.$vux.toast.show({
+            text: '请把信息填完整~'
+          })
+          return
+        } else if (typeof g[i] === 'object' && i !== 'tip_uids' && i !== 'contact') {
+          g[i] = g[i].toString()
+        }
+      }
       WriteRecord(g).then(res => {
         if (ERR_OK === res.code) {
           this.$vux.toast.show({
