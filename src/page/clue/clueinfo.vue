@@ -52,7 +52,7 @@
       </div>
     </div>
     <div class="caidan" slot="toolbar">
-      <router-link :to="{ name: '', params: {} }" tag="div" class="item">
+      <router-link :to="'/writeclue/' + $route.params.id" tag="div" class="item">
         <span class="icon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
         <span class="text">写跟进</span>
       </router-link>

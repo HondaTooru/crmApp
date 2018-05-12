@@ -10,6 +10,7 @@ const ClueEdit = () => import('@/page/clue/cluedit')
 const ClueInfo = () => import('@/page/clue/clueinfo')
 const TaskList = () => import('@/page/clue/task')
 const AllRevisit = () => import('@/page/clue/allrevisit')
+const WriteClue = () => import('@/page/clue/writeclue')
 
 const SettingList = () => import('@/page/setting/settingList')
 const SettingView = () => import('@/page/setting/settingView')
@@ -54,6 +55,7 @@ export default new Router({
         { path: 'contractAdd', name: 'contractAdd', component: AddContract, meta: { title: '新增合同' } },
         { path: 'customer', name: 'customer', component: Customer },
         { path: 'customerAdd', name: 'customerAdd', component: AddCustomer, meta: { title: '新增客户' } },
+        { path: 'writeclue/:id', name: 'writeclue', component: WriteClue, meta: { title: '新增线索跟进' } },
 
         { path: 'product', name: 'product', component: Product, meta: { title: '产品列表' } },
         { path: 'productAdd', name: 'productAdd', component: ProductAdd, meta: { title: '新增产品' } },

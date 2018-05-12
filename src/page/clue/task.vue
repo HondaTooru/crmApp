@@ -84,18 +84,18 @@ export default {
       })
     },
     select () {
-      AllAdminApi().then(res => {
-        if (!this.people.list.length) {
+      if (!this.people.list.length) {
+        AllAdminApi().then(res => {
           if (ERR_OK === res.code) {
             this.people.xm = !this.people.xm
             res.data.forEach(item => {
               this.people.list.push(item.username)
             })
           }
-        } else {
-          this.people.xm = !this.people.xm
-        }
-      })
+        })
+      } else {
+        this.people.xm = !this.people.xm
+      }
     },
     selctpeople (value) {
       this.people.names = value.toString().trim()
