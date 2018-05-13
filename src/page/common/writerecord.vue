@@ -60,13 +60,10 @@ export default {
       let _that = this
       let g = Object.assign({}, this.k, this.params)
       for (let i in g) {
+        if (typeof g[i] === 'object' && i !== 'tip_uids') { g[i] = g[i].toString() }
         if (!g[i] && i !== 'contact') {
-          this.$vux.toast.show({
-            text: '请把信息填完整~'
-          })
+          this.$vux.toast.show({ text: '请把信息填完整~', width: '11em' })
           return
-        } else if (typeof g[i] === 'object' && i !== 'tip_uids' && i !== 'contact') {
-          g[i] = g[i].toString()
         }
       }
       WriteRecord(g).then(res => {
@@ -114,6 +111,7 @@ export default {
     selctpeople (value, label) {
       this.people.names = label.toString().trim()
       this.params.tip_uids = value
+      console.log(this.params.tip_uids)
     }
   }
 }

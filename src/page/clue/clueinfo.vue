@@ -57,8 +57,10 @@
         <span class="text">写跟进</span>
       </router-link>
       <div class="item">
+        <a href="tel:15192715214">
         <span class="icon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
         <span class="text">电话</span>
+        </a>
       </div>
     </div>
   </detail-content>
@@ -244,6 +246,7 @@ export default {
     background:#35495e;
     flex:1;
     text-align: center;
+    a {color:#10aeff}
     span {
       display: block;
       &.icon{padding: 5px 0 0 0; .fa {font-size: 27px;margin:0}}

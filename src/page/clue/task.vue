@@ -4,7 +4,7 @@
       <x-dialog v-model="addTask" :mask-z-index="488" :dialog-style="{zIndex:'490'}">
         <x-icon type="ios-close-outline" style="fill:#35495e;" class="close" size="32" @click.native="addTask = !addTask"></x-icon>
         <group :gutter="0" title="新增任务" label-width="5em">
-          <x-input title="任务名称" v-model="k.task" text-align="right" required :show-clear="false" :should-toast-error="false"></x-input>
+          <popup-picker :popup-style="{zIndex: '5001'}" title="任务名称" v-model="k.task" :data="[taskList]"></popup-picker>
           <datetime title="开始时间" v-model="k.start_time" format="YYYY-MM-DD HH:mm"></datetime>
           <popup-picker :popup-style="{zIndex: '5001'}" title="提醒时间" v-model="k.ti_remaind" :data="ti_time" :columns="1" show-name></popup-picker>
           <multi-player :people="people" @on-checkShow="select" @on-selectPerson="selctpeople"></multi-player>
@@ -30,7 +30,7 @@
 <script>
 import { TaskListApi, TaskDone, AllAdminApi, TaskAdd, ERR_OK } from '@/api/api'
 import MultiPlayer from '@/page/common/multiplayer'
-import { OptionsTime } from '@/page/setting/menu'
+import { OptionsTime, TaskList } from '@/page/setting/menu'
 import EmptyData from '@/page/common/emptyData'
 import { XDialog, XInput, Datetime, dateFormat, PopupPicker, XButton } from 'vux'
 
@@ -41,6 +41,7 @@ export default {
       addTask: false,
       list: [],
       ti_time: OptionsTime,
+      taskList: TaskList,
       people: {
         xm: false,
         names: '',
@@ -48,7 +49,7 @@ export default {
         list: []
       },
       k: {
-        task: '',
+        task: [],
         start_time: dateFormat(new Date(), 'YYYY-MM-DD HH:mm'),
         ti_remaind: [],
         person: []
@@ -120,6 +121,7 @@ export default {
     saveTask () {
       let g = Object.assign({}, this.k, this.params)
       g.ti_remaind = g.ti_remaind.toString()
+      g.task = g.task.toString()
       TaskAdd(g).then(res => {
         if (ERR_OK === res.code) {
           this.getList()

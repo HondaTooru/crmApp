@@ -11,5 +11,6 @@ export const Menus = [
   [{label: '转成客户', link: 'transformc'}, {label: '转移给他人', link: 'transformo'}]
 ]
 export const addBtn = ['task']
+export const TaskList = ['打电话给该客户', '发邮件给该客户', '拜访该客户']
 export const DropTitle = ['/clue', '/contract', '/contact', '/customer', '/payment', '/opportunity']
 export const OptionsTime = [ { value: '0', name: '准时' }, {value: '5', name: '提前5分钟'}, {value: '155', name: '提前15分钟'}, {value: '30', name: '提前30分钟'}, {value: '60', name: '提前1小时'}, {value: '120', name: '提前2小时'}, {value: '1440', name: '提前1天'}, {value: '2880', name: '提前2天'} ]

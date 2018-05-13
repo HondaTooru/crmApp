@@ -6,7 +6,7 @@ import App from './test'
 import Vuex from 'vuex'
 import router from './router'
 import { sync } from 'vuex-router-sync'
-import { TransferDom, AjaxPlugin, CloseDialogsPlugin, AlertPlugin, LoadingPlugin, BusPlugin, ToastPlugin, Group, Cell } from 'vux'
+import { TransferDom, ConfirmPlugin, AjaxPlugin, CloseDialogsPlugin, AlertPlugin, LoadingPlugin, BusPlugin, ToastPlugin, Group, Cell } from 'vux'
 import 'font-awesome/css/font-awesome.css'
 Vue.directive('transfer-dom', TransferDom)
 Vue.use(Vuex)
@@ -47,6 +47,7 @@ Vue.use(LoadingPlugin)
 Vue.use(AlertPlugin)
 Vue.use(AjaxPlugin)
 Vue.use(BusPlugin)
+Vue.use(ConfirmPlugin)
 Vue.use(ToastPlugin, {type: 'text', position: 'center'})
 Vue.component('group', Group)
 Vue.component('Cell', Cell)

@@ -91,18 +91,24 @@ export default {
     del () {
       let _that = this
       this.enableBtn = true
-      DelThis({row_id: this.$route.params.id}).then(res => {
-        if (ERR_OK === res.code) {
-          this.$vux.toast.show({
-            text: res.msg,
-            type: 'success',
-            onHide () {
-              _that.$router.replace('/clue')
+      this.$vux.confirm.show({
+        content: '删除后不可恢复',
+        onCancel () { _that.enableBtn = false },
+        onConfirm () {
+          DelThis({row_id: _that.$route.params.id}).then(res => {
+            if (ERR_OK === res.code) {
+              _that.$vux.toast.show({
+                text: res.msg,
+                type: 'success',
+                onHide () {
+                  _that.$router.replace('/clue')
+                }
+              })
+            } else {
+              _that.enableBtn = false
+              _that.$vux.toast.show({ text: res.msg })
             }
           })
-        } else {
-          this.enableBtn = false
-          this.$vux.toast.show({ text: res.msg })
         }
       })
     },
