@@ -10,7 +10,8 @@ export default {
   data () {
     return {
       k: {
-        name: 'lead'
+        name: 'lead',
+        alias: '线索'
       }
     }
   },

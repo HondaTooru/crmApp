@@ -2,10 +2,11 @@
  <div class="nobar db">
    <group :gutter="0" title="基本信息">
      <x-input title="姓名" v-model="infos.body.username" text-align="right" :show-clear="false"></x-input>
-     <x-input title="公司名称" v-model="infos.body.company" text-align="right" :show-clear="false"></x-input>
+     <x-input title="电话" v-model="infos.body.telphone1" text-align="right" :show-clear="false"></x-input>
    </group>
    <group :gutter="0" title="联系信息">
-     <x-input title="手机" v-model="infos.body.telphone1" is-type="china-mobile" text-align="right" :show-clear="false"></x-input>
+     <x-input title="公司名称" v-model="infos.body.company" text-align="right" :show-clear="false"></x-input>
+     <x-input title="手机" v-model="infos.body.telphone" text-align="right" :show-clear="false"></x-input>
      <x-input title="邮箱" v-model="infos.body.email" is-type="email" text-align="right" :show-clear="false"></x-input>
      <x-input title="微信号" v-model="infos.body.wechat" text-align="right" :show-clear="false"></x-input>
      <x-input title="旺旺号" v-model="infos.body.alinum" text-align="right" :show-clear="false"></x-input>
@@ -14,10 +15,10 @@
    </group>
    <group :gutter="0" title="其他信息">
      <x-input title="备注" v-model="infos.body.remark" text-align="right" :show-clear="false"></x-input>
-     <x-input title="部门" v-model="infos.body.pre_department_id" text-align="right" :show-clear="false"></x-input>
      <x-input title="职位" v-model="infos.body.job" text-align="right" :show-clear="false"></x-input>
      <x-input title="位置" v-model="infos.body.position" text-align="right" :show-clear="false"></x-input>
      <x-input title="邮编" v-model="infos.body.code" text-align="right" :show-clear="false"></x-input>
+     <popup-picker title="前负责部门" :data="[list.pre_department_id]" v-model="k.pre_department_id" v-if="list.pre_department_id.length"></popup-picker>
      <popup-picker title="跟进状态" :data="[list.status]" v-model="k.status" v-if="list.status.length"></popup-picker>
      <popup-picker title="部门" :data="[list.department]" v-model="k.want_department_id" v-if="list.department.length"></popup-picker>
      <popup-picker title="线索来源" :data="[list.source]" v-model="k.source" v-if="list.source.length"></popup-picker>
@@ -41,6 +42,7 @@ export default {
   data () {
     return {
       list: {
+        pre_department_id: [],
         status: [],
         department: [],
         preuserid: [],
@@ -58,6 +60,7 @@ export default {
       itemList: [],
       enableBtn: false,
       k: {
+        pre_department_id: [],
         status: [],
         want_department_id: [],
         source: [],
@@ -84,6 +87,7 @@ export default {
         res[2].data.forEach(item => { this.list.preuserid.push(item.username) })
         res[3].data.forEach(item => { this.list.department.push(item.name) })
         this.people.list = this.list.preuserid
+        this.list.pre_department_id = this.list.department
         this.people.checks = this.infos.body.user_id.split(',')
         this.people.names = this.infos.body.user_id
       })

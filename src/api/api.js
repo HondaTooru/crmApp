@@ -26,10 +26,12 @@ export const DelVisit = params => { return Vue.http.post('/crm/revisit/del_visit
 export const DelComment = params => { return Vue.http.post('/crm/revisit/del_comment', Object.assign({}, USERID, params)).then(res => res.data) }
 export const SaveComment = params => { return Vue.http.post('/crm/revisit/save_comment', Object.assign({}, USERID, params)).then(res => res.data) }
 export const WriteRecord = params => { return Vue.http.post('/crm/api/visit_record_write', Object.assign({}, USERID, params), formatData).then(res => res.data) }
+export const ClueTransfer = params => { return Vue.http.post('/crm/clue/remove', Object.assign({}, USERID, params), formatData).then(res => res.data) }
+export const BeCustomer = (params, name) => { return Vue.http.post('/crm/clue/be_customer' + name, Object.assign({}, USERID, params), formatData).then(res => res.data) }
 
 export const qishuApi = params => { return Vue.http.post('/crm/Payment/qishu', Object.assign({}, USERID, params)).then(res => res.data) }
 export const AddqishuApi = params => { return Vue.http.post('/crm/Payment/add_plan_save', Object.assign({}, USERID, params), formatData).then(res => res.data) }
-export const CustomerApi = () => { return Vue.http.all(prems.map(mRequest)).then(Vue.http.spread((q, w, e, r, y) => [q, w, e, r, y])) }
+export const CustomerApi = () => { return Vue.http.all(prems.map(mRequest)).then(Vue.http.spread((q, w, e, r) => [q, w, e, r])) }
 export const LoginApi = params => { return Vue.http.post('/crm/api/login', params, formatData).then(res => res.data) }
 export const IndexApi = (params, name) => { return Vue.http.post('crm/' + name + '/index', Object.assign({}, USERID, params), formatData).then(res => res.data) }
 export const ContractListApi = params => { return Vue.http.post('/crm/ContractList/contract_list', Object.assign({}, USERID, params), formatData).then(res => res.data) }

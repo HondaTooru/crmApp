@@ -4,7 +4,7 @@
      <x-textarea :max="200" placeholder="请输入跟进类容" v-model="params.record"></x-textarea>
      <popup-picker title="跟进类型" :data="[listVisits]" v-if="listVisits.length" v-model="k.revisit_way"></popup-picker>
      <datetime title="实际跟进时间" format="YYYY-MM-DD HH:mm" v-model="params.revisit_time"></datetime>
-     <cell title="线索" disabled></cell>
+     <cell :title="recordtype.alias" disabled v-model="params.customer"></cell>
      <popup-picker title="跟进状态" :data="[listStauts]" v-if="listStauts.length" v-model="k.status"></popup-picker>
      <datetime title="下次跟进时间" format="YYYY-MM-DD HH:mm" v-model="params.revisit_next_time"></datetime>
      <multi-player :people="people" @on-checkShow="select" @on-selectPerson="selctpeople"></multi-player>
@@ -25,6 +25,7 @@ export default {
   data () {
     return {
       people: {
+        flag: false,
         xm: false,
         names: '',
         title: '通知他人',
@@ -57,6 +58,15 @@ export default {
   created () {
     this.getList()
     this.$vux.bus.$on('Addinfo', () => {
+      this.saveRecord()
+    })
+  },
+  beforeDestroy () {
+    this.$vux.bus.$off('Addinfo')
+  },
+  methods: {
+    saveRecord () {
+      if (this.flag) return
       let _that = this
       let g = Object.assign({}, this.k, this.params)
       for (let i in g) {
@@ -66,6 +76,7 @@ export default {
           return
         }
       }
+      this.flag = true
       WriteRecord(g).then(res => {
         if (ERR_OK === res.code) {
           this.$vux.toast.show({
@@ -73,21 +84,17 @@ export default {
             type: 'success',
             onHide () {
               _that.$router.back()
+              _that.flag = false
             }
           })
         } else {
+          _that.flag = false
           this.$vux.toast.show({
             text: res.msg
           })
         }
       })
-    })
-  },
-  beforeDestroy () {
-    this.$vux.bus.$off('Addinfo')
-  },
-  methods: {
-    saveRecord () {},
+    },
     getList () {
       WhiteClueList().then(res => {
         res[0].data.forEach(item => { this.listVisits.push(item.name) })
@@ -111,7 +118,6 @@ export default {
     selctpeople (value, label) {
       this.people.names = label.toString().trim()
       this.params.tip_uids = value
-      console.log(this.params.tip_uids)
     }
   }
 }

@@ -208,6 +208,7 @@ export default {
       this.$vux.bus.$emit('AddBtn')
     },
     AddPage (n, i) {
+      if (n) return
       this.$router.push('/' + i.link)
     },
     ...mapActions([
