@@ -20,7 +20,7 @@ export const pContractInfoApi = params => { return Vue.http.post('/crm/Payment/c
 export const TaskListApi = params => { return Vue.http.post('/crm/api/task', Object.assign({}, USERID, params)).then(res => res.data) }
 export const TaskDone = params => { return Vue.http.post('/crm/api/task_done', Object.assign({}, USERID, params)).then(res => res.data) }
 export const TaskAdd = params => { return Vue.http.post('/crm/api/task_add', Object.assign({}, USERID, params), formatData).then(res => res.data) }
-export const EditSave = params => { return Vue.http.post('/crm/clue/edit_save', Object.assign({}, USERID, params)).then(res => res.data) }
+export const EditSave = (params, name) => { return Vue.http.post('/crm/' + name + '/edit_save', Object.assign({}, USERID, params)).then(res => res.data) }
 export const DelThis = params => { return Vue.http.post('/crm/clue/del', Object.assign({}, USERID, params)).then(res => res.data) }
 export const DelVisit = params => { return Vue.http.post('/crm/revisit/del_visit_record', Object.assign({}, USERID, params)).then(res => res.data) }
 export const DelComment = params => { return Vue.http.post('/crm/revisit/del_comment', Object.assign({}, USERID, params)).then(res => res.data) }
@@ -28,7 +28,10 @@ export const SaveComment = params => { return Vue.http.post('/crm/revisit/save_c
 export const WriteRecord = params => { return Vue.http.post('/crm/api/visit_record_write', Object.assign({}, USERID, params), formatData).then(res => res.data) }
 export const ClueTransfer = params => { return Vue.http.post('/crm/clue/remove', Object.assign({}, USERID, params), formatData).then(res => res.data) }
 export const BeCustomer = (params, name) => { return Vue.http.post('/crm/clue/be_customer' + name, Object.assign({}, USERID, params), formatData).then(res => res.data) }
+export const ApprovalLog = params => { return Vue.http.post('/crm/api/write_approval_log', Object.assign({}, USERID, params), formatData).then(res => res.data) }
+export const Approval = params => { return Vue.http.post('/crm/customer/approval', Object.assign({}, USERID, params), formatData).then(res => res.data) }
 
+export const PlanRecord = params => { return Vue.http.post('/crm/Payment/plan_record', Object.assign({}, USERID, params)).then(res => res.data) }
 export const qishuApi = params => { return Vue.http.post('/crm/Payment/qishu', Object.assign({}, USERID, params)).then(res => res.data) }
 export const AddqishuApi = params => { return Vue.http.post('/crm/Payment/add_plan_save', Object.assign({}, USERID, params), formatData).then(res => res.data) }
 export const CustomerApi = () => { return Vue.http.all(prems.map(mRequest)).then(Vue.http.spread((q, w, e, r) => [q, w, e, r])) }

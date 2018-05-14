@@ -31,6 +31,8 @@ import { Scroller, Spinner } from 'vux'
 import Search from '@/page/common/search'
 import EmptyData from '@/page/common/emptyData'
 import { ERR_OK, IndexApi, ContractListApi } from '@/api/api'
+// PlanRecord
+
 export default {
   name: 'listdata',
   props: {
@@ -40,7 +42,9 @@ export default {
     return {
       params: {
         page: 1,
-        my_own: 0
+        my_own: 0,
+        cooper: 0,
+        to_be_approved: 0
       },
       listData: [],
       pullupEnabled: true,
@@ -52,10 +56,10 @@ export default {
   },
   created () {
     this.list()
-    this.params.my_own = 0
     this.$vux.bus.$on('getTypeList', msg => {
+      this.params.my_own = this.params.cooper = this.params.to_be_approved = 0
+      this.params[msg.name] = msg.value
       this.params.page = 1
-      this.params.my_own = msg
       this.list(true)
     })
   },

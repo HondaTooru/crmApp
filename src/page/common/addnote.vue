@@ -95,7 +95,7 @@ export default {
     SaveData () {
       this.saveList = []
       this.note.forEach(item => {
-        this.saveList.push({name: item.name, value: !item.value ? item.value = '' : item.value.toString()})
+        this.saveList.push({name: item.name, value: !item.value ? '' : item.value.toString()})
       })
       let t = { field_data: JSON.stringify(this.saveList) }
       let s = 'save_add'
@@ -111,7 +111,7 @@ export default {
             }
           })
         } else {
-          this.$vux.toast.show({ text: '必填信息不能为空~', position: 'bottom', width: '10em' })
+          this.$vux.toast.show({ text: res.msg, position: 'bottom', width: '70%' })
         }
       })
     },

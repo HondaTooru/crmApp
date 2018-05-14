@@ -1,7 +1,7 @@
 <template>
  <div class="nobar">
    <Content :tData="comData">
-     <cell is-link slot="list" slot-scope="item">
+     <cell is-link slot="list" slot-scope="item" :link="'customeraudited/' + item.o.id">
        <div class="_nn" slot="title">
          <div class="_nb" v-if="item.o.be_approved === 0" v-text="'待审核'"></div>
          <div class="_nb _nt" v-else-if="item.o.be_approved === 1" v-text="'已通过'"></div>

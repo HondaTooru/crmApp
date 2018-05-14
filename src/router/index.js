@@ -21,6 +21,7 @@ const Contract = () => import('@/page/contract/contract')
 const AddContract = () => import('@/page/contract/contractAdd')
 const Customer = () => import('@/page/customer/customer')
 const AddCustomer = () => import('@/page/customer/customerAdd')
+const CustomerAudited = () => import('@/page/customer/audited')
 
 const Product = () => import('@/page/product/product')
 const ProductAdd = () => import('@/page/product/productAdd')
@@ -59,6 +60,7 @@ export default new Router({
         { path: 'contractAdd', name: 'contractAdd', component: AddContract, meta: { title: '新增合同' } },
         { path: 'customer', name: 'customer', component: Customer },
         { path: 'customerAdd', name: 'customerAdd', component: AddCustomer, meta: { title: '新增客户' } },
+        { path: 'customeraudited/:id', name: 'CustomerAudited', component: CustomerAudited, meta: { title: '审核信息' } },
         { path: 'writeclue/:id', name: 'writeclue', component: WriteClue, meta: { title: '新增线索跟进' } },
 
         { path: 'product', name: 'product', component: Product, meta: { title: '产品列表' } },

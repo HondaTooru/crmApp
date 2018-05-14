@@ -22,9 +22,7 @@
       </cell>
     </group>
     <empty-data v-if="!list.length"></empty-data>
-
   </div>
-
 </template>
 
 <script>

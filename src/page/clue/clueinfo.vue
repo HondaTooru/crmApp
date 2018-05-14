@@ -1,5 +1,5 @@
 <template>
-  <detail-content :ax="name">
+  <detail-content :ax="m">
     <div slot="detail" slot-scope="item" class="content">
       <div v-transfer-dom>
         <popup v-model="k" max-height="50%">
@@ -76,7 +76,10 @@ export default {
   data () {
     return {
       k: false,
-      name: 'clue',
+      m: {
+        name: 'clue',
+        flag: true
+      },
       rList: null,
       len: 0,
       status: []

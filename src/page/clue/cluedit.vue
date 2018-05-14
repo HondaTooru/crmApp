@@ -132,7 +132,7 @@ export default {
       let _that = this
       g.field_data = JSON.stringify(this.itemList)
       g.row_id = this.$route.params.id
-      EditSave(g).then(res => {
+      EditSave(g, 'clue').then(res => {
         if (ERR_OK === res.code) {
           this.$vux.toast.show({
             text: res.msg,
