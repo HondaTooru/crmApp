@@ -29,7 +29,7 @@ export default {
       DetailApi({row_id: this.$route.params.id}, this.ax.name).then(res => {
         if (ERR_OK === res.code) {
           this.info = res.data
-          // if () this.info.detail.body.address = this.infos.detail.body.address.split(',')
+          if (this.info.detail) this.info.detail.body.address = this.info.detail.body.address.split(',')
           localStorage.setItem('DETAIL_INFO', JSON.stringify(res.data))
         } else {
           this.$vux.toast.show({

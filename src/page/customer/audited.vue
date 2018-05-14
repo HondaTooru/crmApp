@@ -1,6 +1,6 @@
 <template>
-  <detail-content :ax="k">
-    <div slot="detail" slot-scope="item">
+  <div class="nobar hastool">
+    <div class="main_o">
       <div v-transfer-dom>
       <x-dialog v-model="xk" :mask-z-index="498" :dialog-style="{ zIndex: 499 }">
         <x-icon type="ios-close-outline" style="fill:#35495e;" class="close" size="32" @click.native="xk = !xk"></x-icon>
@@ -41,47 +41,43 @@
            <datetime :disabled="Edit" v-model="m.value" :title="m.showname" v-if="m.field_type === 'date'" format="YYYY-MM-DD HH:mm" :readonly="m.name === 'create_time'"></datetime>
            <x-address :disabled="Edit"  @on-shadow-change="onShadowChange" :title="m.showname" v-model="m.value" :list="addressData" placeholder="请选择地址" :show.sync="showAddress"  v-if="m.name === 'address'"></x-address>
            <popup-picker :disabled="Edit" v-if="m.field_type === 'drop' && n[m.name].length && m.name !== 'user_id'" :popup-title="m.showname" :data="[n[m.name]]" :title="m.showname" v-model="m.value"></popup-picker>
-           <cell primary="content" :disabled="Edit" :title="m.showname" is-link @click.native="k.xn = !k.xn" v-model="k.names" v-if="m.name === 'user_id'"></cell>
+           <cell primary="content" :disabled="Edit" :title="m.showname" is-link @click.native="om" v-model="m.value" v-if="m.name === 'user_id'"></cell>
          </div>
        </template>
         </group>
-      </div>
-      <div slot="toolbar">
         <div class="caidan">
-        <div class="item" v-if="is_edit === 3">
+        <div class="item" v-if="Edit">
           <span class="icon" @click="show(2)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
           <span class="text">审批否决</span>
         </div>
-        <div class="item" @click="show(3)" v-if="is_edit === 3">
+        <div class="item" @click="show(3)" v-if="Edit">
           <span class="icon"><i class="fa fa-ban" aria-hidden="true"></i></span>
           <span class="text">审批撤销</span>
         </div>
-        <div class="item" v-if="is_edit === 3">
+        <div class="item" v-if="Edit">
           <span class="icon" @click="show(1)"><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
           <span class="text">审批通过</span>
         </div>
         </div>
       </div>
     </div>
-  </detail-content>
+  </div>
 </template>
 
 <script>
-import DetailContent from '@/page/common/detail'
-import { AllAdminApi, ApprovalLog, Approval, ERR_OK, CustomerApi, AllCustomer } from '@/api/api'
+import { AllAdminApi, ApprovalLog, Approval, ERR_OK, CustomerApi, AllCustomer, DetailApi } from '@/api/api'
 import { XAddress, ChinaAddressV4Data, XDialog, XTextarea, XButton, Datetime, PopupPicker, XInput, Checklist, Popup } from 'vux'
 import MultiPlayer from '@/page/common/multiplayer'
 export default {
   name: 'audited',
   data () {
     return {
-      is_edit: '',
+      is_edit: 0,
       k: {
         name: 'customer',
         flag: false,
         xn: false,
         user_id: [],
-        names: '',
         checks: []
       },
       n: {
@@ -111,12 +107,11 @@ export default {
       addressData: ChinaAddressV4Data,
       showAddress: false,
       unless: ['provance', 'city', 'area', 'imgs'],
-      showContent: true,
+      showContent: false,
       list: []
     }
   },
   components: {
-    DetailContent,
     XAddress,
     XDialog,
     XTextarea,
@@ -133,30 +128,54 @@ export default {
     this.getList()
     this.getAdmin()
     this.getAllCustomer()
+    this.$vux.bus.$on('delthis', () => {
+      console.log(1)
+    })
   },
   methods: {
     getInfos () {
-      let data = JSON.parse(localStorage.getItem('DETAIL_INFO')).detail
-      data.header.forEach(item => {
-        if (item.name === 'parent_customer') item.field_type = 'drop'
-        item.value = ''
-        if (item.field_type === 'drop' || item.name === 'address') item.value = []
-        this.list.push(item)
-        for (let i in data.body) {
-          if (item.name === i) {
-            if (item.field_type === 'drop') {
-              item.value.push(data.body[i])
-              return
+      let _that = this
+      DetailApi({row_id: this.$route.params.id}, 'customer').then(res => {
+        if (ERR_OK === res.code) {
+          let o = res.data.detail
+          this.is_edit = o.body.be_approved
+          o.header.forEach(item => {
+            if (item.name === 'parent_customer') item.field_type = 'drop'
+            for (let m in o.body) {
+              if (item.name === m) {
+                if (o.body[m]) {
+                  if (item.field_type === 'drop' && item.name !== 'user_id') {
+                    item.value = [o.body[m]]
+                  } else {
+                    if (item.name === 'address') {
+                      o.body[m] ? item.value = o.body[m].split(',') : item.value = []
+                      return
+                    }
+                    item.value = o.body[m]
+                  }
+                }
+              }
             }
-            item.value = data.body[i]
-          }
+            this.list.push(item)
+          })
+          if (o.body['user_id']) this.k.checks = o.body['user_id'].split(',')
+        } else {
+          this.$vux.toast.show({
+            text: res.msg,
+            onHide () {
+              _that.$router.back()
+            }
+          })
         }
       })
-      this.k.checks = data.body['user_id'].split(',')
-      this.k.names = data.body['user_id']
     },
     select () {
       this.people.xm = !this.people.xm
+    },
+    om () {
+      if (!this.Edit) {
+        this.k.xn = !this.k.xn
+      }
     },
     slideDown () {
       this.$refs.title.innerText === '点击展开' ? this.$refs.title.innerText = '点击关闭' : this.$refs.title.innerText = '点击展开'
@@ -186,13 +205,19 @@ export default {
       //   if (item.name === 'area') item.value = names[2]
       // })
     },
-    selectCharge () {},
+    selectCharge (value) {
+      this.list.forEach(item => {
+        if (item.name === 'user_id') {
+          item.value = value.toString()
+        }
+      })
+    },
     saveData () {
       let _that = this
       ApprovalLog(this.params).then(res => {
         this.params.reason = ''
         if (ERR_OK === res.code) {
-          Approval({status: 3, row_id: this.$route.params.id}).then(res => {
+          Approval({status: this.params.status, row_id: this.$route.params.id}).then(res => {
             if (ERR_OK === res.code) {
               this.xk = !this.xk
               this.$vux.toast.show({ text: res.msg, onHide () { _that.$router.back() } })
@@ -240,7 +265,7 @@ export default {
       return this.params.reason && this.people.names
     },
     Edit () {
-      return this.is_edit === 3
+      return this.is_edit === 0
     }
   }
 }
@@ -280,8 +305,8 @@ export default {
   display: flex;
   box-shadow: 1px 1px 20px 0px #35495e;
   border-top: 1px solid #6b6b6b;
+  background:#35495e;
   .item {
-    background:#35495e;
     flex:1;
     color:white;
     text-align: center;
@@ -308,6 +333,21 @@ export default {
     color: #D9D9D9;
     transform-origin: 0 100%;
     transform: scaleY(0.5);
+  }
+}
+.nobar {
+  &.hastool {
+   overflow: hidden;
+   padding-bottom: 50px;
+  &>.main_o{
+    width: 100%;
+    padding-top: 0;
+    padding-bottom:0;
+    overflow: auto;
+    box-sizing: border-box;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
   }
 }
 .savebtn {margin: 15px}

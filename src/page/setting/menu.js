@@ -1,5 +1,6 @@
 export const ActionMenu = ['clue', 'customer', 'contact', 'opportunity', 'contract', 'product', 'payment', 'clueinfo']
 export const AddData = ['cluetransfer', 'transformc', 'clueAdd', 'customerAdd', 'cluedit', 'contactAdd', 'opportunityAdd', 'contractAdd', 'productAdd', 'received', 'writeclue']
+export const delBtn = ['CustomerAudited']
 export const Menus = [
   [{label: '新增线索', link: 'clueAdd'}],
   [{label: '新增客户', link: 'customerAdd'}],
