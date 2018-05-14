@@ -34,7 +34,7 @@ export default {
     },
     change (key, value) {
       this.list[this.n].defaultVal.value = value
-      this.list[this.n].defaultVal.key = key
+      // this.list[this.n].defaultVal.key = key
       this.dropShow = false
       this.$vux.bus.$emit('getTypeList', this.list[this.n].data[key].tag)
     }

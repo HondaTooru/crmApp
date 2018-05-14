@@ -22,7 +22,7 @@
         <group :gutter="0" title="基本信息">
            <div v-for="m in list" v-if="m.required === 1" class="item">
              <x-input :disabled="Edit" :show-clear="false" :placeholder="'请输入' + m.showname" v-if="m.field_type === 'text' || m.field_type === 'decimal' || m.field_type === 'textarea'" :title="m.showname" v-model='m.value' text-align="right" :type="m.name.indexOf('tel') !== -1 ? 'tel' : 'text'" required></x-input>
-             <datetime :disabled="Edit" v-model="m.value" :title="m.showname" v-if="m.field_type === 'date'" format="YYYY-MM-DD HH:mm"></datetime>
+             <datetime :readonly="Edit" v-model="m.value" :title="m.showname" v-if="m.field_type === 'date'" format="YYYY-MM-DD HH:mm"></datetime>
              <popup-picker :disabled="Edit" v-if="m.field_type === 'drop' && n[m.name].length" :popup-title="m.showname" :data="[n[m.name]]" :title="m.showname" v-model="m.value"></popup-picker>
            </div>
         </group>
@@ -72,6 +72,7 @@ export default {
   name: 'audited',
   data () {
     return {
+      flag: true,
       is_edit: 0,
       k: {
         name: 'customer',
@@ -186,17 +187,9 @@ export default {
       this.params.notice_uids = ids
     },
     show (status) {
+      if (!this.flag) return
       this.xk = !this.xk
-      switch (status) {
-        case 1:
-          this.params.status = status
-          break
-        case 2:
-          this.params.status = status
-          break
-        case 3:
-          this.params.status = status
-      }
+      this.params.status = status
     },
     onShadowChange (ids, names) {
       // this.note.forEach(item => {
@@ -214,18 +207,21 @@ export default {
     },
     saveData () {
       let _that = this
+      this.flag = false
       ApprovalLog(this.params).then(res => {
         this.params.reason = ''
         if (ERR_OK === res.code) {
           Approval({status: this.params.status, row_id: this.$route.params.id}).then(res => {
             if (ERR_OK === res.code) {
               this.xk = !this.xk
-              this.$vux.toast.show({ text: res.msg, onHide () { _that.$router.back() } })
+              this.$vux.toast.show({ text: res.msg, type: 'success', onHide () { _that.$router.back() } })
             } else {
+              this.flag = true
               this.$vux.toast.show({ text: res.msg })
             }
           })
         } else {
+          this.flag = true
           this.$vux.toast.show({ text: res.msg })
         }
       })
@@ -271,7 +267,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .item {
   position: relative;
   &:last-of-type {

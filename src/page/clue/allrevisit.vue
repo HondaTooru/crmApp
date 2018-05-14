@@ -37,7 +37,7 @@
 
 <script>
 import { XDialog, XTextarea, XButton } from 'vux'
-import EmptyData from '@/page/common/emptyData'
+import EmptyData from '@/page/common/emptydata'
 import { DelVisit, DelComment, SaveComment, RevisitApi, ERR_OK } from '@/api/api'
 
 export default {

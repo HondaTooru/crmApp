@@ -13,6 +13,8 @@ const AllRevisit = () => import('@/page/clue/allrevisit')
 const WriteClue = () => import('@/page/clue/writeclue')
 const ClueTransfer = () => import('@/page/clue/cluetransfer')
 const ClueTransferc = () => import('@/page/clue/transformc')
+const ClueLog = () => import('@/page/clue/cluelog')
+const ClueattchMent = () => import('@/page/clue/clueattchment')
 
 const SettingList = () => import('@/page/setting/settingList')
 const SettingView = () => import('@/page/setting/settingView')
@@ -51,7 +53,9 @@ export default new Router({
         { path: 'clueinfo/:id', name: 'clueinfo', component: ClueInfo, meta: { title: '线索详情' } },
         { path: 'clueAdd', name: 'clueAdd', component: AddClue, meta: { title: '新增线索' } },
         { path: 'cluedit/:id', name: 'cluedit', component: ClueEdit, meta: { title: '线索详情' } },
+        { path: 'cluelog/:id', name: 'cluelog', component: ClueLog, meta: { title: '操作日志' } },
         { path: 'cluetransfer', name: 'cluetransfer', component: ClueTransfer, meta: { title: '转移线索' } },
+        { path: 'clueattchment/:id', name: 'clueattchment', component: ClueattchMent, meta: { title: '附件' } },
         { path: 'transformc', name: 'transformc', component: ClueTransferc, meta: { title: '转成客户' } },
         { path: 'task/:id', name: 'task', component: TaskList, meta: { title: '任务列表' } },
         { path: 'allrevisit/:id', name: 'allrevisit', component: AllRevisit, meta: { title: '跟进记录' } },

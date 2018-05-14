@@ -30,6 +30,7 @@ export const ClueTransfer = params => { return Vue.http.post('/crm/clue/remove',
 export const BeCustomer = (params, name) => { return Vue.http.post('/crm/clue/be_customer' + name, Object.assign({}, USERID, params), formatData).then(res => res.data) }
 export const ApprovalLog = params => { return Vue.http.post('/crm/api/write_approval_log', Object.assign({}, USERID, params), formatData).then(res => res.data) }
 export const Approval = params => { return Vue.http.post('/crm/customer/approval', Object.assign({}, USERID, params), formatData).then(res => res.data) }
+export const GetLog = (params, name) => { return Vue.http.post('/crm/' + name + '/log', Object.assign({}, USERID, params), formatData).then(res => res.data) }
 
 export const PlanRecord = params => { return Vue.http.post('/crm/Payment/plan_record', Object.assign({}, USERID, params)).then(res => res.data) }
 export const qishuApi = params => { return Vue.http.post('/crm/Payment/qishu', Object.assign({}, USERID, params)).then(res => res.data) }

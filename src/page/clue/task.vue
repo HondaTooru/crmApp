@@ -29,7 +29,7 @@
 import { TaskListApi, TaskDone, AllAdminApi, TaskAdd, ERR_OK } from '@/api/api'
 import MultiPlayer from '@/page/common/multiplayer'
 import { OptionsTime, TaskList } from '@/page/setting/menu'
-import EmptyData from '@/page/common/emptyData'
+import EmptyData from '@/page/common/emptydata'
 import { XDialog, XInput, Datetime, dateFormat, PopupPicker, XButton } from 'vux'
 
 export default {

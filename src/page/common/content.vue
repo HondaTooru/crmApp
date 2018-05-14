@@ -29,7 +29,7 @@
 <script>
 import { Scroller, Spinner } from 'vux'
 import Search from '@/page/common/search'
-import EmptyData from '@/page/common/emptyData'
+import EmptyData from '@/page/common/emptydata'
 import { ERR_OK, IndexApi, ContractListApi } from '@/api/api'
 // PlanRecord
 

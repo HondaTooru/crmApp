@@ -50,6 +50,23 @@
           <cell title="负责人" :value="item.detail.sale_team.fuzeren"></cell>
         </group>
       </div>
+      <div class="section top">
+        <h2>其他信息</h2>
+        <group :gutter="0">
+        <div class="other">
+          <router-link :to="'/clueattchment/'+ $route.params.id" tag="div" class="om vux-1px-r">
+            <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+            <p class="text">附件</p>
+            <p class="len">{{item.detail.other.attchment.length}}个</p>
+          </router-link>
+          <router-link :to="'/cluelog/'+ $route.params.id" tag="div" class="om">
+            <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+            <p class="text">操作日志</p>
+            <p class="len">{{item.detail.other.log}}条</p>
+          </router-link>
+        </div>
+        </group>
+      </div>
     </div>
     <div class="caidan" slot="toolbar">
       <router-link :to="'/writeclue/' + $route.params.id" tag="div" class="item">
@@ -229,6 +246,27 @@ export default {
       text-align: center;
       font-size: 14px;
       padding: 10px 0
+    }
+    .other {
+      display: flex;
+      .om {
+        flex:1;
+        position:relative;
+        padding: 5px 15px;
+        margin: 5px 0;
+        .fa {
+          position: absolute;top:50%;right:10px;
+          transform: translateY(-50%);
+        }
+        p{
+          line-height: 20px;
+          &.len {font-size: 12px;color:#666}
+        }
+        &:after {
+          position: absolute;
+          content: '';
+        }
+      }
     }
   }
 }
