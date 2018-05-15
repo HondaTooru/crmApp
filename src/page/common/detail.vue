@@ -3,7 +3,7 @@
     <div class="main_o">
     <slot :detail="info" name="detail" v-if="info"></slot>
     </div>
-    <slot name="toolbar"></slot>
+    <slot name="toolbar" :detail="info"></slot>
   </div>
 </template>
 

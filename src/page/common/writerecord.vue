@@ -5,7 +5,7 @@
      <popup-picker title="跟进类型" :data="[listVisits]" v-if="listVisits.length" v-model="k.revisit_way"></popup-picker>
      <datetime title="实际跟进时间" format="YYYY-MM-DD HH:mm" v-model="params.revisit_time"></datetime>
      <cell :title="recordtype.alias" disabled v-model="params.customer"></cell>
-     <popup-picker title="跟进状态" :data="[listStauts]" v-if="listStauts.length" v-model="k.status"></popup-picker>
+     <popup-picker :title="recordtype.status" :data="[recordtype.listStauts]" v-if="recordtype.listStauts.length" v-model="recordtype.value"></popup-picker>
      <datetime title="下次跟进时间" format="YYYY-MM-DD HH:mm" v-model="params.revisit_next_time"></datetime>
      <multi-player :people="people" @on-checkShow="select" @on-selectPerson="selctpeople"></multi-player>
    </group>
@@ -14,7 +14,7 @@
 
 <script>
 import { XTextarea, PopupPicker, Datetime } from 'vux'
-import { AllAdminApi, WriteRecord, WhiteClueList, ERR_OK } from '@/api/api'
+import { AllAdminApi, WriteRecord, AllVisitApi, ERR_OK } from '@/api/api'
 import MultiPlayer from '@/page/common/multiplayer'
 
 export default {
@@ -31,17 +31,15 @@ export default {
         title: '通知他人',
         list: []
       },
-      listStauts: [],
       listVisits: [],
       k: {
-        status: [],
         revisit_way: []
       },
       params: {
         revisit_time: '',
         record: '',
         revisit_next_time: '',
-        customer: JSON.parse(localStorage.getItem('DETAIL_INFO')).body.username,
+        customer: JSON.parse(localStorage.getItem('DETAIL_INFO')).body ? JSON.parse(localStorage.getItem('DETAIL_INFO')).body.username : JSON.parse(localStorage.getItem('DETAIL_INFO')).detail.body.username,
         row_id: this.$route.params.id,
         contact: '',
         record_type: this.recordtype.name,
@@ -55,19 +53,21 @@ export default {
     PopupPicker,
     MultiPlayer
   },
-  created () {
-    this.getList()
-    this.$vux.bus.$on('Addinfo', () => {
-      this.saveRecord()
-    })
-  },
-  beforeDestroy () {
-    this.$vux.bus.$off('Addinfo')
-  },
+  // created () {
+  //   this.getList()
+  //   this.$vux.bus.$on('Addinfo', () => {
+  //     console.log(1)
+  //     this.saveRecord()
+  //   })
+  // },
+  // beforeDestroy () {
+  //   this.$vux.bus.$off('Addinfo')
+  // },
   methods: {
     saveRecord () {
       if (this.flag) return
       let _that = this
+      this.k.status = this.recordtype.value
       let g = Object.assign({}, this.k, this.params)
       for (let i in g) {
         if (typeof g[i] === 'object' && i !== 'tip_uids') { g[i] = g[i].toString() }
@@ -96,9 +96,8 @@ export default {
       })
     },
     getList () {
-      WhiteClueList().then(res => {
-        res[0].data.forEach(item => { this.listVisits.push(item.name) })
-        res[1].data.forEach(item => { this.listStauts.push(item.name) })
+      AllVisitApi().then(res => {
+        res.data.forEach(item => { this.listVisits.push(item.name) })
       })
     },
     select () {

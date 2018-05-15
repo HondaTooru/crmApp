@@ -1,7 +1,7 @@
 <template>
  <div class="nobar">
    <Content :tData="comData">
-     <cell is-link slot="list" slot-scope="item" :link="'customeraudited/' + item.o.id">
+     <cell is-link slot="list" slot-scope="item" :link="linkTo(item.o.be_approved, item.o.id)">
        <div class="_nn" slot="title">
          <div class="_nb" v-if="item.o.be_approved === 0" v-text="'待审核'"></div>
          <div class="_nb _nt" v-else-if="item.o.be_approved === 1" v-text="'已通过'"></div>
@@ -25,6 +25,11 @@ export default {
         name: 'customer',
         alias: 'Customer'
       }
+    }
+  },
+  methods: {
+    linkTo (type, ids) {
+      if (type === 1) { return 'CustomerInfo/' + ids } else { return 'customeraudited/' + ids }
     }
   },
   components: {
@@ -52,8 +57,9 @@ export default {
       transform: scale(0.5, 0.8) translateY(-50%);
     }}
     &._na {padding-left: 10px}
-    &._nt {background:#a26767}
+    &._nt {background:#da7f7f}
     &._ns {background:#9a9a9a}
+    &._nf {background:#c3c3c3}
     &._nc {background:#8c6396}
   }
 }

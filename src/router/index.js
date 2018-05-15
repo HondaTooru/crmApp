@@ -8,13 +8,14 @@ const Clue = () => import('@/page/clue/clue')
 const AddClue = () => import('@/page/clue/clueAdd')
 const ClueEdit = () => import('@/page/clue/cluedit')
 const ClueInfo = () => import('@/page/clue/clueinfo')
-const TaskList = () => import('@/page/clue/task')
+const TaskList = () => import('@/page/common/task')
 const AllRevisit = () => import('@/page/clue/allrevisit')
 const WriteClue = () => import('@/page/clue/writeclue')
-const ClueTransfer = () => import('@/page/clue/cluetransfer')
+const Transfer = () => import('@/page/common/transfer')
 const ClueTransferc = () => import('@/page/clue/transformc')
 const ClueLog = () => import('@/page/clue/cluelog')
 const ClueattchMent = () => import('@/page/clue/clueattchment')
+const Checks = () => import('@/page/clue/checks')
 
 const SettingList = () => import('@/page/setting/settingList')
 const SettingView = () => import('@/page/setting/settingView')
@@ -24,6 +25,9 @@ const AddContract = () => import('@/page/contract/contractAdd')
 const Customer = () => import('@/page/customer/customer')
 const AddCustomer = () => import('@/page/customer/customerAdd')
 const CustomerAudited = () => import('@/page/customer/audited')
+const CustomerInfo = () => import('@/page/customer/customerinfo')
+const Common = () => import('@/page/customer/common')
+const WriteCustomer = () => import('@/page/customer/writecustomer')
 
 const Product = () => import('@/page/product/product')
 const ProductAdd = () => import('@/page/product/productAdd')
@@ -54,18 +58,24 @@ export default new Router({
         { path: 'clueAdd', name: 'clueAdd', component: AddClue, meta: { title: '新增线索' } },
         { path: 'cluedit/:id', name: 'cluedit', component: ClueEdit, meta: { title: '线索详情' } },
         { path: 'cluelog/:id', name: 'cluelog', component: ClueLog, meta: { title: '操作日志' } },
-        { path: 'cluetransfer', name: 'cluetransfer', component: ClueTransfer, meta: { title: '转移线索' } },
+
+        { path: 'transfer/:type', name: 'transfer', component: Transfer, meta: { title: '转移线索' } },
         { path: 'clueattchment/:id', name: 'clueattchment', component: ClueattchMent, meta: { title: '附件' } },
         { path: 'transformc', name: 'transformc', component: ClueTransferc, meta: { title: '转成客户' } },
-        { path: 'task/:id', name: 'task', component: TaskList, meta: { title: '任务列表' } },
+        { path: 'task/:id/:type', name: 'task', component: TaskList, meta: { title: '任务列表' } },
         { path: 'allrevisit/:id', name: 'allrevisit', component: AllRevisit, meta: { title: '跟进记录' } },
+
         { path: 'viewlist', name: 'viewlist', component: ViewList, meta: { title: '功能设置' } },
         { path: 'contract', name: 'contract', component: Contract },
         { path: 'contractAdd', name: 'contractAdd', component: AddContract, meta: { title: '新增合同' } },
         { path: 'customer', name: 'customer', component: Customer },
+        { path: 'customerinfo/:id', name: 'customerinfo', component: CustomerInfo, meta: { title: '客户详情' } },
         { path: 'customerAdd', name: 'customerAdd', component: AddCustomer, meta: { title: '新增客户' } },
-        { path: 'customeraudited/:id', name: 'CustomerAudited', component: CustomerAudited, meta: { title: '审核信息' } },
+        { path: 'common', name: 'common', component: Common, meta: { title: '转移至公海' } },
+        { path: 'customeraudited/:id', name: 'CustomerAudited', component: CustomerAudited, meta: { title: '客户详情' } },
         { path: 'writeclue/:id', name: 'writeclue', component: WriteClue, meta: { title: '新增线索跟进' } },
+        { path: 'writecustomer/:id', name: 'writecustomer', component: WriteCustomer, meta: { title: '新增客户跟进' } },
+        { path: 'checks/:type', name: 'checks', component: Checks, meta: { title: '查重信息' } },
 
         { path: 'product', name: 'product', component: Product, meta: { title: '产品列表' } },
         { path: 'productAdd', name: 'productAdd', component: ProductAdd, meta: { title: '新增产品' } },

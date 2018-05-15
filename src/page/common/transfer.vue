@@ -6,7 +6,7 @@
 
 <script>
 import MultiPlayer from '@/page/common/multiplayer'
-import { AllAdminApi, ClueTransfer, ERR_OK } from '@/api/api'
+import { AllAdminApi, TransferRemove, ERR_OK } from '@/api/api'
 
 export default {
   name: 'cluetransfer',
@@ -52,8 +52,10 @@ export default {
     saveData () {
       if (this.people.names) {
         let _that = this
-        let g = {row_id: JSON.parse(localStorage.getItem('DETAIL_INFO')).id, new_user_id: this.people.names}
-        ClueTransfer(g).then(res => {
+        let data = JSON.parse(localStorage.getItem('DETAIL_INFO'))
+        let id = data.id ? data.id : data.detail.body.id
+        let g = {row_id: id, new_user_id: this.people.names}
+        TransferRemove(g, this.$route.params.type).then(res => {
           if (ERR_OK === res.code) {
             this.$vux.toast.show({
               text: res.msg,
@@ -63,7 +65,7 @@ export default {
               }
             })
           } else {
-            this.$vux.toast.show({ text: res.msg })
+            this.$vux.toast.show({ text: res.msg, width: '11em' })
           }
         })
       } else {

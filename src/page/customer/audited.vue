@@ -1,5 +1,5 @@
 <template>
-  <div class="nobar hastool">
+  <div class="nobar" :class="{hastool: is_edit !== 1}">
     <div class="main_o">
       <div v-transfer-dom>
       <x-dialog v-model="xk" :mask-z-index="498" :dialog-style="{ zIndex: 499 }">
@@ -45,7 +45,10 @@
          </div>
        </template>
         </group>
-        <div class="caidan">
+        <div class="savebtn">
+        <x-button type="warn" @click.native="delItem" :disabled="!flag">删除</x-button>
+        </div>
+        <div class="caidan" v-if="is_edit !== 1">
         <div class="item" v-if="Edit">
           <span class="icon" @click="show(2)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
           <span class="text">审批否决</span>
@@ -58,6 +61,10 @@
           <span class="icon" @click="show(1)"><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
           <span class="text">审批通过</span>
         </div>
+        <div class="item" v-if="is_edit !== 0">
+          <span class="icon" @click="show(0)"><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
+          <span class="text">提交审批</span>
+        </div>
         </div>
       </div>
     </div>
@@ -65,8 +72,8 @@
 </template>
 
 <script>
-import { AllAdminApi, ApprovalLog, Approval, ERR_OK, CustomerApi, AllCustomer, DetailApi } from '@/api/api'
-import { XAddress, ChinaAddressV4Data, XDialog, XTextarea, XButton, Datetime, PopupPicker, XInput, Checklist, Popup } from 'vux'
+import { AllAdminApi, ApprovalLog, Approval, ERR_OK, CustomerApi, AllCustomer, DetailApi, DelThis, EditSave } from '@/api/api'
+import { XAddress, ChinaAddressV4Data, XDialog, XTextarea, XButton, Datetime, PopupPicker, XInput, Checklist, Popup, Tab, TabItem } from 'vux'
 import MultiPlayer from '@/page/common/multiplayer'
 export default {
   name: 'audited',
@@ -122,16 +129,21 @@ export default {
     PopupPicker,
     XInput,
     Checklist,
-    Popup
+    Popup,
+    Tab,
+    TabItem
   },
   created () {
     this.getInfos()
     this.getList()
     this.getAdmin()
     this.getAllCustomer()
-    this.$vux.bus.$on('delthis', () => {
-      console.log(1)
+    this.$vux.bus.$on('Addinfo', () => {
+      this.editSave()
     })
+  },
+  beforeDestroy () {
+    this.$vux.bus.$off('Addinfo')
   },
   methods: {
     getInfos () {
@@ -150,9 +162,7 @@ export default {
                   } else {
                     if (item.name === 'address') {
                       o.body[m] ? item.value = o.body[m].split(',') : item.value = []
-                      return
-                    }
-                    item.value = o.body[m]
+                    } else { item.value = o.body[m] }
                   }
                 }
               }
@@ -186,17 +196,80 @@ export default {
       this.k.person = value
       this.params.notice_uids = ids
     },
+    editSave () {
+      if (this.is_edit) {
+        if (!this.flag) return
+        let _that = this
+        let data = []
+        let g = []
+        this.list.forEach(item => { data.push({name: item.name, value: item.value}) })
+        data.forEach(item => {
+          if (!item.value) item.value = ''
+          if (typeof item.value === 'object') item.value = item.value.toString()
+        })
+        g.field_data = JSON.stringify(data)
+        g.row_id = this.$route.params.id
+        this.flag = false
+        EditSave(g, 'customer').then(res => {
+          if (ERR_OK === res.code) {
+            this.$vux.toast.show({
+              text: res.msg,
+              type: 'success',
+              onHide () { _that.flag = true }
+            })
+          } else {
+            this.$vux.toast.show({
+              text: res.msg,
+              width: '50%',
+              onHide () { _that.flag = true }
+            })
+          }
+        })
+      } else {
+        this.$vux.toast.show({ text: '审核状态下无法修改内容', width: '50%' })
+      }
+    },
     show (status) {
       if (!this.flag) return
       this.xk = !this.xk
       this.params.status = status
     },
     onShadowChange (ids, names) {
-      // this.note.forEach(item => {
-      //   if (item.name === 'provance') item.value = names[0]
-      //   if (item.name === 'city') item.value = names[1]
-      //   if (item.name === 'area') item.value = names[2]
-      // })
+      this.list.forEach(item => {
+        if (item.name === 'provance') item.value = names[0]
+        if (item.name === 'city') item.value = names[1]
+        if (item.name === 'area') item.value = names[2]
+      })
+    },
+    delItem () {
+      let _that = this
+      if (!this.flag) return
+      this.flag = false
+      this.$vux.confirm.show({
+        title: '删除后不可恢复',
+        onConfirm () {
+          DelThis({row_id: _that.$route.params.id}, 'customer').then(res => {
+            if (ERR_OK === res.code) {
+              _that.$vux.toast.show({
+                text: res.msg,
+                type: 'success',
+                onHide () {
+                  if (_that.is_edit === 1) {
+                    _that.$router.go(-2)
+                  } else {
+                    _that.$router.go(-1)
+                  }
+                } })
+            } else {
+              _that.flag = true
+              _that.$vux.toast.show({ text: res.msg })
+            }
+          })
+        },
+        onCancel () {
+          _that.flag = true
+        }
+      })
     },
     selectCharge (value) {
       this.list.forEach(item => {

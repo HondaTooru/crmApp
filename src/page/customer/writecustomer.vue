@@ -1,34 +1,34 @@
 <template>
-  <write-record :recordtype="k"></write-record>
+  <!-- <write-record :recordtype="k"></write-record> -->
 </template>
 
 <script>
 import WriteRecord from '@/page/common/writerecord'
-import { AllStatusApi } from '@/api/api'
+import { CousterType } from '@/api/api'
 
 export default {
-  name: 'writeclue',
+  name: 'writecustomer',
   data () {
     return {
       k: {
-        name: 'lead',
-        alias: '线索',
+        name: 'cusomter',
+        alias: '客户名称',
         status: '跟进记录',
         listStauts: [],
         value: []
       }
     }
   },
+  components: {
+    WriteRecord
+  },
   created () {
     this.getStatus()
   },
   methods: {
     getStatus () {
-      AllStatusApi().then(res => { res.data.forEach(item => { this.k.listStauts.push(item.name) }) })
+      CousterType().then(res => { res.data.forEach(item => { this.k.listStauts.push(item.showname) }) })
     }
-  },
-  components: {
-    WriteRecord
   }
 }
 </script>

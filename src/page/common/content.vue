@@ -88,7 +88,7 @@ export default {
             }
           }
         } else {
-          if (this.listData.length) this.$refs.scroll.disablePullup()
+          if (this.$refs.scroll) this.$refs.scroll.disablePullup()
           this.$vux.toast.show({text: '没有更多数据~', position: 'bottom'})
         }
       })
@@ -97,14 +97,14 @@ export default {
       setTimeout(() => {
         this.params.page = 1
         this.list(true, this.setown)
-        if (this.listData.length) this.$refs.scroll.reset({top: 0})
+        if (this.$refs.scroll) this.$refs.scroll.reset({top: 0})
       }, 1000)
     },
     loadMore () {
       setTimeout(() => {
         this.params.page ++
         this.list(false, this.setown)
-        if (this.listData.length) this.$refs.scroll.donePullup()
+        if (this.$refs.scroll) this.$refs.scroll.donePullup()
       }, 1000)
     },
     list_mm (o) {
@@ -121,7 +121,7 @@ export default {
   },
   computed: {
     vh_ () {
-      return window.innerHeight - 84 + 'px'
+      return window.innerHeight - 86 + 'px'
     }
   }
 }

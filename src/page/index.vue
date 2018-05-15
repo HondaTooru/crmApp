@@ -51,7 +51,7 @@
             <span v-if="route.path == '/mywork' && !gobalSett" @click="gosettingView">设置</span>
             <span v-if="gobalSett" @click="goSetting">设置</span>
             <span v-if="addData.indexOf($route.name) !== -1" class="save" @click="saveAdd"><i aria-hidden="true" class="fa fa-check-circle-o"></i>保存</span>
-            <span v-if="delBtns.indexOf($route.name) !== -1" class="save" @click="delthisbtn"><i class="fa fa-trash-o" aria-hidden="true"></i>删除</span>
+            <!-- <span v-if="delBtns.indexOf($route.name) !== -1" class="save" @click="delthisbtn"><i class="fa fa-trash-o" aria-hidden="true"></i>删除</span> -->
             <span v-if="addBtn.indexOf($route.name) !== -1" class="save" @click="addBtns">新增</span>
           </div>
         </x-header>
@@ -89,7 +89,7 @@
 import { XHeader, Drawer, ViewBox, Tabbar, TabbarItem, Popup, Radio, Actionsheet } from 'vux'
 import DropList from '@/page/common/dropList'
 import { mapState, mapActions } from 'vuex'
-import { ActionMenu, AddData, Menus, DropTitle, addBtn, delBtn } from '@/page/setting/menu'
+import { ActionMenu, AddData, Menus, DropTitle, addBtn } from '@/page/setting/menu'
 
 export default {
   name: 'index',
@@ -101,7 +101,6 @@ export default {
       addData: AddData,
       addBtn: addBtn,
       menus: Menus,
-      delBtns: delBtn,
       dropTitle: DropTitle
     }
   },

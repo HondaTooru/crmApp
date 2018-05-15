@@ -54,7 +54,7 @@ export default {
       },
       params: {
         row_id: this.$route.params.id,
-        tab_type: 'lead'
+        tab_type: this.$route.params.type
       }
     }
   },

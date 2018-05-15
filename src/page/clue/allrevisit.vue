@@ -46,7 +46,7 @@ export default {
     return {
       visitId: {visit_id: '', content: ''},
       showComments: false,
-      list: JSON.parse(localStorage.getItem('REVISIT_ALL'))
+      list: JSON.parse(localStorage.getItem('REVISIT_ALL')) || []
     }
   },
   methods: {
