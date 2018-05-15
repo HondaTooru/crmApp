@@ -21,7 +21,7 @@ export const TaskListApi = params => { return Vue.http.post('/crm/api/task', Obj
 export const TaskDone = params => { return Vue.http.post('/crm/api/task_done', Object.assign({}, USERID, params)).then(res => res.data) }
 export const TaskAdd = params => { return Vue.http.post('/crm/api/task_add', Object.assign({}, USERID, params), formatData).then(res => res.data) }
 export const EditSave = (params, name) => { return Vue.http.post('/crm/' + name + '/edit_save', Object.assign({}, USERID, params)).then(res => res.data) }
-export const DelThis = params => { return Vue.http.post('/crm/clue/del', Object.assign({}, USERID, params)).then(res => res.data) }
+export const DelThis = (params, name) => { return Vue.http.post('/crm/' + name + '/del', Object.assign({}, USERID, params)).then(res => res.data) }
 export const DelVisit = params => { return Vue.http.post('/crm/revisit/del_visit_record', Object.assign({}, USERID, params)).then(res => res.data) }
 export const DelComment = params => { return Vue.http.post('/crm/revisit/del_comment', Object.assign({}, USERID, params)).then(res => res.data) }
 export const SaveComment = params => { return Vue.http.post('/crm/revisit/save_comment', Object.assign({}, USERID, params)).then(res => res.data) }

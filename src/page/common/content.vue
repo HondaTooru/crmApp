@@ -104,7 +104,7 @@ export default {
       setTimeout(() => {
         this.params.page ++
         this.list(false, this.setown)
-        this.$refs.scroll.donePullup()
+        if (this.listData.length) this.$refs.scroll.donePullup()
       }, 1000)
     },
     list_mm (o) {

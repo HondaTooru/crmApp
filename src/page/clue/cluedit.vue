@@ -99,13 +99,13 @@ export default {
         content: '删除后不可恢复',
         onCancel () { _that.enableBtn = false },
         onConfirm () {
-          DelThis({row_id: _that.$route.params.id}).then(res => {
+          DelThis({row_id: _that.$route.params.id}, 'clue').then(res => {
             if (ERR_OK === res.code) {
               _that.$vux.toast.show({
                 text: res.msg,
                 type: 'success',
                 onHide () {
-                  _that.$router.replace('/clue')
+                  _that.$router.go(-2)
                 }
               })
             } else {
