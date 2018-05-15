@@ -11,7 +11,7 @@ export default {
   data () {
     return {
       k: {
-        name: 'cusomter',
+        name: 'customer',
         alias: '客户名称',
         status: '跟进记录',
         listStauts: [],

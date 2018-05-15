@@ -13,7 +13,7 @@ const AllRevisit = () => import('@/page/clue/allrevisit')
 const WriteClue = () => import('@/page/clue/writeclue')
 const Transfer = () => import('@/page/common/transfer')
 const ClueTransferc = () => import('@/page/clue/transformc')
-const ClueLog = () => import('@/page/clue/cluelog')
+const Log = () => import('@/page/common/log')
 const ClueattchMent = () => import('@/page/clue/clueattchment')
 const Checks = () => import('@/page/clue/checks')
 
@@ -57,7 +57,7 @@ export default new Router({
         { path: 'clueinfo/:id', name: 'clueinfo', component: ClueInfo, meta: { title: '线索详情' } },
         { path: 'clueAdd', name: 'clueAdd', component: AddClue, meta: { title: '新增线索' } },
         { path: 'cluedit/:id', name: 'cluedit', component: ClueEdit, meta: { title: '线索详情' } },
-        { path: 'cluelog/:id', name: 'cluelog', component: ClueLog, meta: { title: '操作日志' } },
+        { path: 'log/:name/:id', name: 'log', component: Log, meta: { title: '操作日志' } },
 
         { path: 'transfer/:type', name: 'transfer', component: Transfer, meta: { title: '转移线索' } },
         { path: 'clueattchment/:id', name: 'clueattchment', component: ClueattchMent, meta: { title: '附件' } },

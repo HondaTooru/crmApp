@@ -59,7 +59,7 @@
             <p class="text">附件</p>
             <p class="len">{{item.detail.other.attchment.length}}个</p>
           </router-link>
-          <router-link :to="'/cluelog/'+ $route.params.id" tag="div" class="om">
+          <router-link :to="'/log/clue/'+ $route.params.id" tag="div" class="om">
             <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
             <p class="text">操作日志</p>
             <p class="len">{{item.detail.other.log}}条</p>

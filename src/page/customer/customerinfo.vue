@@ -95,7 +95,7 @@
             <p class="text">附件</p>
             <p class="len">0个</p>
           </router-link>
-          <router-link :to="'/cluelog/'+ $route.params.id" tag="div" class="om">
+          <router-link :to="'/log/customer/'+ $route.params.id" tag="div" class="om">
             <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
             <p class="text">操作日志</p>
             <p class="len">0条</p>

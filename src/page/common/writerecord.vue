@@ -36,13 +36,14 @@ export default {
         revisit_way: []
       },
       params: {
+        record_type: this.recordtype.name,
         revisit_time: '',
         record: '',
-        revisit_next_time: '',
         customer: JSON.parse(localStorage.getItem('DETAIL_INFO')).body ? JSON.parse(localStorage.getItem('DETAIL_INFO')).body.username : JSON.parse(localStorage.getItem('DETAIL_INFO')).detail.body.username,
+        revisit_next_time: '',
         row_id: this.$route.params.id,
+        rowid: this.$route.params.id,
         contact: '',
-        record_type: this.recordtype.name,
         tip_uids: []
       }
     }
@@ -56,7 +57,6 @@ export default {
   created () {
     this.getList()
     this.$vux.bus.$on('Addinfo', () => {
-      console.log(1)
       this.saveRecord()
     })
   },
