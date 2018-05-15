@@ -1,5 +1,5 @@
 <template>
-  <!-- <write-record :recordtype="k"></write-record> -->
+  <write-record :recordtype="k"></write-record>
 </template>
 
 <script>

@@ -53,16 +53,16 @@ export default {
     PopupPicker,
     MultiPlayer
   },
-  // created () {
-  //   this.getList()
-  //   this.$vux.bus.$on('Addinfo', () => {
-  //     console.log(1)
-  //     this.saveRecord()
-  //   })
-  // },
-  // beforeDestroy () {
-  //   this.$vux.bus.$off('Addinfo')
-  // },
+  created () {
+    this.getList()
+    this.$vux.bus.$on('Addinfo', () => {
+      console.log(1)
+      this.saveRecord()
+    })
+  },
+  beforeDestroy () {
+    this.$vux.bus.$off('Addinfo')
+  },
   methods: {
     saveRecord () {
       if (this.flag) return
