@@ -48,25 +48,25 @@
         <div class="savebtn">
         <x-button type="warn" @click.native="delItem" :disabled="!flag">删除</x-button>
         </div>
-        <div class="caidan" v-if="is_edit !== 1">
-        <div class="item" v-if="Edit">
-          <span class="icon" @click="show(2)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-          <span class="text">审批否决</span>
-        </div>
-        <div class="item" @click="show(3)" v-if="Edit">
-          <span class="icon"><i class="fa fa-ban" aria-hidden="true"></i></span>
-          <span class="text">审批撤销</span>
-        </div>
-        <div class="item" v-if="Edit">
-          <span class="icon" @click="show(1)"><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
-          <span class="text">审批通过</span>
-        </div>
-        <div class="item" v-if="is_edit !== 0">
-          <span class="icon" @click="show(0)"><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
-          <span class="text">提交审批</span>
-        </div>
-        </div>
       </div>
+    </div>
+    <div class="caidan" v-if="is_edit !== 1">
+    <div class="item" v-if="Edit">
+      <span class="icon" @click="show(2)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+      <span class="text">审批否决</span>
+    </div>
+    <div class="item" @click="show(3)" v-if="Edit">
+      <span class="icon"><i class="fa fa-ban" aria-hidden="true"></i></span>
+      <span class="text">审批撤销</span>
+    </div>
+    <div class="item" v-if="Edit">
+      <span class="icon" @click="show(1)"><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
+      <span class="text">审批通过</span>
+    </div>
+    <div class="item" v-if="is_edit !== 0">
+      <span class="icon" @click="show(0)"><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
+      <span class="text">提交审批</span>
+    </div>
     </div>
   </div>
 </template>
