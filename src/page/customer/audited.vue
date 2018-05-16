@@ -51,19 +51,19 @@
       </div>
     </div>
     <div class="caidan" v-if="is_edit !== 1">
-    <div class="item" v-if="Edit">
+    <div class="tools" v-if="Edit">
       <span class="icon" @click="show(2)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
       <span class="text">审批否决</span>
     </div>
-    <div class="item" @click="show(3)" v-if="Edit">
+    <div class="tools" @click="show(3)" v-if="Edit">
       <span class="icon"><i class="fa fa-ban" aria-hidden="true"></i></span>
       <span class="text">审批撤销</span>
     </div>
-    <div class="item" v-if="Edit">
+    <div class="tools" v-if="Edit">
       <span class="icon" @click="show(1)"><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
       <span class="text">审批通过</span>
     </div>
-    <div class="item" v-if="is_edit !== 0">
+    <div class="tools" v-if="is_edit !== 0">
       <span class="icon" @click="show(0)"><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
       <span class="text">提交审批</span>
     </div>
@@ -375,7 +375,7 @@ export default {
   box-shadow: 1px 1px 20px 0px #35495e;
   border-top: 1px solid #6b6b6b;
   background:#35495e;
-  .item {
+  .tools {
     flex:1;
     color:white;
     text-align: center;

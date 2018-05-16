@@ -28,7 +28,7 @@
         </router-link>
       </div>
       <div class="section">
-        <router-link :to="'/allrevisit/' + $route.params.id" tag="h2">
+        <router-link :to="'/allrevisit/' + $route.params.id + '/customer'" tag="h2">
           <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>跟进记录({{len}})
         </router-link>
         <group :gutter="0">
@@ -121,7 +121,7 @@
 
 <script>
 import DetailContent from '@/page/common/detail'
-import { CousterType, SingleEditSave, ERR_OK } from '@/api/api'
+import { CousterType, SingleEditSave, RevisitApi, ERR_OK } from '@/api/api'
 import { Popup, Radio } from 'vux'
 // RevisitApi
 export default {
@@ -139,16 +139,16 @@ export default {
     }
   },
   created () {
-    // this.getList()
+    this.getList()
   },
   methods: {
-    // getList () {
-    //   RevisitApi({row_id: this.$route.params.id, record_type: 'lead'}).then(res => {
-    //     this.rList = res.data[0]
-    //     this.len = res.data.length
-    //     localStorage.setItem('REVISIT_ALL', JSON.stringify(res.data))
-    //   })
-    // },
+    getList () {
+      RevisitApi({row_id: this.$route.params.id, record_type: 'customer'}).then(res => {
+        this.rList = res.data[0]
+        this.len = res.data.length
+        localStorage.setItem('REVISIT_ALL', JSON.stringify(res.data))
+      })
+    },
     getStatus () {
       if (!this.status.length) {
         CousterType().then(res => {

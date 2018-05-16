@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-const Index = () => import('@/page/index')
-const Login = () => import('@/page/login')
-const AppHome = () => import('@/page/home/apphome')
-const MyWork = () => import('@/page/mywork/mywork')
-const Clue = () => import('@/page/clue/clue')
-const AddClue = () => import('@/page/clue/clueAdd')
-const ClueEdit = () => import('@/page/clue/cluedit')
-const ClueInfo = () => import('@/page/clue/clueinfo')
-const TaskList = () => import('@/page/common/task')
-const AllRevisit = () => import('@/page/clue/allrevisit')
+const Index = () => import('@/page/index') // 首页
+const Login = () => import('@/page/login') // 登录
+const AppHome = () => import('@/page/home/apphome') // 首页
+const MyWork = () => import('@/page/mywork/mywork')  // 我的工作
+const Clue = () => import('@/page/clue/clue')  //  线索列表
+const AddClue = () => import('@/page/clue/clueAdd')  //  新增线索
+const ClueEdit = () => import('@/page/clue/cluedit')  //  线索编辑
+const ClueInfo = () => import('@/page/clue/clueinfo') // 线索详情
+const TaskList = () => import('@/page/common/task') //  任务列表
+const AllRevisit = () => import('@/page/common/allrevisit') //  跟进记录
 const WriteClue = () => import('@/page/clue/writeclue')
 const Transfer = () => import('@/page/common/transfer')
 const ClueTransferc = () => import('@/page/clue/transformc')
@@ -33,12 +33,12 @@ const CustomerInfo = () => import('@/page/customer/customerinfo')
 const Common = () => import('@/page/customer/common')
 const WriteCustomer = () => import('@/page/customer/writecustomer') // 撰写线索跟进
 
-const Product = () => import('@/page/product/product')
-const ProductAdd = () => import('@/page/product/productAdd')
+const Product = () => import('@/page/product/product') // 产品列表
+const ProductAdd = () => import('@/page/product/productAdd')  // 添加产品
 const ProductInfo = () => import('@/page/product/productinfo') // 产品详情
 
-const Contact = () => import('@/page/contact/contact')
-const AddContact = () => import('@/page/contact/contactAdd')
+const Contact = () => import('@/page/contact/contact') // 联系人列表
+const AddContact = () => import('@/page/contact/contactAdd')  // 添加联系人
 
 const Opportunities = () => import('@/page/opportunities/opportunities') // 商机列表
 const OpportunitiesAdd = () => import('@/page/opportunities/opportunitiesAdd') // 增加商机
@@ -73,7 +73,7 @@ export default new Router({
         { path: 'clueattchment/:id', name: 'clueattchment', component: ClueattchMent, meta: { title: '附件' } },
         { path: 'transformc', name: 'transformc', component: ClueTransferc, meta: { title: '转成客户' } },
         { path: 'task/:id/:type', name: 'task', component: TaskList, meta: { title: '任务列表' } },
-        { path: 'allrevisit/:id', name: 'allrevisit', component: AllRevisit, meta: { title: '跟进记录' } },
+        { path: 'allrevisit/:id/:type', name: 'allrevisit', component: AllRevisit, meta: { title: '跟进记录' } },
 
         { path: 'viewlist', name: 'viewlist', component: ViewList, meta: { title: '功能设置' } },
         { path: 'contract', name: 'contract', component: Contract },
