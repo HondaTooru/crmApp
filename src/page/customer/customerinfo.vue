@@ -78,7 +78,7 @@
         <group :gutter="0" label-width="5em">
           <cell title="所属部门"></cell>
           <cell title="负责人"></cell>
-          <cell title="写作人"></cell>
+          <cell title="协作人"></cell>
         </group>
       </div>
       <div class="section top">

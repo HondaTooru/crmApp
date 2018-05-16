@@ -15,7 +15,8 @@ export default {
         alias: '客户名称',
         status: '跟进记录',
         listStauts: [],
-        value: []
+        value: [],
+        customer: JSON.parse(localStorage.getItem('DETAIL_INFO')).detail.body.username
       }
     }
   },

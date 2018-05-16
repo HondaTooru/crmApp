@@ -39,7 +39,7 @@ export default {
         record_type: this.recordtype.name,
         revisit_time: '',
         record: '',
-        customer: JSON.parse(localStorage.getItem('DETAIL_INFO')).body ? JSON.parse(localStorage.getItem('DETAIL_INFO')).body.username : JSON.parse(localStorage.getItem('DETAIL_INFO')).detail.body.username,
+        customer: this.recordtype.customer,
         revisit_next_time: '',
         row_id: this.$route.params.id,
         rowid: this.$route.params.id,

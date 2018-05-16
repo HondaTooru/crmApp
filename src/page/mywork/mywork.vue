@@ -1,12 +1,29 @@
 <template>
   <div>
     <group :gutter="0">
-      <h3 slot="title" class="main_">销售管理</h3>
+      <h3 slot="title" class="main_">销售支持</h3>
       <flexbox :gutter="0" wrap="wrap" class="wlist">
          <flexbox-item :span="1/4" v-for="(item, i) in menuList" :key="item.id">
            <router-link :to="{ name: item.name }" tag="div">
            <div class="icon" :class="'icon-'+[i]"><i class="fa" :class="getIcon(item.name)" aria-hidden="true"></i></div>
            <div class="text">{{item.showname}}</div>
+           </router-link>
+         </flexbox-item>
+      </flexbox>
+    </group>
+    <group :gutter="0">
+      <h3 slot="title" class="main_">其他信息</h3>
+      <flexbox :gutter="0" wrap="wrap" class="wlist">
+         <flexbox-item :span="1/4">
+           <router-link :to="{ name: '', params: {} }" tag="div">
+             <div class="icon icon-9"><i class="fa fa-users" aria-hidden="true"></i></div>
+             <div class="text">公海</div>
+           </router-link>
+         </flexbox-item>
+         <flexbox-item :span="1/4">
+           <router-link :to="{ name: '', params: {} }" tag="div">
+             <div class="icon icon-10"><i class="fa fa-bar-chart" aria-hidden="true"></i></div>
+             <div class="text">报表中心</div>
            </router-link>
          </flexbox-item>
       </flexbox>
@@ -104,6 +121,12 @@ export default {
       }
       &.icon-7{
         background-color:#ea4a85;
+      }
+      &.icon-9{
+        background:linear-gradient(-45deg, #54b5e6, #9054a5)
+      }
+      &.icon-10{
+        background:linear-gradient(top, #e05353, #312f30)
       }
     }
     .icon,.text {

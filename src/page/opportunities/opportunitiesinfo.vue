@@ -8,25 +8,15 @@
           </group>
         </popup>
       </div>
-      <router-link :to="'/cluedit/' + $route.params.id" tag="div" class="title">
+      <router-link :to="'/opportunitiesedit/' + $route.params.id" tag="div" class="title">
         <div class="mm">
-          <p class="user"><i class="fa fa-user" aria-hidden="true"></i>{{item.detail.body.username}}</p>
-          <p class="dsc">{{item.detail.body.company}}</p>
+          <p class="user"><i class="fa fa-briefcase" aria-hidden="true"></i>{{item.detail.body.title}}</p>
+          <p class="dsc">{{item.detail.body.per_department}}</p>
         </div>
         <div class="tag">
           <x-icon type="ios-arrow-forward" size="20" fill="white"></x-icon>
         </div>
       </router-link>
-      <div class="opt">
-        <div class="list" @click="getStatus">
-          <div class="name" ref="status">{{item.detail.body.status}}</div>
-          <div class="tag"><x-icon type="ios-arrow-forward" size="16" fill="white"></x-icon></div>
-        </div>
-        <router-link :to="'/task/' + $route.params.id + '/lead'" tag="div" class="list">
-          <div class="name">任务</div>
-          <div class="tag"><x-icon type="ios-arrow-forward" size="16" fill="white"></x-icon></div>
-        </router-link>
-      </div>
       <div class="section">
         <router-link :to="'/allrevisit/' + $route.params.id" tag="h2">
           <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>跟进记录({{len}})
@@ -42,12 +32,33 @@
         </group>
       </div>
       <div class="section top">
+        <router-link :to="'/allrevisit/' + $route.params.id" tag="h2">
+          <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>联系人
+        </router-link>
+        <group :gutter="0">
+          <div class="nodata">
+            暂无联系人记录
+          </div>
+        </group>
+      </div>
+      <div class="section top">
+        <router-link :to="'/allrevisit/' + $route.params.id" tag="h2">
+          <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>合同
+        </router-link>
+        <group :gutter="0">
+          <div class="nodata">
+            暂无合同记录
+          </div>
+        </group>
+      </div>
+      <div class="section top">
         <router-link :to="{ name: '', params: {} }" tag="h2">
           <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>销售团队
         </router-link>
         <group :gutter="0" label-width="5em">
-          <cell title="所属部门" :value="item.detail.sale_team.department"></cell>
-          <cell title="负责人" :value="item.detail.sale_team.fuzeren"></cell>
+          <cell title="所属部门"></cell>
+          <cell title="负责人"></cell>
+          <cell title="协作人"></cell>
         </group>
       </div>
       <div class="section top">
@@ -57,44 +68,39 @@
           <router-link :to="'/clueattchment/'+ $route.params.id" tag="div" class="om vux-1px-r">
             <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
             <p class="text">附件</p>
-            <p class="len">{{item.detail.other.attchment.length}}个</p>
+            <p class="len">0个</p>
           </router-link>
-          <router-link :to="'/log/clue/'+ $route.params.id" tag="div" class="om">
+          <router-link :to="'/log/opportunities/'+ $route.params.id" tag="div" class="om">
             <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
             <p class="text">操作日志</p>
-            <p class="len">{{item.detail.other.log}}条</p>
+            <p class="len">0条</p>
           </router-link>
         </div>
         </group>
       </div>
     </div>
-    <div class="caidan" slot="toolbar">
-      <router-link :to="'/writeclue/' + $route.params.id" tag="div" class="item">
+    <div class="caidan" slot="toolbar" slot-scope="item" v-if="item.detail">
+      <router-link :to="'/writeopportunities/' + $route.params.id" tag="div" class="item">
         <span class="icon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
         <span class="text">写跟进</span>
       </router-link>
-      <div class="item">
-        <a href="tel:15192715214">
-        <span class="icon"><i class="fa fa-phone-square" aria-hidden="true"></i></span>
-        <span class="text">电话</span>
-        </a>
-      </div>
+
     </div>
   </detail-content>
 </template>
 
 <script>
 import DetailContent from '@/page/common/detail'
-import { AllStatusApi, CludEdit, RevisitApi, ERR_OK } from '@/api/api'
+import { CousterType, SingleEditSave, RevisitApi, ERR_OK } from '@/api/api'
 import { Popup, Radio } from 'vux'
 // RevisitApi
 export default {
-  name: 'clueinfo',
+  name: 'customerinfo',
   data () {
     return {
       k: false,
       m: {
-        name: 'clue',
+        name: 'opportunities',
         flag: true
       },
       rList: null,
@@ -107,7 +113,7 @@ export default {
   },
   methods: {
     getList () {
-      RevisitApi({row_id: this.$route.params.id, record_type: 'lead'}).then(res => {
+      RevisitApi({row_id: this.$route.params.id, record_type: 'opportunity'}).then(res => {
         this.rList = res.data[0]
         this.len = res.data.length
         localStorage.setItem('REVISIT_ALL', JSON.stringify(res.data))
@@ -115,11 +121,11 @@ export default {
     },
     getStatus () {
       if (!this.status.length) {
-        AllStatusApi().then(res => {
+        CousterType().then(res => {
           if (ERR_OK === res.code) {
             this.k = !this.k
             res.data.forEach(item => {
-              this.status.push({key: item.id, value: item.name})
+              this.status.push({key: item.id, value: item.showname})
             })
           }
         })
@@ -130,7 +136,7 @@ export default {
     select (n, m) {
       this.$refs.status.innerText = m
       this.k = !this.k
-      CludEdit({row_id: this.$route.params.id, field_data: JSON.stringify([{name: 'status', value: m}])}).then(res => {
+      SingleEditSave({row_id: this.$route.params.id, field_data: JSON.stringify([{name: 'status', value: m}])}).then(res => {
         console.log(res)
       })
     }
@@ -179,6 +185,7 @@ export default {
       transform-origin: 0 0;
       transform: scaleY(0.5);
     }
+    &:after{display: none;}
     &:before {
       top: 0
     }

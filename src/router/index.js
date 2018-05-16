@@ -17,6 +17,10 @@ const Log = () => import('@/page/common/log')
 const ClueattchMent = () => import('@/page/clue/clueattchment')
 const Checks = () => import('@/page/clue/checks')
 
+const Notifications = () => import('@/page/panel/notifications') // 通知
+const Center = () => import('@/page/panel/setinfos') // 个人信息
+const UpdatePass = () => import('@/page/panel/updatepass') // 修改密码
+
 const SettingList = () => import('@/page/setting/settingList')
 const SettingView = () => import('@/page/setting/settingView')
 const ViewList = () => import('@/page/setting/viewList')
@@ -27,15 +31,21 @@ const AddCustomer = () => import('@/page/customer/customerAdd')
 const CustomerAudited = () => import('@/page/customer/audited')
 const CustomerInfo = () => import('@/page/customer/customerinfo')
 const Common = () => import('@/page/customer/common')
-const WriteCustomer = () => import('@/page/customer/writecustomer')
+const WriteCustomer = () => import('@/page/customer/writecustomer') // 撰写线索跟进
 
 const Product = () => import('@/page/product/product')
 const ProductAdd = () => import('@/page/product/productAdd')
+const ProductInfo = () => import('@/page/product/productinfo') // 产品详情
+
 const Contact = () => import('@/page/contact/contact')
 const AddContact = () => import('@/page/contact/contactAdd')
 
-const Opportunities = () => import('@/page/opportunities/opportunities')
-const OpportunitiesAdd = () => import('@/page/opportunities/opportunitiesAdd')
+const Opportunities = () => import('@/page/opportunities/opportunities') // 商机列表
+const OpportunitiesAdd = () => import('@/page/opportunities/opportunitiesAdd') // 增加商机
+const OpportunitiesInfo = () => import('@/page/opportunities/opportunitiesinfo') // 商机详情
+const OpportunitiesEdit = () => import('@/page/opportunities/opportunitiesedit') // 商机编辑
+const WriteOpportunities = () => import('@/page/opportunities/writeopportunities') // 撰写商机跟进
+
 const Payment = () => import('@/page/payment/payment')
 const Received = () => import('@/page/payment/Received')
 const PaymentRecord = () => import('@/page/payment/paymentRecord')
@@ -76,14 +86,22 @@ export default new Router({
         { path: 'writeclue/:id', name: 'writeclue', component: WriteClue, meta: { title: '新增线索跟进' } },
         { path: 'writecustomer/:id', name: 'writecustomer', component: WriteCustomer, meta: { title: '新增客户跟进' } },
         { path: 'checks/:type', name: 'checks', component: Checks, meta: { title: '查重信息' } },
-
+        { path: 'center', name: 'center', component: Center, meta: { title: '个人信息' } },
+        { path: 'notifications', name: 'notifications', component: Notifications, meta: { title: '提醒消息' } },
+        { path: 'updatepass', name: 'updatepass', component: UpdatePass, meta: { title: '修改密码' } },
         { path: 'product', name: 'product', component: Product, meta: { title: '产品列表' } },
         { path: 'productAdd', name: 'productAdd', component: ProductAdd, meta: { title: '新增产品' } },
+        { path: 'productinfo/:id', name: 'productinfo', component: ProductInfo, meta: { title: '产品详情' } },
+
         { path: 'contact', name: 'contact', component: Contact },
         { path: 'contactAdd', name: 'contactAdd', component: AddContact, meta: { title: '新增联系人' } },
 
         { path: 'opportunity', name: 'opportunity', component: Opportunities, meta: { title: '商机' } },
         { path: 'opportunityAdd', name: 'opportunityAdd', component: OpportunitiesAdd, meta: { title: '新增商机' } },
+        { path: 'opportunitiesinfo/:id', name: 'opportunitiesinfo', component: OpportunitiesInfo, meta: { title: '商机详情' } },
+        { path: 'opportunitiesedit/:id', name: 'opportunitiesedit', component: OpportunitiesEdit, meta: { title: '商机详情' } },
+        { path: 'writeopportunities/:id', name: 'writeopportunities', component: WriteOpportunities, meta: { title: '新增商机跟进' } },
+
         { path: 'payment', name: 'payment', component: Payment },
         { path: 'received', name: 'received', component: Received, meta: { title: '新增回款计划' } },
         { path: 'paymentRecord', name: 'paymentRecord', component: PaymentRecord, meta: { title: '新增回款记录' } },

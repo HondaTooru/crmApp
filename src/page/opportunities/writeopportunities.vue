@@ -4,19 +4,19 @@
 
 <script>
 import WriteRecord from '@/page/common/writerecord'
-import { AllStatusApi } from '@/api/api'
+import { OppoStage } from '@/api/api'
 
 export default {
   name: 'writeclue',
   data () {
     return {
       k: {
-        name: 'lead',
-        alias: '线索',
-        status: '跟进记录',
+        name: 'opportunity',
+        alias: '商机',
+        status: '销售阶段',
         listStauts: [],
         value: [],
-        customer: JSON.parse(localStorage.getItem('DETAIL_INFO')).body.username
+        customer: JSON.parse(localStorage.getItem('DETAIL_INFO')).body.title
       }
     }
   },
@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     getStatus () {
-      AllStatusApi().then(res => { res.data.forEach(item => { this.k.listStauts.push(item.name) }) })
+      OppoStage({stype: 'sale_stage'}).then(res => { res.data.forEach(item => { this.k.listStauts.push(item.showname) }) })
     }
   },
   components: {

@@ -1,6 +1,6 @@
-export const ActionMenu = ['clue', 'customer', 'contact', 'opportunity', 'contract', 'product', 'payment', 'clueinfo', 'customerinfo']
-export const AddData = ['CustomerAudited', 'common', 'transfer', 'transformc', 'clueAdd', 'customerAdd', 'cluedit', 'contactAdd', 'opportunityAdd', 'contractAdd', 'productAdd', 'received', 'writeclue', 'writecustomer']
-// export const delBtn = ['CustomerAudited']
+export const ActionMenu = ['clue', 'customer', 'contact', 'opportunity', 'contract', 'product', 'payment', 'clueinfo', 'customerinfo', 'opportunitiesinfo']
+export const AddData = ['productinfo', 'updatepass', 'center', 'CustomerAudited', 'common', 'transfer', 'transformc', 'clueAdd', 'customerAdd', 'cluedit', 'contactAdd', 'opportunityAdd', 'contractAdd', 'productAdd', 'received', 'writeclue', 'writecustomer', 'writeopportunities']
+export const delBtns = ['notifications']
 export const Menus = [
   [{label: '新增线索', link: 'clueAdd'}, {label: '线索查重', link: 'checks/lead'}],
   [{label: '新增客户', link: 'customerAdd'}, {label: '客户查重', link: 'checks/customer'}],
@@ -10,7 +10,8 @@ export const Menus = [
   [{label: '新增产品', link: 'productAdd'}],
   [{label: '新增回款计划', link: 'Received'}, {label: '新增回款记录', link: 'paymentRecord'}, {label: '新增开票记录', link: 'paymentMark'}],
   [{label: '转成客户', link: 'transformc'}, {label: '转移给他人', link: 'transfer/clue'}],
-  [{label: '转移至公海', link: 'common'}, {label: '转移给他人', link: 'transfer/customer'}]
+  [{label: '转移至公海', link: 'common'}, {label: '转移给他人', link: 'transfer/customer'}],
+  [{label: '增加联系', link: 'oaddcontact'}, {label: '转成合同 ', link: 'otransfer'}]
 ]
 export const addBtn = ['task']
 export const TaskList = ['打电话给该客户', '发邮件给该客户', '拜访该客户']

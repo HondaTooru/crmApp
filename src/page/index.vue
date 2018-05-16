@@ -15,22 +15,22 @@
         <view-box>
           <div>
             <div class="avatar">
-              <img src="../assets/avatar.jpg" alt="">
+              <img :src="userInfos.avatar" alt="">
             </div>
             <div class="info">
               <p class="name">
-                <span>叶倾城</span><span>高级主管</span>
+                <span>{{userInfos.username}}</span><span>{{userInfos._role}}</span>
               </p>
-              <p class="complany">天河科技</p>
+              <p class="complany">{{userInfos._group}}</p>
             </div>
             <ul class="list">
-              <router-link :to="{ name: '', params: {} }" tag="li"><i class="fa fa-bell" aria-hidden="true"></i>通知中心</router-link>
-              <router-link :to="{ name: '', params: {} }" tag="li"><i class="fa fa-th-large" aria-hidden="true"></i>应用管理</router-link>
-              <router-link :to="{ name: '', params: {} }" tag="li"><i class="fa fa-volume-up" aria-hidden="true"></i>公告</router-link>
+              <router-link to="/notifications" tag="li" @click.native="drawerVisibility = false"><i class="fa fa-bell" aria-hidden="true"></i>通知中心</router-link>
+              <router-link to="center" tag="li" @click.native="drawerVisibility = false"><i class="fa fa-cog" aria-hidden="true"></i>设置</router-link>
+              <router-link to="updatepass" tag="li" @click.native="drawerVisibility = false"><i class="fa fa-unlock-alt" aria-hidden="true"></i>修改密码</router-link>
+              <!-- <router-link :to="{ name: '', params: {} }" tag="li"><i class="fa fa-volume-up" aria-hidden="true"></i>公告</router-link>
               <router-link :to="{ name: '', params: {} }" tag="li"><i class="fa fa-address-book-o" aria-hidden="true"></i>公司通讯录</router-link>
-              <router-link :to="{ name: '', params: {} }" tag="li"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>常见问题</router-link>
-              <router-link :to="{ name: '', params: {} }" tag="li"><i class="fa fa-user-circle-o" aria-hidden="true"></i>关于我们</router-link>
-              <router-link :to="{ name: '', params: {} }" tag="li"><i class="fa fa-cog" aria-hidden="true"></i>设置</router-link>
+              <router-link :to="{ name: '', params: {} }" tag="li"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>常见问题</router-link> -->
+              <router-link :to="{ name: '', params: {} }" tag="li" @click.native="signOut"><i class="fa fa-sign-out" aria-hidden="true"></i>退出登录</router-link>
             </ul>
           </div>
         </view-box>
@@ -45,13 +45,13 @@
          <div slot="overwrite-title" class="com-title" v-if="this.dropTitle.indexOf(route.path) === -1">{{ gobalSett ? title : $route.meta.title }}</div>
          <drop-list slot="overwrite-title" class="com-title" v-if="this.dropTitle.indexOf(route.path) !== -1"></drop-list>
           <figure slot="overwrite-left" @click="drawerVisibility = !drawerVisibility" v-if="(route.path == '/' || route.path == '/mywork') && !gobalSett">
-            <img src="../assets/avatar.jpg">
+            <img :src="userInfos.avatar">
           </figure>
           <div slot="right" class="set">
             <span v-if="route.path == '/mywork' && !gobalSett" @click="gosettingView">设置</span>
             <span v-if="gobalSett" @click="goSetting">设置</span>
             <span v-if="addData.indexOf($route.name) !== -1" class="save" @click="saveAdd"><i aria-hidden="true" class="fa fa-check-circle-o"></i>保存</span>
-            <!-- <span v-if="delBtns.indexOf($route.name) !== -1" class="save" @click="delthisbtn"><i class="fa fa-trash-o" aria-hidden="true"></i>删除</span> -->
+            <span v-if="delBtns.indexOf($route.name) !== -1" class="save" @click="delthisbtn"><i class="fa fa-trash-o" aria-hidden="true"></i>清除</span>
             <span v-if="addBtn.indexOf($route.name) !== -1" class="save" @click="addBtns">新增</span>
           </div>
         </x-header>
@@ -89,7 +89,8 @@
 import { XHeader, Drawer, ViewBox, Tabbar, TabbarItem, Popup, Radio, Actionsheet } from 'vux'
 import DropList from '@/page/common/dropList'
 import { mapState, mapActions } from 'vuex'
-import { ActionMenu, AddData, Menus, DropTitle, addBtn } from '@/page/setting/menu'
+import { MemberInfo } from '@/api/api'
+import { ActionMenu, AddData, Menus, DropTitle, addBtn, delBtns } from '@/page/setting/menu'
 
 export default {
   name: 'index',
@@ -101,7 +102,9 @@ export default {
       addData: AddData,
       addBtn: addBtn,
       menus: Menus,
-      dropTitle: DropTitle
+      delBtns: delBtns,
+      dropTitle: DropTitle,
+      userInfos: {}
     }
   },
   mounted () {
@@ -176,7 +179,11 @@ export default {
       return 'vux-pop-' + (this.direction === 'forward' ? 'in' : 'out')
     }
   },
+  created () { this.getInfos() },
   methods: {
+    getInfos () {
+      MemberInfo().then(res => { this.userInfos = res.data })
+    },
     onShowModeChange (val) {
   /** hide drawer before changing showMode **/
       this.drawerVisibility = false
@@ -206,10 +213,20 @@ export default {
       this.$vux.bus.$emit('Addinfo')
     },
     delthisbtn () {
-      this.$vux.bus.$emit('delthis')
+      this.$vux.bus.$emit('DelInfo')
     },
     addBtns () {
       this.$vux.bus.$emit('AddBtn')
+    },
+    signOut () {
+      let _that = this
+      this.$vux.confirm.show({
+        content: '确认退出吗？',
+        onConfirm () {
+          localStorage.setItem('crm_user_data', '')
+          _that.$router.replace('login')
+        }
+      })
     },
     AddPage (n, i) {
       if (n) return

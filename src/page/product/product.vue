@@ -1,7 +1,7 @@
 <template>
  <div class="nobar">
    <Content :tData="comData">
-     <cell is-link slot="list" slot-scope="item">
+     <cell is-link slot="list" slot-scope="item" :link="'productinfo/' + item.o.id">
        <div class="_np" slot="title">{{item.o.title}}</div>
        <div slot="after-title" class="_nd">
          <div class="_ni">{{item.o.cate_id}}</div>

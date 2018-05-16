@@ -20,7 +20,7 @@
 
 <script>
 import { XInput, XButton } from 'vux'
-import { LoginApi, ERR_OK, USER_KEY } from '@/api/api'
+import { LoginApi, ERR_OK, USER_KEY } from '@/api/login'
 export default {
   name: 'login',
   data () {
