@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import { AllAdminApi, ApprovalLog, Approval, ERR_OK, CustomerApi, AllCustomer, DetailApi, DelThis, EditSave } from '@/api/api'
+import { ApprovalLog, Approval, ERR_OK, DetailApi, DelThis, EditSave, CListApi } from '@/api/api'
 import { XAddress, ChinaAddressV4Data, XDialog, XTextarea, XButton, Datetime, PopupPicker, XInput, Checklist, Popup, Tab, TabItem } from 'vux'
 import MultiPlayer from '@/page/common/multiplayer'
 export default {
@@ -82,27 +82,27 @@ export default {
       flag: true,
       is_edit: 0,
       k: {
-        name: 'customer',
+        name: 'contract',
         flag: false,
         xn: false,
         user_id: [],
         checks: []
       },
       n: {
-        status: [],
-        source: [],
-        customer_type: [],
-        industry: [],
+        opporttunity: [],
+        pi_status: [],
+        con_type: [],
+        pay_way: [],
         user_id: [],
-        cooperation: [],
-        parent_customer: []
+        user_id_2: [],
+        customer: []
       },
       params: {
         status: 0,
         row_id: this.$route.params.id,
         reason: '',
         notice_uids: [],
-        w_type: 'customer'
+        w_type: 'contract'
       },
       people: {
         xm: false,
@@ -136,8 +136,6 @@ export default {
   created () {
     this.getInfos()
     this.getList()
-    this.getAdmin()
-    this.getAllCustomer()
     this.$vux.bus.$on('Addinfo', () => {
       this.editSave()
     })
@@ -148,12 +146,12 @@ export default {
   methods: {
     getInfos () {
       let _that = this
-      DetailApi({row_id: this.$route.params.id}, 'customer').then(res => {
+      DetailApi({row_id: this.$route.params.id}, 'Contract').then(res => {
         if (ERR_OK === res.code) {
           let o = res.data.detail
           this.is_edit = o.body.be_approved
           o.header.forEach(item => {
-            if (item.name === 'parent_customer') item.field_type = 'drop'
+            if (item.name === 'customer') item.field_type = 'drop'
             for (let m in o.body) {
               if (item.name === m) {
                 if (o.body[m]) {
@@ -210,7 +208,7 @@ export default {
         g.field_data = JSON.stringify(data)
         g.row_id = this.$route.params.id
         this.flag = false
-        EditSave(g, 'customer').then(res => {
+        EditSave(g, 'contract').then(res => {
           if (ERR_OK === res.code) {
             this.$vux.toast.show({
               text: res.msg,
@@ -248,7 +246,7 @@ export default {
       this.$vux.confirm.show({
         title: '删除后不可恢复',
         onConfirm () {
-          DelThis({row_id: _that.$route.params.id}, this.k.name).then(res => {
+          DelThis({row_id: _that.$route.params.id}, 'Contract').then(res => {
             if (ERR_OK === res.code) {
               _that.$vux.toast.show({
                 text: res.msg,
@@ -300,32 +298,17 @@ export default {
       })
     },
     getList () {
-      CustomerApi().then(res => {
-        res[0].data.forEach(item => { this.n.status.push(item.showname) })
-        res[1].data.forEach(item => { this.n.source.push(item.showname) })
-        res[2].data.forEach(item => { this.n.industry.push(item.showname) })
-        res[3].data.forEach(item => { this.n.customer_type.push(item.showname) })
-      })
-    },
-    getAdmin () {
-      AllAdminApi().then(res => {
-        if (ERR_OK === res.code) {
-          res.data.forEach(item => {
-            this.n.user_id.push(item.username)
-            this.people.list.push({key: item.id, value: item.username})
-          })
-        }
+      CListApi().then(res => {
+        console.log(res)
+        res[0].data.forEach(item => { this.n.pay_way.push(item.showname) })
+        res[1].data.forEach(item => { this.n.con_type.push(item.showname) })
+        res[2].data.forEach(item => { this.n.pi_status.push(item.showname) })
+        res[3].data.forEach(item => { this.n.customer.push(item.username) })
+        res[4].data.forEach(item => {
+          this.n.user_id.push(item.username)
+          this.people.list.push({key: item.id, value: item.username})
+        })
         this.k.user_id = this.n.user_id
-        this.n.cooperation = this.n.user_id
-      })
-    },
-    getAllCustomer () {
-      AllCustomer().then(res => {
-        if (ERR_OK === res.code) {
-          res.data.forEach(item => {
-            this.n.parent_customer.push(item.username)
-          })
-        }
       })
     }
   },

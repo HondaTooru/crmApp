@@ -24,13 +24,21 @@ const UpdatePass = () => import('@/page/panel/updatepass') // 修改密码
 const SettingList = () => import('@/page/setting/settingList')
 const SettingView = () => import('@/page/setting/settingView')
 const ViewList = () => import('@/page/setting/viewList')
-const Contract = () => import('@/page/contract/contract')
-const AddContract = () => import('@/page/contract/contractAdd')
+const Contract = () => import('@/page/contract/contract') // 合同列表
+const ContractInfo = () => import('@/page/contract/contractinfo') // 合同详情
+const AddContract = () => import('@/page/contract/contractAdd') // 合同商机
+const WriteContract = () => import('@/page/contract/writecontract') // 撰写合同跟进
+const ContractAudited = () => import('@/page/contract/audited')
+const Plan = () => import('@/page/contract/plan')  // 回款计划~
+const ListInfo = () => import('@/page/contractlist/listinfo')  // 合同清单详细信息
+
 const Customer = () => import('@/page/customer/customer')
 const AddCustomer = () => import('@/page/customer/customerAdd')
 const CustomerAudited = () => import('@/page/customer/audited')
 const CustomerInfo = () => import('@/page/customer/customerinfo')
-const Common = () => import('@/page/customer/common')
+
+const Common = () => import('@/page/customer/common') // 公海列表
+const CustomerCommon = () => import('@/page/common/common')  // 公海
 const WriteCustomer = () => import('@/page/customer/writecustomer') // 撰写线索跟进
 
 const Product = () => import('@/page/product/product') // 产品列表
@@ -82,7 +90,13 @@ export default new Router({
         { path: 'customerinfo/:id', name: 'customerinfo', component: CustomerInfo, meta: { title: '客户详情' } },
         { path: 'customerAdd', name: 'customerAdd', component: AddCustomer, meta: { title: '新增客户' } },
         { path: 'common', name: 'common', component: Common, meta: { title: '转移至公海' } },
-        { path: 'customeraudited/:id', name: 'CustomerAudited', component: CustomerAudited, meta: { title: '客户详情' } },
+        { path: 'customeraudited/:id', name: 'customeraudited', component: CustomerAudited, meta: { title: '客户详情' } },
+        { path: 'contractinfo/:id', name: 'contractinfo', component: ContractInfo, meta: { title: '合同详情' } },
+        { path: 'contractaudited/:id', name: 'contractaudited', component: ContractAudited, meta: { title: '合同详情' } },
+        { path: 'writecontract/:id', name: 'writecontract', component: WriteContract, meta: { title: '新增合同跟进' } },
+        { path: 'plan', name: 'plan', component: Plan, meta: { title: '回款计划' } },
+        { path: 'customercommon', name: 'customercommon', component: CustomerCommon, meta: { title: '公海' } },
+
         { path: 'writeclue/:id', name: 'writeclue', component: WriteClue, meta: { title: '新增线索跟进' } },
         { path: 'writecustomer/:id', name: 'writecustomer', component: WriteCustomer, meta: { title: '新增客户跟进' } },
         { path: 'checks/:type', name: 'checks', component: Checks, meta: { title: '查重信息' } },
@@ -106,7 +120,8 @@ export default new Router({
         { path: 'received', name: 'received', component: Received, meta: { title: '新增回款计划' } },
         { path: 'paymentRecord', name: 'paymentRecord', component: PaymentRecord, meta: { title: '新增回款记录' } },
         { path: 'paymentMark', name: 'paymentMark', component: PaymentMark, meta: { title: '新增开票记录' } },
-        { path: 'contract_list', name: 'contract_list', component: ContractList, meta: { title: '合同清单' } }
+        { path: 'contract_list', name: 'contract_list', component: ContractList, meta: { title: '合同清单' } },
+        { path: 'listinfo/:id', name: 'listinfo', component: ListInfo, meta: { title: '合同清单详情' } }
       ]
     },
     {

@@ -17,6 +17,8 @@ const opRequest = parmas => { return Vue.http.post(oppo, Object.assign({}, USERI
 export const oppoApi = () => { return Vue.http.all(oparmas.map(opRequest)).then(Vue.http.spread((q, w, e) => [q, w, e])) } // 获取商机全部状态
 export const OppoStage = params => { return Vue.http.post(oppo, Object.assign({}, USERID, params)).then(res => res.data) }
 export const pContractApi = parmas => { return Vue.http.post('/crm/Payment/contract', Object.assign({}, USERID, parmas)).then(res => res.data) }
+export const PaymentIndex = parmas => { return Vue.http.post('/crm/payment/index', Object.assign({}, USERID, parmas)).then(res => res.data) }
+
 export const pContractInfoApi = params => { return Vue.http.post('/crm/Payment/contract_info', Object.assign({}, USERID, params)).then(res => res.data) }
 export const TaskListApi = params => { return Vue.http.post('/crm/api/task', Object.assign({}, USERID, params)).then(res => res.data) }
 export const TaskDone = params => { return Vue.http.post('/crm/api/task_done', Object.assign({}, USERID, params)).then(res => res.data) }
@@ -30,7 +32,7 @@ export const WriteRecord = params => { return Vue.http.post('/crm/api/visit_reco
 export const TransferRemove = (params, name) => { return Vue.http.post('/crm/' + name + '/remove', Object.assign({}, USERID, params), formatData).then(res => res.data) }
 export const BeCustomer = (params, name) => { return Vue.http.post('/crm/clue/be_customer' + name, Object.assign({}, USERID, params), formatData).then(res => res.data) }
 export const ApprovalLog = params => { return Vue.http.post('/crm/api/write_approval_log', Object.assign({}, USERID, params), formatData).then(res => res.data) }
-export const Approval = params => { return Vue.http.post('/crm/customer/approval', Object.assign({}, USERID, params), formatData).then(res => res.data) }
+export const Approval = (params, name) => { return Vue.http.post('/crm/' + name + '/approval', Object.assign({}, USERID, params), formatData).then(res => res.data) }
 export const GetLog = (params, name) => { return Vue.http.post('/crm/' + name + '/log', Object.assign({}, USERID, params), formatData).then(res => res.data) }
 export const CousterType = () => { return Vue.http.post(urls, Object.assign({}, USERID, prems[0])).then(res => res.data) }  // 客户状态
 export const SingleEditSave = params => { return Vue.http.post('/crm/customer/single_edit_save', Object.assign({}, USERID, params), formatData).then(res => res.data) }
@@ -46,6 +48,7 @@ export const SaveMemberInfo = params => { return Vue.http.post('/crm/api/save_me
 export const Upload = params => { return Vue.http.post('/crm/api/upload', Object.assign({}, USERID, params)).then(res => res.data) }  // 头像上传
 export const UpdataPass = params => { return Vue.http.post('/crm/api/change_pwd', Object.assign({}, USERID, params)).then(res => res.data) }  // 修改密码
 export const DelProduct = params => { return Vue.http.post('/crm/product/del_product', Object.assign({}, USERID, params), formatData).then(res => res.data) } // 删除产品
+export const ListDetail = params => { return Vue.http.post('/crm/ContractList/contract_list_detail', Object.assign({}, USERID, params), formatData).then(res => res.data) } // 合同清单详细信息
 
 export const PlanRecord = params => { return Vue.http.post('/crm/Payment/plan_record', Object.assign({}, USERID, params)).then(res => res.data) }
 export const qishuApi = params => { return Vue.http.post('/crm/Payment/qishu', Object.assign({}, USERID, params)).then(res => res.data) }
@@ -57,6 +60,7 @@ export const AddApi = (name, acct) => { return Vue.http.post('/crm/' + name + '/
 export const SaveAddApi = (parmas, name, o) => { return Vue.http.post('/crm/' + name + '/' + o, Object.assign({}, USERID, parmas), formatData).then(res => res.data) }
 export const AllStatusApi = () => { return Vue.http.post('/crm/api/all_status', USERID, formatData).then(res => res.data) }
 export const AllVisitApi = () => { return Vue.http.post('/crm/api/all_visit', USERID, formatData).then(res => res.data) }
+export const CustomerCommon = parmas => { return Vue.http.post('/crm/CustomerCommon/index', Object.assign({}, USERID, parmas), formatData).then(res => res.data) }
 // export const WhiteClueList = () => { return Vue.http.post([AllVisitApi(), AllStatusApi()]).then(Vue.http.spread((q, e) => [q, e])) }
 
 const AllSourceApi = () => { return Vue.http.post('/crm/api/all_source', USERID, formatData).then(res => res.data) }
@@ -76,7 +80,7 @@ const PayTypeApi = parmas => { return Vue.http.post('/crm/api/all_pay_type', Obj
 export const payRecord = () => { return Vue.http.all([PayWayApi(), PayTypeApi(), AllAdminApi(), AllCustomer()]).then(Vue.http.spread((q, e, r, s) => [q, e, r, s])) }
 export const addRecordApi = parmas => { return Vue.http.post('/crm/payment/add_plan_record', Object.assign({}, USERID, parmas)).then(res => res.data) }
 const ContractTypeApi = () => { return Vue.http.post('/crm/api/all_contract_type', Object.assign({}, USERID)).then(res => res.data) }
-const ContractStatusApi = () => { return Vue.http.post('/crm/api/all_contract_status', Object.assign({}, USERID)).then(res => res.data) }
+export const ContractStatusApi = () => { return Vue.http.post('/crm/api/all_contract_status', Object.assign({}, USERID)).then(res => res.data) }
 const Tickettype = () => { return Vue.http.post('/crm/api/all_ticket_type', Object.assign({}, USERID)).then(res => res.data) }
 export const contactList = () => { return Vue.http.all([AllAdminApi(), AllCustomer()]).then(Vue.http.spread((r, e) => [r, e])) }
 export const PaymentMark = () => { return Vue.http.all([AllAdminApi(), AllCustomer(), pContractApi(), Tickettype()]).then(Vue.http.spread((r, e, q, s) => [r, e, q, s])) }

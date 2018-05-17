@@ -8,17 +8,33 @@
           </group>
         </popup>
       </div>
-      <router-link :to="'/opportunitiesedit/' + $route.params.id" tag="div" class="title">
+      <router-link :to="'/contractaudited/' + $route.params.id" tag="div" class="title">
         <div class="mm">
-          <p class="user"><i class="fa fa-briefcase" aria-hidden="true"></i>{{item.detail.body.title}}</p>
-          <p class="dsc">{{item.detail.body.per_department}}</p>
+          <p class="user"><i class="fa fa-handshake-o" aria-hidden="true"></i>{{item.detail.detail.body.title}}</p>
+          <p class="dsc"><span class="vux-1px-r" style="padding-right:10px;margin-right:10px;">&yen;{{item.detail.detail.body.amount_money}}</span>
+                         <span>{{item.detail.detail.body.sign_date}}</span>
+          </p>
         </div>
         <div class="tag">
           <x-icon type="ios-arrow-forward" size="20" fill="white"></x-icon>
         </div>
       </router-link>
+      <router-link :to="{ name: '', params: {} }" tag="div" class="customer vux-1px-b">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        {{item.detail.detail.body.customer}}
+      </router-link>
+      <div class="opt">
+        <div class="list" @click="getStatus">
+          <div class="name" ref="status">{{item.detail.detail.body.pi_status}}</div>
+          <div class="tag"><x-icon type="ios-arrow-forward" size="16" fill="white"></x-icon></div>
+        </div>
+        <router-link :to="'/task/' + $route.params.id + '/contract'" tag="div" class="list">
+          <div class="name">任务</div>
+          <div class="tag"><x-icon type="ios-arrow-forward" size="16" fill="white"></x-icon></div>
+        </router-link>
+      </div>
       <div class="section">
-        <router-link :to="'/allrevisit/' + $route.params.id + '/opportunity'" tag="h2">
+        <router-link :to="'/allrevisit/' + $route.params.id + '/contract'" tag="h2">
           <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>跟进记录({{len}})
         </router-link>
         <group :gutter="0">
@@ -32,12 +48,39 @@
         </group>
       </div>
       <div class="section top">
-        <router-link :to="'/allrevisit/' + $route.params.id" tag="h2">
-          <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>联系人
+        <router-link to="/plan" tag="h2">
+          <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>回款计划(0)
         </router-link>
         <group :gutter="0">
-          <div class="nodata">
-            暂无联系人记录
+          <div class="payment">
+            <div class="jk">
+              <div class="icon"><span class="img"><i class="fa fa-usd" aria-hidden="true"></i></span></div>
+              <div class="data">
+                <p class="text">本月计划回款</p>
+                <p class="now_mo">&yen;0.00</p>
+              </div>
+            </div>
+            <div class="jk">
+              <div class="icon"><span class="img"><i class="fa fa-usd" aria-hidden="true"></i></span></div>
+              <div class="data">
+                <p class="text">本月回款</p>
+                <p class="now_mo">&yen;0.00</p>
+              </div>
+            </div>
+            <div class="jk">
+              <div class="icon"><span class="img"><i class="fa fa-usd" aria-hidden="true"></i></span></div>
+              <div class="data">
+                <p class="text">总已回款</p>
+                <p class="now_mo">&yen;0.00</p>
+              </div>
+            </div>
+            <div class="jk">
+              <div class="icon"><span class="img"><i class="fa fa-usd" aria-hidden="true"></i></span></div>
+              <div class="data">
+                <p class="text">总未回款</p>
+                <p class="now_mo">&yen;0.00</p>
+              </div>
+            </div>
           </div>
         </group>
       </div>
@@ -52,13 +95,13 @@
         </group>
       </div>
       <div class="section top">
-        <router-link :to="{ name: '', params: {} }" tag="h2">
-          <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>销售团队
+        <router-link :to="'/allrevisit/' + $route.params.id" tag="h2">
+          <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>联系人
         </router-link>
-        <group :gutter="0" label-width="5em">
-          <cell title="所属部门"></cell>
-          <cell title="负责人"></cell>
-          <cell title="协作人"></cell>
+        <group :gutter="0">
+          <div class="nodata">
+            暂无联系人记录
+          </div>
         </group>
       </div>
       <div class="section top">
@@ -70,7 +113,7 @@
             <p class="text">附件</p>
             <p class="len">0个</p>
           </router-link>
-          <router-link :to="'/log/opportunities/'+ $route.params.id" tag="div" class="om">
+          <router-link :to="'/log/customer/'+ $route.params.id" tag="div" class="om">
             <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
             <p class="text">操作日志</p>
             <p class="len">0条</p>
@@ -80,40 +123,49 @@
       </div>
     </div>
     <div class="caidan" slot="toolbar" slot-scope="item" v-if="item.detail">
-      <router-link :to="'/writeopportunities/' + $route.params.id" tag="div" class="item">
+      <router-link :to="'/writecontract/' + $route.params.id" tag="div" class="item">
         <span class="icon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
         <span class="text">写跟进</span>
       </router-link>
-
     </div>
   </detail-content>
 </template>
 
 <script>
 import DetailContent from '@/page/common/detail'
-import { CousterType, SingleEditSave, RevisitApi, ERR_OK } from '@/api/api'
+import { ContractStatusApi, SingleEditSave, RevisitApi, PaymentIndex, ERR_OK } from '@/api/api'
 import { Popup, Radio } from 'vux'
 // RevisitApi
 export default {
-  name: 'customerinfo',
+  name: 'contractinfo',
   data () {
     return {
       k: false,
       m: {
-        name: 'opportunities',
+        name: 'contract',
         flag: true
+      },
+      listPayment: [],
+      params: {
+        field: 'title',
+        keyword: ''
       },
       rList: null,
       len: 0,
-      status: []
+      status: [],
+      money: {
+        plan_back_money: 0,
+        back_money: 0
+      }
     }
   },
   created () {
     this.getList()
+    // this.getPayment()
   },
   methods: {
     getList () {
-      RevisitApi({row_id: this.$route.params.id, record_type: 'opportunity'}).then(res => {
+      RevisitApi({row_id: this.$route.params.id, record_type: this.m.name}).then(res => {
         this.rList = res.data[0]
         this.len = res.data.length
         localStorage.setItem('REVISIT_ALL', JSON.stringify(res.data))
@@ -121,7 +173,7 @@ export default {
     },
     getStatus () {
       if (!this.status.length) {
-        CousterType().then(res => {
+        ContractStatusApi().then(res => {
           if (ERR_OK === res.code) {
             this.k = !this.k
             res.data.forEach(item => {
@@ -132,6 +184,11 @@ export default {
       } else {
         this.k = !this.k
       }
+    },
+    getPayment () {
+      PaymentIndex(this.params).then(res => {
+        console.log(res)
+      })
     },
     select (n, m) {
       this.$refs.status.innerText = m
@@ -185,11 +242,11 @@ export default {
       transform-origin: 0 0;
       transform: scaleY(0.5);
     }
-    &:after{display: none;}
     &:before {
       top: 0
     }
   }
+  .customer { padding: 10px 15px;}
   .opt {
     display: flex;
     padding: 0 15px;
@@ -272,6 +329,38 @@ export default {
         &:after {
           position: absolute;
           content: '';
+        }
+      }
+    }
+    .payment {
+      overflow: hidden;
+      padding: 10px 15px;
+      .jk {
+        float:left;
+        width: 50%;
+        display: flex;
+        padding: 5px 0;
+        .icon {
+          width: 35px;position: relative;
+          .img {display: block;
+            height: 25px;
+            line-height: 25px;
+            width: 25px;
+            color:white;
+            background:#ff5c5c;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 14px;
+            position: absolute;
+            top:50%;
+            left: 50%;
+            transform:translate(-50%, -50%);
+            .fa {margin: 0}
+          }
+        }
+        .data {
+          flex: 1;
+          p.text{ font-size: 12px;color:#666}
         }
       }
     }

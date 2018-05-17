@@ -8,7 +8,7 @@
           </group>
         </popup>
       </div>
-      <router-link :to="'/cluedit/' + $route.params.id + '/lead'" tag="div" class="title">
+      <router-link :to="'/cluedit/' + $route.params.id" tag="div" class="title">
         <div class="mm">
           <p class="user"><i class="fa fa-user" aria-hidden="true"></i>{{item.detail.body.username}}</p>
           <p class="dsc">{{item.detail.body.company}}</p>
@@ -28,7 +28,7 @@
         </router-link>
       </div>
       <div class="section">
-        <router-link :to="'/allrevisit/' + $route.params.id" tag="h2">
+        <router-link :to="'/allrevisit/' + $route.params.id + '/lead'" tag="h2">
           <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>跟进记录({{len}})
         </router-link>
         <group :gutter="0">

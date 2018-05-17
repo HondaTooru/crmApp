@@ -1,7 +1,7 @@
 <template>
  <div class="nobar contract">
    <Content :tData="comData">
-     <cell is-link slot="list" slot-scope="item">
+     <cell is-link slot="list" slot-scope="item" :link="linkTo(item.o.be_approved, item.o.id)">
        <div class="_nn" slot="title">
          <div class="_nb" v-if="item.o.be_approved === 0" v-text="'待审核'"></div>
          <div class="_nb _nt" v-else-if="item.o.be_approved === 1" v-text="'已通过'"></div>
@@ -13,7 +13,7 @@
          <div class="_ni">{{item.o.customer}}</div>
          <div class="_na">&yen;{{item.o.amount_money}}</div>
        </div>
-       <div class="right">{{item.o.status}}</div>
+       <div class="right">{{item.o.pi_status}}</div>
      </cell>
    </Content>
  </div>
@@ -29,6 +29,11 @@ export default {
         name: 'contract',
         alias: 'Contract'
       }
+    }
+  },
+  methods: {
+    linkTo (type, ids) {
+      if (type === 1) { return 'contractinfo/' + ids } else { return 'contractaudited/' + ids }
     }
   },
   components: {
@@ -59,7 +64,8 @@ export default {
         transform: scale(0.5, 0.8) translateY(-50%);
       }}
       &._na {padding-left: 10px;max-width: 30%}
-      &._nt {background:#a26767}
+      &._nf {background:#c3c3c3}
+      &._nt {background:#da7f7f}
       &._ns {background:#9a9a9a}
       &._nc {background:#8c6396}
     }

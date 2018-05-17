@@ -50,7 +50,8 @@ export default {
         task: [],
         start_time: dateFormat(new Date(), 'YYYY-MM-DD HH:mm'),
         ti_remaind: [],
-        person: []
+        person: [],
+        tip_uids: []
       },
       params: {
         row_id: this.$route.params.id,
@@ -88,7 +89,7 @@ export default {
           if (ERR_OK === res.code) {
             this.people.xm = !this.people.xm
             res.data.forEach(item => {
-              this.people.list.push(item.username)
+              this.people.list.push({key: item.id, value: item.username})
             })
           }
         })
@@ -96,9 +97,10 @@ export default {
         this.people.xm = !this.people.xm
       }
     },
-    selctpeople (value) {
-      this.people.names = value.toString().trim()
-      this.k.person = value
+    selctpeople (value, label) {
+      this.people.names = label.toString().trim()
+      this.k.person = label
+      this.k.tip_uids = value
     },
     setDone (m) {
       let o = m.is_done === 1 ? 0 : 1

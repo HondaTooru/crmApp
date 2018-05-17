@@ -58,7 +58,7 @@
         <transition
         @after-enter="$vux.bus && $vux.bus.$emit('vux:after-view-enter')"
         :name="viewTransition" :css="!!direction">
-        <keep-alive :include="['apphome', 'mywork']">
+        <keep-alive :include="['apphome', 'mywork', 'common']">
         <router-view class="router-view"></router-view>
         </keep-alive>
       </transition>

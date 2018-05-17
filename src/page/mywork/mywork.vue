@@ -15,7 +15,7 @@
       <h3 slot="title" class="main_">其他信息</h3>
       <flexbox :gutter="0" wrap="wrap" class="wlist">
          <flexbox-item :span="1/4">
-           <router-link :to="{ name: '', params: {} }" tag="div">
+           <router-link to="/customercommon" tag="div">
              <div class="icon icon-9"><i class="fa fa-users" aria-hidden="true"></i></div>
              <div class="text">公海</div>
            </router-link>
@@ -24,6 +24,12 @@
            <router-link :to="{ name: '', params: {} }" tag="div">
              <div class="icon icon-10"><i class="fa fa-bar-chart" aria-hidden="true"></i></div>
              <div class="text">报表中心</div>
+           </router-link>
+         </flexbox-item>
+         <flexbox-item :span="1/4">
+           <router-link :to="{ name: '', params: {} }" tag="div">
+             <div class="icon icon-11"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+             <div class="text">跟进记录</div>
            </router-link>
          </flexbox-item>
       </flexbox>
@@ -127,6 +133,9 @@ export default {
       }
       &.icon-10{
         background:linear-gradient(top, #e05353, #312f30)
+      }
+      &.icon-11{
+        background:linear-gradient(top, #25a297, #5d5850)
       }
     }
     .icon,.text {
