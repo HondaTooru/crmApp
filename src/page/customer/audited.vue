@@ -248,7 +248,7 @@ export default {
       this.$vux.confirm.show({
         title: '删除后不可恢复',
         onConfirm () {
-          DelThis({row_id: _that.$route.params.id}, this.k.name).then(res => {
+          DelThis({row_id: _that.$route.params.id}, _that.k.name).then(res => {
             if (ERR_OK === res.code) {
               _that.$vux.toast.show({
                 text: res.msg,

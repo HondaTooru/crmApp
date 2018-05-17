@@ -43,7 +43,7 @@
         @on-click-more="Addmore = !Addmore"
         >
          <div slot="overwrite-title" class="com-title" v-if="this.dropTitle.indexOf(route.path) === -1">{{ gobalSett ? title : $route.meta.title }}</div>
-         <drop-list slot="overwrite-title" class="com-title" v-if="this.dropTitle.indexOf(route.path) !== -1"></drop-list>
+         <drop-list class="com-title" v-if="this.dropTitle.indexOf(route.path) !== -1"></drop-list>
           <figure slot="overwrite-left" @click="drawerVisibility = !drawerVisibility" v-if="(route.path == '/' || route.path == '/mywork') && !gobalSett">
             <img :src="userInfos.avatar">
           </figure>
@@ -58,7 +58,7 @@
         <transition
         @after-enter="$vux.bus && $vux.bus.$emit('vux:after-view-enter')"
         :name="viewTransition" :css="!!direction">
-        <keep-alive :include="['apphome', 'mywork', 'common']">
+        <keep-alive :include="include">
         <router-view class="router-view"></router-view>
         </keep-alive>
       </transition>
@@ -90,7 +90,7 @@ import { XHeader, Drawer, ViewBox, Tabbar, TabbarItem, Popup, Radio, Actionsheet
 import DropList from '@/page/common/dropList'
 import { mapState, mapActions } from 'vuex'
 import { MemberInfo } from '@/api/api'
-import { ActionMenu, AddData, Menus, DropTitle, addBtn, delBtns } from '@/page/setting/menu'
+import { ActionMenu, AddData, Menus, DropTitle, addBtn, delBtns, Include } from '@/page/setting/menu'
 
 export default {
   name: 'index',
@@ -104,6 +104,7 @@ export default {
       menus: Menus,
       delBtns: delBtns,
       dropTitle: DropTitle,
+      include: Include,
       userInfos: {}
     }
   },

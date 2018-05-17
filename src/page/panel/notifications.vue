@@ -3,13 +3,9 @@
     <div :style="{height: vh_}" class="_mm">
     <scroller v-if="listData.length" :height="vh_" lock-x use-pullup use-pulldown :scrollbar-x="false" @on-pullup-loading="loadMore" @on-pulldown-loading="refresh" ref="scroll" v-model="status">
         <group :gutter="0" v-if="listData.length">
-          <!-- <div v-for="m in listData" :key="m.id" class="_oo">
-            <slot :o="m" name="list"></slot>
-          </div> -->
           <cell v-for="m in listData" :key="m.id" @click.native="isRead(m)">
             <div slot="title"><i class="fa" :class="{'fa-envelope': !m.is_read, 'fa-envelope-o': m.is_read}" aria-hidden="true"></i>[{{m.showname}}]{{m.msg}}</div>
             <div slot="after-title" class="content">{{m.remark}}</div>
-            <!-- <div slot="inline-desc">{{m.log_type}}</div> -->
             <div slot="inline-desc" class="date"><i class="fa fa-clock-o" aria-hidden="true"></i>{{m.create_time}}</div>
           </cell>
        </group>
@@ -88,8 +84,18 @@ export default {
     },
     isRead (item) {
       NotificationsRead({row_id: item.id}).then(res => {
-        if (item.msg_type === 'customer') { this.$router.push('/CustomerInfo/' + item.row_id) }
-        if (item.msg_type === 'clue') { this.$router.push('/clueinfo/' + item.row_id) }
+        if (item.msg_type === 'customer') {
+          if (item.row_data.be_approved === 1) { this.$router.push('/CustomerInfo/' + item.row_id) } else {
+            this.$router.push('customeraudited/' + item.row_id)
+          }
+        }
+        if (item.msg_type === 'clue') { this.$router.push('clueinfo/' + item.row_id) }
+        if (item.msg_type === 'contract') {
+          if (item.row_data.be_approved === 1) { this.$router.push('/contractinfo/' + item.row_id) } else {
+            this.$router.push('contractaudited/' + item.row_id)
+          }
+        }
+        if (item.msg_type === 'opportunity') { this.$router.push('/opportunitiesedit/' + item.row_id) }
       })
     },
     delAll () {

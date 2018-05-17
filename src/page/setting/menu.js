@@ -16,7 +16,7 @@ export const Menus = [
 ]
 export const addBtn = ['task']
 export const TaskList = ['打电话给该客户', '发邮件给该客户', '拜访该客户']
-export const DropTitle = ['/clue', '/contract', '/contact', '/customer', '/payment', '/opportunity']
+export const DropTitle = ['/clue', '/contract', '/contact', '/customer', '/payment', '/opportunity', '/mark']
 export const OptionsTime = [
   { value: '0', name: '准时' },
   {value: '5', name: '提前5分钟'},
@@ -61,6 +61,14 @@ export const List = [
     data: [{ key: 0, value: '回款计划', tag: { name: 'my_own', value: 0 } },
     { key: 1, value: '回款记录', tag: { name: 'my_own', value: 0 } },
     { key: 2, value: '开票记录', tag: { name: 'my_own', value: 0 } },
-    { key: 3, value: '待审批的回款', tag: { name: 'my_own', value: 0 } }]}
+    { key: 3, value: '待审批的回款', tag: { name: 'my_own', value: 0 } }]},
+  {defaultVal:
+    {key: 0, value: '全部'},
+    data: [{ key: 0, value: '全部', tag: { name: 'my_own', value: 0 } },
+    {key: 1, value: '线索', tag: {name: 'my_own', value: 0}},
+    {key: 2, value: '客户', tag: {name: 'my_own', value: 0}},
+    {key: 3, value: '商机', tag: {name: 'my_own', value: 0}},
+    {key: 4, value: '合同', tag: {name: 'my_own', value: 0}}]}
 ]
-export const RouterName = ['clue', 'contract', 'contact', 'opportunity', 'customer', 'payment']
+export const RouterName = ['clue', 'contract', 'contact', 'opportunity', 'customer', 'payment', 'mark']
+export const Include = ['apphome', 'mywork', 'common', 'notifications']

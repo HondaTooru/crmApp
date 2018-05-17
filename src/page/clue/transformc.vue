@@ -113,7 +113,6 @@ export default {
     },
     getStatus () {
       AllClueAddAPi().then(res => {
-        console.log(res)
         res[0].data.forEach(item => { this.k.status.push(item.name) })
         res[1].data.forEach(item => { this.k.source.push(item.name) })
         res[2].data.forEach(item => { this.people.list.push(item.username) })

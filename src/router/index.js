@@ -10,12 +10,12 @@ const ClueEdit = () => import('@/page/clue/cluedit')  //  线索编辑
 const ClueInfo = () => import('@/page/clue/clueinfo') // 线索详情
 const TaskList = () => import('@/page/common/task') //  任务列表
 const AllRevisit = () => import('@/page/common/allrevisit') //  跟进记录
-const WriteClue = () => import('@/page/clue/writeclue')
-const Transfer = () => import('@/page/common/transfer')
-const ClueTransferc = () => import('@/page/clue/transformc')
-const Log = () => import('@/page/common/log')
-const ClueattchMent = () => import('@/page/clue/clueattchment')
-const Checks = () => import('@/page/clue/checks')
+const WriteClue = () => import('@/page/clue/writeclue') //  撰写线索跟进记录
+const Transfer = () => import('@/page/common/transfer') //  线索转成客户
+const ClueTransferc = () => import('@/page/clue/transformc')  //  线索转移给他人
+const Log = () => import('@/page/common/log')  // 操作日志
+const ClueattchMent = () => import('@/page/clue/clueattchment') // 附件
+const Checks = () => import('@/page/clue/checks')  // 查重
 
 const Notifications = () => import('@/page/panel/notifications') // 通知
 const Center = () => import('@/page/panel/setinfos') // 个人信息
@@ -28,17 +28,18 @@ const Contract = () => import('@/page/contract/contract') // 合同列表
 const ContractInfo = () => import('@/page/contract/contractinfo') // 合同详情
 const AddContract = () => import('@/page/contract/contractAdd') // 合同商机
 const WriteContract = () => import('@/page/contract/writecontract') // 撰写合同跟进
-const ContractAudited = () => import('@/page/contract/audited')
+const ContractAudited = () => import('@/page/contract/audited')  // 合同编辑
 const Plan = () => import('@/page/contract/plan')  // 回款计划~
 const ListInfo = () => import('@/page/contractlist/listinfo')  // 合同清单详细信息
 
-const Customer = () => import('@/page/customer/customer')
-const AddCustomer = () => import('@/page/customer/customerAdd')
-const CustomerAudited = () => import('@/page/customer/audited')
-const CustomerInfo = () => import('@/page/customer/customerinfo')
+const Customer = () => import('@/page/customer/customer')  //  客户列表
+const AddCustomer = () => import('@/page/customer/customerAdd') //  新增客户
+const CustomerAudited = () => import('@/page/customer/audited')  // 客户编辑
+const CustomerInfo = () => import('@/page/customer/customerinfo')  // 客户详情
 
 const Common = () => import('@/page/customer/common') // 公海列表
 const CustomerCommon = () => import('@/page/common/common')  // 公海
+const Mark = () => import('@/page/mywork/mark')  // 跟新记录
 const WriteCustomer = () => import('@/page/customer/writecustomer') // 撰写线索跟进
 
 const Product = () => import('@/page/product/product') // 产品列表
@@ -109,6 +110,7 @@ export default new Router({
 
         { path: 'contact', name: 'contact', component: Contact },
         { path: 'contactAdd', name: 'contactAdd', component: AddContact, meta: { title: '新增联系人' } },
+        { path: 'mark', name: 'mark', component: Mark, meta: { title: '跟进记录' } },
 
         { path: 'opportunity', name: 'opportunity', component: Opportunities, meta: { title: '商机' } },
         { path: 'opportunityAdd', name: 'opportunityAdd', component: OpportunitiesAdd, meta: { title: '新增商机' } },

@@ -27,7 +27,7 @@
            </router-link>
          </flexbox-item>
          <flexbox-item :span="1/4">
-           <router-link :to="{ name: '', params: {} }" tag="div">
+           <router-link to="mark" tag="div">
              <div class="icon icon-11"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>
              <div class="text">跟进记录</div>
            </router-link>

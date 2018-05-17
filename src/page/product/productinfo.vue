@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="nobar">
   <group :gutter="0">
     <x-input title="产品名称" v-model="infos.title" text-align="right"></x-input>
     <x-input title="产品单价" is-type="number" v-model.number="infos.unit_price" text-align="right"></x-input>
@@ -66,7 +66,6 @@ export default {
     },
     getInfo () {
       DetailApi({ row_id: this.$route.params.id }, 'product').then(res => {
-        console.log(res)
         this.infos = res.data.body
       })
     },
@@ -74,6 +73,8 @@ export default {
       EditSave(this.params, 'Product').then(res => {
         if (ERR_OK === res.code) {
         } else {}
+      }).catch(err => {
+        console.log(err)
       })
     }
   },

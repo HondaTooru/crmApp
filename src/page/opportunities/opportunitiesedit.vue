@@ -119,6 +119,7 @@ export default {
             }
             this.list.push(item)
           })
+          console.log(o)
           if (o.body['user_id']) this.k.checks = o.body['user_id'].split(',')
         } else {
           this.$vux.toast.show({
@@ -159,7 +160,10 @@ export default {
           this.$vux.toast.show({
             text: res.msg,
             type: 'success',
-            onHide () { _that.flag = true }
+            onHide () {
+              _that.flag = true
+              _that.$router.back()
+            }
           })
         } else {
           this.$vux.toast.show({
