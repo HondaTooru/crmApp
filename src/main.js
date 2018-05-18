@@ -7,7 +7,7 @@ import Vuex from 'vuex'
 import router from './router'
 import { sync } from 'vuex-router-sync'
 import { TransferDom, ConfirmPlugin, AjaxPlugin, CloseDialogsPlugin, AlertPlugin, LoadingPlugin, BusPlugin, ToastPlugin, Group, Cell } from 'vux'
-import 'font-awesome/css/font-awesome.css'
+import 'font-awesome/css/font-awesome.min.css'
 Vue.directive('transfer-dom', TransferDom)
 Vue.use(Vuex)
 
