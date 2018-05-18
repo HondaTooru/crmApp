@@ -19,6 +19,7 @@ export const OppoStage = params => { return Vue.http.post(oppo, Object.assign({}
 export const pContractApi = parmas => { return Vue.http.post('/crm/Payment/contract', Object.assign({}, USERID, parmas)).then(res => res.data) }
 export const PaymentIndex = parmas => { return Vue.http.post('/crm/payment/index', Object.assign({}, USERID, parmas)).then(res => res.data) }
 
+export const SaleReport = params => { return Vue.http.post('/crm/dashboard/sale_report', Object.assign({}, USERID, params)).then(res => res.data) } // 销售简报
 export const pContractInfoApi = params => { return Vue.http.post('/crm/Payment/contract_info', Object.assign({}, USERID, params)).then(res => res.data) }
 export const TaskListApi = params => { return Vue.http.post('/crm/api/task', Object.assign({}, USERID, params)).then(res => res.data) }
 export const TaskDone = params => { return Vue.http.post('/crm/api/task_done', Object.assign({}, USERID, params)).then(res => res.data) }

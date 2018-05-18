@@ -2,7 +2,7 @@
  <div class="nobar">
    <Content :tData="comData">
      <cell is-link slot="list" slot-scope="item">
-       <div class="_nk" slot="title"><i class="fa fa-user" aria-hidden="true"></i>{{item.o.customer}}
+       <div class="_nk" slot="title"><i class="fa fa-briefcase" aria-hidden="true"></i>{{item.o.title}}
        </div>
        <div slot="after-title" class="_nn">
          <div class="_ni">已回款：&yen;{{item.o.back_money}}</div>

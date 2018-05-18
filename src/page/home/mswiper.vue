@@ -2,9 +2,8 @@
   <swiper height="235px" dots-position="center" class="mswiper">
     <swiper-item>
       <div class="title vux-1px-b">
-        <span class="select"><popup-picker :data="list" v-model="value" @on-change="getTagList"></popup-picker></span>业绩目标</div>
+        <span class="select"><popup-picker :data="list" v-model="value" @on-change="getTagList"></popup-picker></span><span>业绩目标</span><span class="select"><popup-picker :data="list_" v-model="value_" @on-change="selectList" :columns="1" show-name></popup-picker></span></div>
       <div class="main aim">
-        <h2>赢单商业金额</h2>
         <div class="content">
             <div>
               <div class="circle" v-if="slideDate">
@@ -26,21 +25,21 @@
     </swiper-item>
     <swiper-item>
       <div class="title vux-1px-b">
-        <span class="select"><popup-picker :data="list" v-model="value" @on-change="list2"></popup-picker></span>销售业绩</div>
-        <div class="main list">
+        <span class="select"><popup-picker :data="list2" v-model="value2" @on-change="om"></popup-picker></span>销售简报</div>
+        <div class="main list" v-if="infos">
            <flexbox orient="vertical" :gutter="15">
              <flexbox-item>
                <flexbox>
                  <flexbox-item>
                    <div class="list-block">
                      <div><i class="fa fa-usd dollar" aria-hidden="true"></i></div>
-                     <div><p class="text">赢单商机总金额</p><p class="dollar"><span>&yen;</span>0</p></div>
+                     <div><p class="text">合同数</p><p class="dollar"><span></span>{{infos.contract.count}}</p></div>
                    </div>
                  </flexbox-item>
                  <flexbox-item>
                    <div class="list-block">
                      <div><i class="fa fa-usd dollar" aria-hidden="true"></i></div>
-                     <div><p class="text">赢单商机总单数</p><p class="dollar">0</p></div>
+                     <div><p class="text">合同总金额</p><p class="dollar"><span>&yen;</span>{{infos.contract.amount}}</p></div>
                    </div>
                  </flexbox-item>
                </flexbox>
@@ -50,13 +49,13 @@
                  <flexbox-item>
                    <div class="list-block">
                      <div><i class="fa fa-usd dollar" aria-hidden="true"></i></div>
-                     <div><p class="text">赢单商机单价</p><p class="dollar"><span>&yen;</span>0</p></div>
+                     <div><p class="text">已回款金额</p><p class="dollar"><span>&yen;</span>{{infos.contract.back_money}}</p></div>
                    </div>
                  </flexbox-item>
                  <flexbox-item>
                    <div class="list-block">
                      <div><i class="fa fa-briefcase backage" aria-hidden="true"></i></div>
-                     <div><p class="text">合同总金额</p><p class="dollar"><span>&yen;</span>0</p></div>
+                     <div><p class="text">线索数</p><p class="dollar">{{infos.newadd.clue_count}}</p></div>
                    </div>
                  </flexbox-item>
                </flexbox>
@@ -66,13 +65,13 @@
                  <flexbox-item>
                    <div class="list-block">
                      <div><i class="fa fa-briefcase backage" aria-hidden="true"></i></div>
-                     <div><p class="text">计划回款</p><p class="dollar"><span>&yen;</span>0</p></div>
+                     <div><p class="text">客户数</p><p class="dollar">{{infos.newadd.customer_count}}</p></div>
                    </div>
                  </flexbox-item>
                  <flexbox-item>
                    <div class="list-block">
                      <div><i class="fa fa-briefcase backage" aria-hidden="true"></i></div>
-                     <div><p class="text">实际回款</p><p class="dollar"><span>&yen;</span>0</p></div>
+                     <div><p class="text">商机数</p><p class="dollar">{{infos.newadd.oppo_count}}</p></div>
                    </div>
                  </flexbox-item>
                </flexbox>
@@ -82,21 +81,21 @@
     </swiper-item>
     <swiper-item>
       <div class="title vux-1px-b">
-      <span class="select"><popup-picker :data="list" v-model="value"></popup-picker></span>销售执行力</div>
-      <div class="main list">
+      <span class="select"><popup-picker :data="list2" v-model="value2"></popup-picker></span>销售简报</div>
+      <div class="main list" v-if="infos">
          <flexbox orient="vertical" :gutter="15">
            <flexbox-item>
              <flexbox>
                <flexbox-item>
                  <div class="list-block">
                    <div><i class="fa fa-pencil pencil" aria-hidden="true"></i></div>
-                   <div><p class="text">总跟进数</p><p class="dollar">74</p></div>
+                   <div><p class="text">预测签单数</p><p class="dollar">{{infos.yuce.sign_count}}</p></div>
                  </div>
                </flexbox-item>
                <flexbox-item>
                  <div class="list-block">
                    <div><i class="fa fa-map-marker marker" aria-hidden="true"></i></div>
-                   <div><p class="text">拜访签到数</p><p class="dollar">14</p></div>
+                   <div><p class="text">预计签单金额</p><p class="dollar"><span>&yen;</span>{{infos.yuce.sign_amount}}</p></div>
                  </div>
                </flexbox-item>
              </flexbox>
@@ -106,13 +105,13 @@
                <flexbox-item>
                  <div class="list-block">
                    <div><i class="fa fa-life-saver dollar" aria-hidden="true"></i></div>
-                   <div><p class="text">新增线索数</p><p class="dollar"><span>&yen;</span>10</p></div>
+                   <div><p class="text">计划回款金额</p><p class="dollar"><span>&yen;</span>{{infos.yuce.plan_back_money}}</p></div>
                  </div>
                </flexbox-item>
                <flexbox-item>
                  <div class="list-block">
                    <div><i class="fa fa-user-md user usermd" aria-hidden="true"></i></div>
-                   <div><p class="text">新增客户数</p><p class="dollar"><span>&yen;</span>27</p></div>
+                   <div><p class="text">写跟进次数</p><p class="dollar">{{infos.visit.visit_count}}</p></div>
                  </div>
                </flexbox-item>
              </flexbox>
@@ -122,13 +121,13 @@
                <flexbox-item>
                  <div class="list-block">
                    <div><i class="fa fa-dollar mon" aria-hidden="true"></i></div>
-                   <div><p class="text">新增商机数</p><p class="dollar"><span>&yen;</span>17</p></div>
+                   <div><p class="text">拜访面谈次数</p><p class="dollar">{{infos.visit.bai_count}}</p></div>
                  </div>
                </flexbox-item>
                <flexbox-item>
                  <div class="list-block">
                    <div><i class="fa fa-handshake-o backage handshake" aria-hidden="true"></i></div>
-                   <div><p class="text">新增合同数</p><p class="dollar"><span>&yen;</span>11</p></div>
+                   <div><p class="text">电话跟进次数</p><p class="dollar">{{infos.visit.phone_count}}</p></div>
                  </div>
                </flexbox-item>
              </flexbox>
@@ -171,7 +170,8 @@
 
 <script>
 import { Swiper, SwiperItem, PopupPicker, XCircle, Flexbox, FlexboxItem } from 'vux'
-import { SlideApi, ERR_OK } from '@/api/api'
+import { SlideApi, SaleReport, ERR_OK } from '@/api/api'
+
 export default {
   name: 'mswiper',
   components: {
@@ -184,9 +184,12 @@ export default {
   },
   data () {
     return {
-      value2: ['你好'],
       value: ['本月'],
+      value2: ['本月'],
+      value_: ['1'],
+      list_: [{value: '1', name: '赢单商机金额'}, {value: '2', name: '合同数'}],
       list: [['本月', '上个月', '本季', '上季', '今年', '去年']],
+      list2: [['本月', '上个月', '本季', '上季', '今年', '去年']],
       transformText: ['month', 'last month', 'three month', 'last three month', 'year', 'last year'],
       slideDate: null,
       strokeColor: '#3FC7FA',
@@ -194,11 +197,17 @@ export default {
         is_own: 0,
         module: 1,
         time_str: ''
-      }
+      },
+      params: {
+        is_own: 0,
+        time_str: 'month'
+      },
+      infos: null
     }
   },
   created () {
     this.getTagList()
+    this.om()
   },
   mounted () {
   },
@@ -215,7 +224,16 @@ export default {
         }
       })
     },
-    list2 () {
+    selectList (value, label) {
+      this.data.module = value.toString()
+      this.getTagList()
+    },
+    om () {
+      let n = this.transformText[this.list2[0].indexOf(this.value2[0])]
+      this.params.time_str = n
+      SaleReport(this.params).then(res => {
+        this.infos = res.data
+      })
     }
   },
   computed: {
@@ -243,20 +261,29 @@ export default {
     font-size: 14px;
     height: 35px;
     line-height: 40px;
-    span.select{
-      display: block;
-      width: auto;
-      float: right;
-      height: 100%;
-      position: relative;
-      line-height: 1.2;
-      &::before {
-        content: '';
-        position: absolute;
-        bottom:1px;
-        left:0;
-        width:100%;
-        border-bottom:2px solid #1cb0f1
+    span{
+      &.select{
+          display: block;
+          width: auto;
+          float: right;
+          height: 100%;
+          position: relative;
+          line-height: 1.2;
+          &::before {
+            content: '';
+            position: absolute;
+            bottom:1px;
+            left:0;
+            width:100%;
+            border-bottom:2px solid #1cb0f1
+          }
+       }
+      &:nth-of-type(n + 2) {
+        margin-right: 15px;
+        float:left;
+        &::before {
+          border-bottom-color: #c3c3c3
+        }
       }
     }
   }
@@ -282,9 +309,14 @@ export default {
         display: flex;
         &>div{
           flex: 1;
+          position:relative;
           .circle{
             width: 75%;
-            padding-left: 12%
+            max-width: 160px;
+            top:50%;
+            left: 50%;
+            position: absolute;
+            transform: translate(-50%, -50%);
           }
           .dsc{
             padding:15px 0 0 20px;
