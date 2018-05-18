@@ -6,12 +6,13 @@
        </popup>
     </div>
     <div class="main_o">
-      <div class="dx">
+      <div class="dx" v-if="list.length">
         <group :gutter="0" title="基本信息">
            <div v-for="m in list" v-if="m.required === 1" class="item">
              <x-input  :show-clear="false" :placeholder="'请输入' + m.showname" v-if="m.field_type === 'text' || m.field_type === 'decimal' || m.field_type === 'textarea'" :title="m.showname" v-model='m.value' text-align="right" :type="m.name.indexOf('tel') !== -1 ? 'tel' : 'text'" required></x-input>
              <datetime  v-model="m.value" :title="m.showname" v-if="m.field_type === 'date'" format="YYYY-MM-DD HH:mm"></datetime>
              <popup-picker  v-if="m.field_type === 'drop' && n[m.name].length" :popup-title="m.showname" :data="[n[m.name]]" :title="m.showname" v-model="m.value"></popup-picker>
+             <checklist :title="m.showname" :options="sexList" v-model="m.value" :max="1" v-if="m.field_type === 'radio'"></checklist>
            </div>
         </group>
         <group :gutter="0" title="其他信息">
@@ -25,8 +26,8 @@
        <template v-if="showContent">
          <div v-for="m in list" v-if="m.required === 0 && unless.indexOf(m.name) === -1" class="item">
            <x-input  :show-clear="false" :is-type="m.name.indexOf('tel') !== -1 ? 'china-mobile' : ''" :placeholder="'请输入' + m.showname" :title="m.showname" v-model='m.value' v-if="m.field_type === 'text' && m.name !== 'address' || m.field_type === 'decimal' || m.field_type === 'textarea' || m.field_type === 'email'" text-align="right" :type="m.name.indexOf('tel') !== -1 ? 'tel' : 'text'"></x-input>
-           <datetime  v-model="m.value" :title="m.showname" v-if="m.field_type === 'date'" format="YYYY-MM-DD HH:mm" :readonly="m.name === 'create_time'"></datetime>
-           <popup-picker  v-if="m.field_type === 'drop' && n[m.name].length && m.name !== 'user_id'" :popup-title="m.showname" :data="[n[m.name]]" :title="m.showname" v-model="m.value"></popup-picker>
+           <datetime  v-model="m.value" :title="m.showname" v-if="m.field_type === 'date'" format="YYYY-MM-DD" :readonly="m.name === 'create_time'"></datetime>
+           <x-address  @on-shadow-change="onShadowChange" :title="m.showname" v-model="m.value" :list="addressData" placeholder="请选择地址" :show.sync="showAddress"  v-if="m.name === 'address'"></x-address>
            <cell primary="content"  :title="m.showname" is-link @click.native="k.xn = !k.xn" v-model="m.value" v-if="m.name === 'user_id'"></cell>
          </div>
        </template>
@@ -40,36 +41,30 @@
 </template>
 
 <script>
-import { ERR_OK, DetailApi, DelThis, EditSave, AllCustomer, oppoApi, AllAdminApi, AllDepartmentApi } from '@/api/api'
-import { XButton, Datetime, PopupPicker, XInput, Checklist, Popup, Tab, TabItem } from 'vux'
+import { ERR_OK, DetailApi, DelThis, EditSave, AllCustomer, AllAdminApi } from '@/api/api'
+import { XButton, Datetime, PopupPicker, XInput, Checklist, Popup, XAddress, ChinaAddressV4Data } from 'vux'
 import MultiPlayer from '@/page/common/multiplayer'
 export default {
-  name: 'oppoaudited',
+  name: 'contactaudited',
   data () {
     return {
       flag: true,
       k: {
-        name: 'opportunities',
+        name: 'contact',
         flag: false,
         xn: false,
         user_id: [],
         checks: []
       },
       n: {
-        customer: [],
-        oppo_source: [],
-        oppo_type: [],
-        sales_phase: [],
-        user_id: [],
-        user_id_2: [],
-        want_department_id: [],
-        per_department: [],
-        per_user: []
+        customer: []
       },
       showAddress: false,
+      addressData: ChinaAddressV4Data,
       unless: ['provance', 'city', 'area', 'imgs'],
       showContent: false,
-      list: []
+      list: [],
+      sexList: ['男', '女']
     }
   },
   components: {
@@ -80,26 +75,23 @@ export default {
     XInput,
     Checklist,
     Popup,
-    Tab,
-    TabItem
+    XAddress
   },
   created () {
     this.getInfos()
     this.CustomerList()
-    this.getOppo()
     this.getAllCustomer()
-    this.getDepartment()
-    this.$vux.bus.$on('Addinfo', () => {
+    this.$vux.bus.$on('saveData', () => {
       this.editSave()
     })
   },
   beforeDestroy () {
-    this.$vux.bus.$off('Addinfo')
+    this.$vux.bus.$off('saveData')
   },
   methods: {
     getInfos () {
       let _that = this
-      DetailApi({row_id: this.$route.params.id}, 'opportunities').then(res => {
+      DetailApi({row_id: this.$route.params.id}, 'contact').then(res => {
         if (ERR_OK === res.code) {
           let o = res.data
           o.header.forEach(item => {
@@ -112,14 +104,13 @@ export default {
                   } else {
                     if (item.name === 'address') {
                       o.body[m] ? item.value = o.body[m].split(',') : item.value = []
-                    } else { item.value = o.body[m] }
+                    } else if (item.name === 'sex') { item.value = [o.body[m]] } else { item.value = o.body[m] }
                   }
                 }
               }
             }
             this.list.push(item)
           })
-          console.log(o)
           if (o.body['user_id']) this.k.checks = o.body['user_id'].split(',')
         } else {
           this.$vux.toast.show({
@@ -155,7 +146,7 @@ export default {
       g.field_data = JSON.stringify(data)
       g.row_id = this.$route.params.id
       this.flag = false
-      EditSave(g, 'opportunities').then(res => {
+      EditSave(g, 'contact').then(res => {
         if (ERR_OK === res.code) {
           this.$vux.toast.show({
             text: res.msg,
@@ -181,13 +172,13 @@ export default {
       this.$vux.confirm.show({
         title: '删除后不可恢复',
         onConfirm () {
-          DelThis({row_id: _that.$route.params.id}, 'opportunities').then(res => {
+          DelThis({row_id: _that.$route.params.id}, 'contact').then(res => {
             if (ERR_OK === res.code) {
               _that.$vux.toast.show({
                 text: res.msg,
                 type: 'success',
                 onHide () {
-                  _that.$router.replace('/opportunity')
+                  _that.$router.replace('/contact')
                 } })
             } else {
               _that.flag = true
@@ -216,31 +207,20 @@ export default {
         }
       })
     },
-    getOppo () {
-      oppoApi().then(res => {
-        res[0].data.forEach(item => { this.n.oppo_source.push(item.showname) })
-        res[1].data.forEach(item => { this.n.sales_phase.push(item.showname) })
-        res[2].data.forEach(item => { this.n.oppo_type.push(item.showname) })
-      })
-    },
     getAllCustomer () {
       AllAdminApi().then(res => {
         if (ERR_OK === res.code) {
           res.data.forEach(item => {
-            this.n.user_id.push(item.username)
+            this.k.user_id.push(item.username)
           })
         }
-        this.n.user_id_2 = this.n.per_user = this.k.user_id = this.n.user_id
       })
     },
-    getDepartment () {
-      AllDepartmentApi().then(res => {
-        if (ERR_OK === res.code) {
-          res.data.forEach(item => {
-            this.n.want_department_id.push(item.name)
-          })
-        }
-        this.n.per_department = this.n.want_department_id
+    onShadowChange (ids, names) {
+      this.list.forEach(item => {
+        if (item.name === 'provance') item.value = names[0]
+        if (item.name === 'city') item.value = names[1]
+        if (item.name === 'area') item.value = names[2]
       })
     }
   },

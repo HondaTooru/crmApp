@@ -252,11 +252,7 @@ export default {
                 text: res.msg,
                 type: 'success',
                 onHide () {
-                  if (_that.is_edit === 1) {
-                    _that.$router.go(-2)
-                  } else {
-                    _that.$router.go(-1)
-                  }
+                  _that.$router.replace('/contract')
                 } })
             } else {
               _that.flag = true
@@ -299,7 +295,6 @@ export default {
     },
     getList () {
       CListApi().then(res => {
-        console.log(res)
         res[0].data.forEach(item => { this.n.pay_way.push(item.showname) })
         res[1].data.forEach(item => { this.n.con_type.push(item.showname) })
         res[2].data.forEach(item => { this.n.pi_status.push(item.showname) })

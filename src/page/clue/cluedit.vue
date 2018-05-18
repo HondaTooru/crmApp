@@ -105,7 +105,7 @@ export default {
                 text: res.msg,
                 type: 'success',
                 onHide () {
-                  _that.$router.go(-2)
+                  _that.$router.replace('/clue')
                 }
               })
             } else {

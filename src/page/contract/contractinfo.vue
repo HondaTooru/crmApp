@@ -85,7 +85,7 @@
         </group>
       </div>
       <div class="section top">
-        <router-link :to="'/allrevisit/' + $route.params.id" tag="h2">
+        <router-link :to="{}" tag="h2">
           <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>合同
         </router-link>
         <group :gutter="0">
@@ -95,7 +95,7 @@
         </group>
       </div>
       <div class="section top">
-        <router-link :to="'/allrevisit/' + $route.params.id" tag="h2">
+        <router-link :to="{}" tag="h2">
           <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>联系人
         </router-link>
         <group :gutter="0">

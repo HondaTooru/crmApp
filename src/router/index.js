@@ -47,13 +47,18 @@ const ProductAdd = () => import('@/page/product/productAdd')  // 添加产品
 const ProductInfo = () => import('@/page/product/productinfo') // 产品详情
 
 const Contact = () => import('@/page/contact/contact') // 联系人列表
+const ContactAbout = () => import('@/page/contact/contactabout') // 联系人相关联系
 const AddContact = () => import('@/page/contact/contactAdd')  // 添加联系人
+const ContactInfo = () => import('@/page/contact/contactinfo')  // 编辑联系人
+const ContactOppo = () => import('@/page/contact/contactoppo') // 联系人商机
 
+const OppoAddContact = () => import('@/page/opportunities/addcontact') // 商机增加联系人
 const Opportunities = () => import('@/page/opportunities/opportunities') // 商机列表
 const OpportunitiesAdd = () => import('@/page/opportunities/opportunitiesAdd') // 增加商机
 const OpportunitiesInfo = () => import('@/page/opportunities/opportunitiesinfo') // 商机详情
 const OpportunitiesEdit = () => import('@/page/opportunities/opportunitiesedit') // 商机编辑
 const WriteOpportunities = () => import('@/page/opportunities/writeopportunities') // 撰写商机跟进
+const Oppoc = () => import('@/page/opportunities/oppoc')  // 转成合同
 
 const Payment = () => import('@/page/payment/payment')
 const Received = () => import('@/page/payment/Received')
@@ -110,12 +115,17 @@ export default new Router({
 
         { path: 'contact', name: 'contact', component: Contact },
         { path: 'contactAdd', name: 'contactAdd', component: AddContact, meta: { title: '新增联系人' } },
+        { path: 'contactabout/:id', name: 'contactabout', component: ContactAbout, meta: { title: '相关联系' } },
+        { path: 'contactinfo/:id', name: 'contactinfo', component: ContactInfo, meta: { title: '联系人详情' } },
+        { path: 'contactoppo/:id', name: 'contactoppo', component: ContactOppo, meta: { title: '商机' } },
         { path: 'mark', name: 'mark', component: Mark, meta: { title: '跟进记录' } },
 
         { path: 'opportunity', name: 'opportunity', component: Opportunities, meta: { title: '商机' } },
+        { path: 'oppoc/:id', name: 'oppoc', component: Oppoc, meta: { title: '转成合同' } },
         { path: 'opportunityAdd', name: 'opportunityAdd', component: OpportunitiesAdd, meta: { title: '新增商机' } },
         { path: 'opportunitiesinfo/:id', name: 'opportunitiesinfo', component: OpportunitiesInfo, meta: { title: '商机详情' } },
         { path: 'opportunitiesedit/:id', name: 'opportunitiesedit', component: OpportunitiesEdit, meta: { title: '商机详情' } },
+        { path: 'oppoaddcontact/:id', name: 'oppoaddcontact', component: OppoAddContact, meta: { title: '添加联系' } },
         { path: 'writeopportunities/:id', name: 'writeopportunities', component: WriteOpportunities, meta: { title: '新增商机跟进' } },
 
         { path: 'payment', name: 'payment', component: Payment },

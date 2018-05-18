@@ -11,13 +11,41 @@
       </div>
     </x-dialog>
   </div>
+  <div v-transfer-dom>
+    <popup v-model="oa" :popup-style="{backgroundColor: 'white'}" max-height="50%">
+       <radio :options="option" @on-change="change"></radio>
+    </popup>
+  </div>
+  <div v-transfer-dom>
+    <popup v-model="ox" :popup-style="{backgroundColor: 'white'}" max-height="50%">
+       <radio :options="option_" @on-change="change_" value="record"></radio>
+    </popup>
+  </div>
   <div :style="{height: vh_}" class="_mm">
+    <div class="search vux-1px-b">
+      <div class="content">
+        <div class="left" @click="oa = !oa">
+          <span>跟进类型</span>
+        </div>
+        <div class="left" @click="ox = !ox">
+          <span>搜索类型</span>
+        </div>
+        <div class="right">
+          <form action="" class="input-kw-form" @submit.prevent="searchWord">
+          <input class="keyword" type="search" autocomplete="off" v-model="params.keyword" placeholder="请输入关键词">
+        </form>
+        </div>
+      </div>
+    </div>
   <scroller v-if="listData.length" :height="vh_" lock-x use-pullup use-pulldown :scrollbar-x="false" @on-pullup-loading="loadMore" @on-pulldown-loading="refresh" ref="scroll" v-model="status">
     <group :gutter="0" class="revisitlist" v-if="list.length">
-      <cell v-for="item in listData" :key="item.id" :border-intent="false" align-items="flex-start">
-      <img slot="icon" class="avatar" :src="item.avatar">
+      <cell v-for="(item, i) in listData" :key="i" :border-intent="false" align-items="flex-start">
+      <div slot="icon" class="avatar" :style="{backgroundImage: 'url(' + item.avatar + ')'}"></div>
       <div slot="title">
-      <span class="rdate"> <i class="fa fa-clock-o" aria-hidden="true"></i>{{item.revisit_time}}<i class="fa fa-trash-o" aria-hidden="true" v-if="item.is_own" @click="delvisit(item)"></i></span>  <i class="fa fa-user" aria-hidden="true"></i> {{item.username}} <i class="fa fa-angle-right right_arrow" aria-hidden="true"></i> {{item.revisit_way}}
+      <span class="rdate"> <i class="fa fa-clock-o" aria-hidden="true"></i>{{item.revisit_time}}
+        <i class="fa fa-trash-o" aria-hidden="true" v-if="item.is_own" @click="delvisit(item)"></i></span>
+        <i class="fa fa-user" aria-hidden="true"></i> {{item.username}}
+        <i class="fa fa-angle-right right_arrow" aria-hidden="true"></i>{{item.revisit_way}}
       </div>
       <div slot="inline-desc" class="coments" v-if="item.comment.count">
          <div class="item" v-for="m in item.comment.data" :key="m.id">
@@ -52,9 +80,9 @@
 </template>
 
 <script>
-import { Scroller, Spinner, XDialog, XTextarea, XButton } from 'vux'
+import { Scroller, Spinner, XDialog, XTextarea, XButton, Popup, Radio } from 'vux'
 import EmptyData from '@/page/common/emptydata'
-import { ERR_OK, RevisitApi, DelVisit, DelComment, SaveComment } from '@/api/api'
+import { ERR_OK, RevisitApi, DelVisit, DelComment, SaveComment, AllVisitApi } from '@/api/api'
 // PlanRecord
 
 export default {
@@ -62,9 +90,13 @@ export default {
   data () {
     return {
       showComments: false,
+      option: [],
+      option_: [{key: 'record', value: '跟进类容'}, {key: 'username', value: '跟进人'}, {key: 'customer', value: '跟进客户'}],
+      oa: false,
+      ox: false,
       params: {
-        page: 0,
-        record_type: 'opportunity',
+        page: 1,
+        record_type: '',
         revisit_way: '',
         start_time: '',
         end_time: '',
@@ -82,6 +114,15 @@ export default {
   },
   created () {
     this.list()
+    this.getOptions()
+    this.$vux.bus.$on('getTypeList', msg => {
+      this.params.page = 1
+      this.params.record_type = msg.name
+      this.list(true)
+    })
+  },
+  beforeDestory () {
+    this.$vux.bus.$off('getTypeList')
   },
   methods: {
     list (flag, show) {
@@ -170,6 +211,28 @@ export default {
           this.$vux.toast.show({ text: res.msg, width: '15em', position: 'bottom' })
         }
       })
+    },
+    getOptions () {
+      AllVisitApi().then(res => {
+        res.data.forEach(item => { this.option.push(item.name) })
+      })
+    },
+    change (value) {
+      this.params.revisit_way = value
+      this.params.page = 1
+      this.list(true)
+      this.oa = !this.oa
+    },
+    change_ (value) {
+      this.params.field = value
+      this.ox = !this.ox
+    },
+    searchWord () {
+      if (this.params.keyword) {
+        this.list(true)
+      } else {
+        this.$vux.toast.show({text: '你想搜索什么呢~', width: '11em', position: 'bottom'})
+      }
     }
   },
   components: {
@@ -178,11 +241,13 @@ export default {
     EmptyData,
     XDialog,
     XTextarea,
-    XButton
+    XButton,
+    Popup,
+    Radio
   },
   computed: {
     vh_ () {
-      return window.innerHeight - 46 + 'px'
+      return window.innerHeight - 86 + 'px'
     },
     isClick () {
       return !this.visitId.content
@@ -228,12 +293,17 @@ font-size: 20px;
 }
 @borderColor: #65707b;
 .revisitlist {
+  position: relative;
+  top:-2px;
   .avatar {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     margin: 7px 5px 0 0;
     overflow: hidden;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
   }
   .right_arrow {
     padding: 0 0 0 7px;
@@ -293,6 +363,66 @@ font-size: 20px;
         border-right:8px solid  rgba(0,0,0,0);
         border-bottom:10px solid @borderColor;
         border-left:8px solid  rgba(0,0,0,0);
+      }
+    }
+  }
+}
+.search {
+  height: 20px;
+  line-height: 20px;
+  overflow: hidden;
+  padding: 10px 0;
+  position: relative;
+  z-index: 999;
+  background-color:white;
+  .content {
+    display: flex;
+    .left {
+      min-width: 100px;
+      text-align: center;
+      position: relative;
+      font-size: 14px;
+      &:after{
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 1px;
+        bottom: 0;
+        border-right: 1px solid #C7C7C7;
+        color: #C7C7C7;
+        transform-origin: 100% 0;
+        transform: scaleX(0.5);
+      }
+      &:before {
+        content: '❯';
+        position: absolute;
+        color:#C7C7C7;
+        right: 10px;
+        transform: rotate(90deg);
+      }
+      span {
+        width: 100%;
+        display: block;
+      }
+    }
+    .right {
+      flex:1;
+      padding:0 15px 0 30px;
+      background:url(../../assets/Search.svg) no-repeat 5px center/contain;
+      .input-kw-form {
+        overflow: hidden;
+        float:left;
+        height: 100%;
+        width: 100%;
+        .keyword {
+          appearance:none;
+          border: 0 none;
+          outline: 0 none;
+          height: 100%;
+          float:left;
+          width: 100%
+        }
       }
     }
   }

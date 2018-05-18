@@ -27,9 +27,6 @@
               <router-link to="/notifications" tag="li" @click.native="drawerVisibility = false"><i class="fa fa-bell" aria-hidden="true"></i>通知中心</router-link>
               <router-link to="center" tag="li" @click.native="drawerVisibility = false"><i class="fa fa-cog" aria-hidden="true"></i>设置</router-link>
               <router-link to="updatepass" tag="li" @click.native="drawerVisibility = false"><i class="fa fa-unlock-alt" aria-hidden="true"></i>修改密码</router-link>
-              <!-- <router-link :to="{ name: '', params: {} }" tag="li"><i class="fa fa-volume-up" aria-hidden="true"></i>公告</router-link>
-              <router-link :to="{ name: '', params: {} }" tag="li"><i class="fa fa-address-book-o" aria-hidden="true"></i>公司通讯录</router-link>
-              <router-link :to="{ name: '', params: {} }" tag="li"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>常见问题</router-link> -->
               <router-link :to="{ name: '', params: {} }" tag="li" @click.native="signOut"><i class="fa fa-sign-out" aria-hidden="true"></i>退出登录</router-link>
             </ul>
           </div>
@@ -43,7 +40,7 @@
         @on-click-more="Addmore = !Addmore"
         >
          <div slot="overwrite-title" class="com-title" v-if="this.dropTitle.indexOf(route.path) === -1">{{ gobalSett ? title : $route.meta.title }}</div>
-         <drop-list class="com-title" v-if="this.dropTitle.indexOf(route.path) !== -1"></drop-list>
+         <drop-list slot="overwrite-title" class="com-title" v-if="this.dropTitle.indexOf(route.path) !== -1"></drop-list>
           <figure slot="overwrite-left" @click="drawerVisibility = !drawerVisibility" v-if="(route.path == '/' || route.path == '/mywork') && !gobalSett">
             <img :src="userInfos.avatar">
           </figure>
@@ -52,7 +49,7 @@
             <span v-if="gobalSett" @click="goSetting">设置</span>
             <span v-if="addData.indexOf($route.name) !== -1" class="save" @click="saveAdd"><i aria-hidden="true" class="fa fa-check-circle-o"></i>保存</span>
             <span v-if="delBtns.indexOf($route.name) !== -1" class="save" @click="delthisbtn"><i class="fa fa-trash-o" aria-hidden="true"></i>清除</span>
-            <span v-if="addBtn.indexOf($route.name) !== -1" class="save" @click="addBtns">新增</span>
+            <span v-if="addBtn.indexOf($route.name) !== -1" class="save" @click="addBtns"><i class="fa fa-plus-circle" aria-hidden="true"></i>新增</span>
           </div>
         </x-header>
         <transition
@@ -231,7 +228,13 @@ export default {
     },
     AddPage (n, i) {
       if (n) return
-      this.$router.push('/' + i.link)
+      let id = this.$route.params.id
+      if (typeof id === 'undefined') id = ''
+      if (typeof i.link === 'object') {
+        this.$vux.bus.$emit('saveData')
+        return
+      }
+      this.$router.push('/' + i.link + id)
     },
     ...mapActions([
       'updateDemoPosition'

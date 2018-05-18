@@ -254,11 +254,7 @@ export default {
                 text: res.msg,
                 type: 'success',
                 onHide () {
-                  if (_that.is_edit === 1) {
-                    _that.$router.go(-2)
-                  } else {
-                    _that.$router.go(-1)
-                  }
+                  _that.$router.replace('/customer')
                 } })
             } else {
               _that.flag = true
