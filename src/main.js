@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import FastClick from 'fastclick'
-import App from './test'
+import App from './App'
 import Vuex from 'vuex'
 import router from './router'
 import { sync } from 'vuex-router-sync'
