@@ -3,6 +3,8 @@ import Router from 'vue-router'
 const Index = () => import('@/page/index') // 首页
 const Login = () => import('@/page/login') // 登录
 const AppHome = () => import('@/page/home/apphome') // 首页
+const NoticeShow = () => import('@/page/home/noticeshow') // 公告详情
+const NoticeMore = () => import('@/page/home/noticemore') // 更多公告
 const MyWork = () => import('@/page/mywork/mywork')  // 我的工作
 const Clue = () => import('@/page/clue/clue')  //  线索列表
 const AddClue = () => import('@/page/clue/clueAdd')  //  新增线索
@@ -107,7 +109,9 @@ export default new Router({
         { path: 'writecustomer/:id', name: 'writecustomer', component: WriteCustomer, meta: { title: '新增客户跟进' } },
         { path: 'checks/:type', name: 'checks', component: Checks, meta: { title: '查重信息' } },
         { path: 'center', name: 'center', component: Center, meta: { title: '个人信息' } },
-        { path: 'notifications', name: 'notifications', component: Notifications, meta: { title: '提醒消息' } },
+        { path: 'notifications', name: 'notifications', component: Notifications, meta: { title: '通知中心' } },
+        { path: 'noticeshow/:id', name: 'noticeshow', component: NoticeShow, meta: { title: '公告详情' } },
+        { path: 'noticemore', name: 'noticemore', component: NoticeMore, meta: { title: '公告列表' } },
         { path: 'updatepass', name: 'updatepass', component: UpdatePass, meta: { title: '修改密码' } },
         { path: 'product', name: 'product', component: Product, meta: { title: '产品列表' } },
         { path: 'productAdd', name: 'productAdd', component: ProductAdd, meta: { title: '新增产品' } },

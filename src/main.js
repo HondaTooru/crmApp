@@ -12,6 +12,7 @@ Vue.directive('transfer-dom', TransferDom)
 Vue.use(Vuex)
 
 FastClick.attach(document.body)
+Vue.prototype.$devicePixelRatio = 2
 // no transitoin in demo site
 const shouldUseTransition = !/transition=none/.test(location.href)
 const store = new Vuex.Store({})

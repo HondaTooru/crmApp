@@ -32,7 +32,7 @@
                <flexbox>
                  <flexbox-item>
                    <div class="list-block">
-                     <div><i class="fa fa-usd dollar" aria-hidden="true"></i></div>
+                     <div><i class="fa fa-handshake-o" aria-hidden="true"></i></div>
                      <div><p class="text">合同数</p><p class="dollar"><span></span>{{infos.contract.count}}</p></div>
                    </div>
                  </flexbox-item>
@@ -54,7 +54,7 @@
                  </flexbox-item>
                  <flexbox-item>
                    <div class="list-block">
-                     <div><i class="fa fa-briefcase backage" aria-hidden="true"></i></div>
+                     <div><i class="fa fa-crosshairs clue" aria-hidden="true"></i></div>
                      <div><p class="text">线索数</p><p class="dollar">{{infos.newadd.clue_count}}</p></div>
                    </div>
                  </flexbox-item>
@@ -64,7 +64,7 @@
                <flexbox>
                  <flexbox-item>
                    <div class="list-block">
-                     <div><i class="fa fa-briefcase backage" aria-hidden="true"></i></div>
+                     <div><i class="fa fa-users backage" aria-hidden="true"></i></div>
                      <div><p class="text">客户数</p><p class="dollar">{{infos.newadd.customer_count}}</p></div>
                    </div>
                  </flexbox-item>
@@ -94,7 +94,7 @@
                </flexbox-item>
                <flexbox-item>
                  <div class="list-block">
-                   <div><i class="fa fa-map-marker marker" aria-hidden="true"></i></div>
+                   <div><i class="fa fa-usd dollar" aria-hidden="true"></i></div>
                    <div><p class="text">预计签单金额</p><p class="dollar"><span>&yen;</span>{{infos.yuce.sign_amount}}</p></div>
                  </div>
                </flexbox-item>
@@ -104,13 +104,13 @@
              <flexbox>
                <flexbox-item>
                  <div class="list-block">
-                   <div><i class="fa fa-life-saver dollar" aria-hidden="true"></i></div>
+                   <div><i class="fa fa-usd dollar" aria-hidden="true"></i></div>
                    <div><p class="text">计划回款金额</p><p class="dollar"><span>&yen;</span>{{infos.yuce.plan_back_money}}</p></div>
                  </div>
                </flexbox-item>
                <flexbox-item>
                  <div class="list-block">
-                   <div><i class="fa fa-user-md user usermd" aria-hidden="true"></i></div>
+                   <div><i class="fa fa-pencil-square-o user usermd" aria-hidden="true"></i></div>
                    <div><p class="text">写跟进次数</p><p class="dollar">{{infos.visit.visit_count}}</p></div>
                  </div>
                </flexbox-item>
@@ -120,13 +120,13 @@
              <flexbox>
                <flexbox-item>
                  <div class="list-block">
-                   <div><i class="fa fa-dollar mon" aria-hidden="true"></i></div>
+                   <div><i class="fa fa-comments-o mon" aria-hidden="true"></i></div>
                    <div><p class="text">拜访面谈次数</p><p class="dollar">{{infos.visit.bai_count}}</p></div>
                  </div>
                </flexbox-item>
                <flexbox-item>
                  <div class="list-block">
-                   <div><i class="fa fa-handshake-o backage handshake" aria-hidden="true"></i></div>
+                   <div><i class="fa fa-phone backage handshake" aria-hidden="true"></i></div>
                    <div><p class="text">电话跟进次数</p><p class="dollar">{{infos.visit.phone_count}}</p></div>
                  </div>
                </flexbox-item>

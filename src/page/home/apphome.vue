@@ -1,14 +1,9 @@
 <template>
   <div class="crm">
-      <section>
-        <m-swiper :info="tagList"></m-swiper>
-      </section>
-      <section>
-        <m-work></m-work>
-      </section>
-      <section>
-        <m-schedule></m-schedule>
-      </section>
+      <section><m-swiper :info="tagList"></m-swiper></section>
+      <section><m-sale></m-sale></section>
+      <section><m-work></m-work></section>
+      <section><m-schedule></m-schedule></section>
   </div>
 </template>
 
@@ -16,6 +11,7 @@
 import MSwiper from './mswiper'
 import MWork from './mwork'
 import MSchedule from './mschedule'
+import MSale from './msale'
 
 export default {
   name: 'apphome',
@@ -27,7 +23,8 @@ export default {
   components: {
     MSwiper,
     MWork,
-    MSchedule
+    MSchedule,
+    MSale
   }
 }
 </script>
