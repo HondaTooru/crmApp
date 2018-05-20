@@ -68,6 +68,7 @@ export const CustomerCommon = parmas => { return Vue.http.post('/crm/CustomerCom
 export const ContactListApi = params => { return Vue.http.post('/crm/contact/contact_list', Object.assign({}, USERID, params), formatData).then(res => res.data) }
 export const BeContact = params => { return Vue.http.post('/crm/opportunities/be_contract', Object.assign({}, USERID, params), formatData).then(res => res.data) }
 export const BeContactSave = params => { return Vue.http.post('/crm/opportunities/be_contract_save', Object.assign({}, USERID, params), formatData).then(res => res.data) }
+export const PlanRecordDetail = params => { return Vue.http.post('/crm/payment/plan_record_detail', Object.assign({}, USERID, params), formatData).then(res => res.data) }
 // export const WhiteClueList = () => { return Vue.http.post([AllVisitApi(), AllStatusApi()]).then(Vue.http.spread((q, e) => [q, e])) }
 
 const AllSourceApi = () => { return Vue.http.post('/crm/api/all_source', USERID, formatData).then(res => res.data) }

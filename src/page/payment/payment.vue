@@ -22,13 +22,37 @@
     <div :style="{height: vh_}" class="_mm">
     <scroller v-if="listData.length" :height="vh_" lock-x use-pullup use-pulldown :scrollbar-x="false" @on-pullup-loading="loadMore" @on-pulldown-loading="refresh" ref="scroll" v-model="status">
         <group :gutter="0" v-if="listData.length" class="lisgroup">
-          <cell v-for="item in listData" :key="item.id" :link="'/pinfos/' + item.id" is-link>
+          <cell v-for="item in listData" v-if="tag === 0" :key="item.id" :link="'/pinfos/' + item.id" is-link>
+            <div slot="title"><i class="fa fa-user" aria-hidden="true"></i>{{item.customer}}</div>
+            <div slot="after-title" class="after">
+              <div class="line _ni"><i class="fa fa-briefcase" aria-hidden="true"></i>{{item.title}}</div>
+              <div class="line _na">&yen;{{item.amount_money}}</div>
+            </div>
+            <div class="min">{{item.status}}</div>
+          </cell>
+          <cell v-for="item in listData" v-if="tag === 1" :key="item.id" :link="'/recorddetail/' + item.id" is-link>
+            <div slot="title"><i class="fa fa-briefcase" aria-hidden="true"></i>{{item.title}}</div>
+            <div slot="after-title" class="after">
+              <div class="line _ni">&yen;{{item.back_money}}</div>
+              <div class="line _na"><i class="fa fa-clock-o" aria-hidden="true"></i>{{item.back_date}}</div>
+            </div>
+            <div class="min">{{item.pay_way}}</div>
+          </cell>
+          <cell v-for="item in listData" v-if="tag === 2" :key="item.id" :link="'/pinfos/' + item.id" is-link>
             <div slot="title"><i class="fa fa-user" aria-hidden="true"></i>{{item.customer}}</div>
             <div slot="after-title" class="after">
               <div class="_ni"><i class="fa fa-briefcase" aria-hidden="true"></i>{{item.title}}</div>
-              <div class="_na">&yen;{{item.amount_money}}</div>
+              <div class="_na"><i class="fa fa-clock-o" aria-hidden="true"></i>{{item.back_date}}</div>
             </div>
-            <div>{{item.status}}</div>
+            <div class="min">{{item.ticket_type}}</div>
+          </cell>
+          <cell v-for="item in listData" v-if="tag === 3" :key="item.id" :link="'/pinfos/' + item.id" is-link>
+            <div slot="title"><i class="fa fa-user" aria-hidden="true"></i>{{item.customer}}</div>
+            <div slot="after-title" class="after">
+              <div><i class="fa fa-briefcase" aria-hidden="true"></i>{{item.title}}</div>
+              <div><i class="fa fa-clock-o" aria-hidden="true"></i>{{item.back_date}}</div>
+            </div>
+            <div class="min">{{item.pay_type}}</div>
           </cell>
        </group>
        <!--pullup slot-->
@@ -71,7 +95,9 @@ export default {
         pulldownStatus: 'default'
       },
       cShow: false,
-      listItem: []
+      listItem: [],
+      type: '',
+      tag: 0
     }
   },
   components: {
@@ -85,6 +111,11 @@ export default {
     this.list()
     this.getField()
     this.$vux.bus.$on('getTypeList', msg => {
+      this.params.be_approved = 0
+      this.params.page = 1
+      this.tag = msg.show
+      this.type = msg
+      if (msg.label) this.params.be_approved = msg.label
       this.list(true, msg)
     })
   },
@@ -94,7 +125,7 @@ export default {
   methods: {
     list (flag, value) {
       let indexApi = ''
-      if (typeof value === 'undefined') value = ''
+      if (!value) value = ''
       value ? indexApi = value.name : indexApi = PaymentIndex
       if (flag) {
         this.listData = []
@@ -111,21 +142,21 @@ export default {
           }
         } else {
           if (this.$refs.scroll) this.$refs.scroll.disablePullup()
-          this.$vux.toast.show({ text: res.msg })
+          this.$vux.toast.show({ text: '没有更多数据~' })
         }
       })
     },
     loadMore () {
       setTimeout(() => {
         this.params.page ++
-        this.list(false)
+        this.list(false, this.type)
         if (this.$refs.scroll) this.$refs.scroll.donePullup()
       }, 1000)
     },
     refresh () {
       setTimeout(() => {
         this.params.page = 1
-        this.list(true)
+        this.list(true, this.type)
         if (this.$refs.scroll) this.$refs.scroll.reset({top: 0})
       }, 1000)
     },
@@ -183,8 +214,13 @@ font-size: 20px;
   top: -2px;
   .after{
     &>div{
-      display: inline-block;float:left;font-size:12px;color:#6b6b6b;
-      &._ni {padding-right: 10px;position: relative;max-width: 60%;&:after{
+      font-size:12px;color:#6b6b6b;
+      &.line{display: inline-block;float:left;
+      &._ni {padding-right: 10px;position: relative;max-width: 60%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        &:after{
         content: "";
         position: absolute;
         right: 0;
@@ -196,9 +232,11 @@ font-size: 20px;
         transform-origin: 100% 0;
         transform: scale(0.5, 0.8) translateY(-50%);
       }}
-      &._na {padding-left: 10px;max-width: 30%}
+      &._na {padding-left: 10px;}
+    }
     }
   }
+  .min {font-size: 12px}
 }
 .search {
   height: 20px;

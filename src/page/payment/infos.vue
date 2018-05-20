@@ -66,7 +66,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.delbtn {
-  margin: 15px;
-}
+.delbtn {margin: 15px;}
 </style>

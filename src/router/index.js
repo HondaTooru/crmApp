@@ -64,6 +64,7 @@ const Oppoc = () => import('@/page/opportunities/oppoc')  // 转成合同
 
 const Payment = () => import('@/page/payment/payment') // 回款列表
 const Received = () => import('@/page/payment/Received') // 添加回款
+const RecordDetail = () => import('@/page/payment/detailrecord')
 const PaymentRecord = () => import('@/page/payment/paymentRecord')
 const PaymentInfo = () => import('@/page/payment/infos')
 const PaymentMark = () => import('@/page/payment/paymentMark')
@@ -124,6 +125,7 @@ export default new Router({
         { path: 'contactinfo/:id', name: 'contactinfo', component: ContactInfo, meta: { title: '联系人详情' } },
         { path: 'contactoppo/:id', name: 'contactoppo', component: ContactOppo, meta: { title: '商机' } },
         { path: 'mark', name: 'mark', component: Mark, meta: { title: '跟进记录' } },
+        { path: 'recorddetail/:id', name: 'recorddetail', component: RecordDetail, meta: { title: '回款记录' } },
         { path: 'pinfos/:id', name: 'pinfos', component: PaymentInfo, meta: { title: '回款计划详情' } },
 
         { path: 'opportunity', name: 'opportunity', component: Opportunities, meta: { title: '商机' } },

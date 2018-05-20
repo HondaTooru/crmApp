@@ -93,7 +93,6 @@ export default {
   methods: {
     getList () {
       payRecord().then(res => {
-        console.log(res)
         res[0].data.forEach(item => { this.v.y.push(item.showname) })
         res[1].data.forEach(item => { this.v.u.push(item.showname) })
         res[2].data.forEach(item => { this.v.i.push(item.username) })

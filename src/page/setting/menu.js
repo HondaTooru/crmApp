@@ -61,10 +61,10 @@ export const List = [
       { key: 3, value: '待审批的客户', tag: { name: 'to_be_approved', value: 1 } }]},
   {defaultVal:
       {key: 0, value: '回款计划'},
-    data: [{ key: 0, value: '回款计划', tag: { name: PaymentIndex, value: 0 } },
-    { key: 1, value: '回款记录', tag: { name: PlanRecord, value: 0 } },
-    { key: 2, value: '开票记录', tag: { name: TicketRecord, value: 0 } },
-    { key: 3, value: '待审批的回款', tag: { name: PlanRecord, value: 0 } }]},
+    data: [{ key: 0, value: '回款计划', tag: { name: PaymentIndex, value: 0, show: 0 } },
+    { key: 1, value: '回款记录', tag: { name: PlanRecord, value: 0, show: 1 } },
+    { key: 2, value: '开票记录', tag: { name: TicketRecord, value: 0, show: 2 } },
+    { key: 3, value: '待审批的回款', tag: { name: PlanRecord, value: 0, label: 1, show: 3 } }]},
   {defaultVal:
     {key: 0, value: '全部'},
     data: [{ key: 0, value: '全部', tag: { name: '' } },
