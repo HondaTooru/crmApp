@@ -149,7 +149,7 @@ export default {
       g.pay_way = g.pay_way.toString()
       for (let i in g) {
         if (!g[i]) {
-          this.$vux.toast.show({ text: '请选择需要审批的数据~', width: '11em', position: 'center' })
+          this.$vux.toast.show({ text: '请把信息填完整~', width: '11em', position: 'center' })
           return
         }
       }

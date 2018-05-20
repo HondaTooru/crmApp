@@ -1,4 +1,5 @@
-export const ActionMenu = ['clue', 'customer', 'contact', 'opportunity', 'contract', 'product', 'payment', 'clueinfo', 'customerinfo', 'opportunitiesinfo', 'plan', 'contactinfo']
+import { PlanRecord, TicketRecord, PaymentIndex } from '@/api/api'
+export const ActionMenu = ['clue', 'customer', 'contact', 'opportunity', 'contract', 'product', 'payment', 'clueinfo', 'customerinfo', 'opportunitiesinfo', 'plan', 'contactinfo', 'pinfos']
 export const AddData = ['oppoc', 'oppoaddcontact', 'opportunitiesedit', 'productinfo', 'updatepass', 'center', 'customeraudited', 'common', 'transfer', 'transformc', 'clueAdd', 'customerAdd', 'cluedit', 'contactAdd', 'opportunityAdd', 'contractAdd', 'productAdd', 'received', 'writeclue', 'writecustomer', 'writeopportunities', 'contractaudited', 'writecontract']
 export const delBtns = ['notifications']
 export const Menus = [
@@ -13,7 +14,8 @@ export const Menus = [
   [{label: '转移至公海', link: 'common'}, {label: '转移给他人', link: 'transfer/customer'}],
   [{label: '增加联系', link: 'oppoaddcontact/'}, {label: '转成合同 ', link: 'oppoc/'}],
   [{label: '增加回款计划', link: 'Addplan'}],
-  [{label: '保存', link: {tag: 'contactinfo'}}, {label: '商机', link: 'contactoppo/'}, {label: '相关联系', link: 'contactabout/'}, {label: '操作日志', link: 'log/contact/'}]
+  [{label: '保存', link: {tag: 'contactinfo'}}, {label: '商机', link: 'contactoppo/'}, {label: '相关联系', link: 'contactabout/'}, {label: '操作日志', link: 'log/contact/'}],
+  [{label: '配置', link: 'Received'}, {label: '新增回款记录', link: 'paymentRecord'}]
 ]
 export const addBtn = ['task']
 export const TaskList = ['打电话给该客户', '发邮件给该客户', '拜访该客户']
@@ -59,10 +61,10 @@ export const List = [
       { key: 3, value: '待审批的客户', tag: { name: 'to_be_approved', value: 1 } }]},
   {defaultVal:
       {key: 0, value: '回款计划'},
-    data: [{ key: 0, value: '回款计划', tag: { name: 'my_own', value: 0 } },
-    { key: 1, value: '回款记录', tag: { name: 'my_own', value: 0 } },
-    { key: 2, value: '开票记录', tag: { name: 'my_own', value: 0 } },
-    { key: 3, value: '待审批的回款', tag: { name: 'my_own', value: 0 } }]},
+    data: [{ key: 0, value: '回款计划', tag: { name: PaymentIndex, value: 0 } },
+    { key: 1, value: '回款记录', tag: { name: PlanRecord, value: 0 } },
+    { key: 2, value: '开票记录', tag: { name: TicketRecord, value: 0 } },
+    { key: 3, value: '待审批的回款', tag: { name: PlanRecord, value: 0 } }]},
   {defaultVal:
     {key: 0, value: '全部'},
     data: [{ key: 0, value: '全部', tag: { name: '' } },

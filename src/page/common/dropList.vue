@@ -39,9 +39,6 @@ export default {
       this.$vux.bus.$emit('getTypeList', this.list[this.n].data[key].tag)
     }
   },
-  destroyed () {
-    this.$vux.bus.$off('getTypeList')
-  },
   computed: {
     n () {
       return this.RouterName.indexOf(this.$route.name)

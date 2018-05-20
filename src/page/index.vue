@@ -229,11 +229,10 @@ export default {
     AddPage (n, i) {
       if (n) return
       let id = this.$route.params.id
-      if (typeof id === 'undefined') id = ''
       if (typeof i.link === 'object') {
         this.$vux.bus.$emit('saveData')
         return
-      }
+      } else { id = '' }
       this.$router.push('/' + i.link + id)
     },
     ...mapActions([

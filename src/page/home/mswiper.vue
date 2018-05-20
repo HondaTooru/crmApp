@@ -2,7 +2,7 @@
   <swiper height="235px" dots-position="center" class="mswiper">
     <swiper-item>
       <div class="title vux-1px-b">
-        <span class="select"><popup-picker :data="list" v-model="value" @on-change="getTagList"></popup-picker></span><span>业绩目标</span><span class="select"><popup-picker :data="list_" v-model="value_" @on-change="selectList" :columns="1" show-name></popup-picker></span></div>
+        <span class="select"><popup-picker :data="list" v-model="value" @on-change="getTagList"></popup-picker></span><span>业绩目标</span><span class="select mn"><popup-picker :data="list_" v-model="value_" @on-change="selectList" :columns="1" show-name></popup-picker></span></div>
       <div class="main aim">
         <div class="content">
             <div>
@@ -25,7 +25,7 @@
     </swiper-item>
     <swiper-item>
       <div class="title vux-1px-b">
-        <span class="select"><popup-picker :data="list2" v-model="value2" @on-change="om"></popup-picker></span>销售简报</div>
+        <span class="select"><popup-picker :data="list2" v-model="value2" @on-change="om"></popup-picker></span><span class="isme" @click="lookme"><i class="fa" :class="{'fa-check-square-o': check, 'fa-check-square': !check}" aria-hidden="true"></i>只看自己</span>销售简报</div>
         <div class="main list" v-if="infos">
            <flexbox orient="vertical" :gutter="15">
              <flexbox-item>
@@ -81,7 +81,7 @@
     </swiper-item>
     <swiper-item>
       <div class="title vux-1px-b">
-      <span class="select"><popup-picker :data="list2" v-model="value2"></popup-picker></span>销售简报</div>
+      <span class="select"><popup-picker :data="list2" v-model="value2"></popup-picker></span><span class="isme" @click="lookme"><i class="fa" :class="{'fa-check-square-o': check, 'fa-check-square': !check}" aria-hidden="true"></i>只看自己</span>销售简报</div>
       <div class="main list" v-if="infos">
          <flexbox orient="vertical" :gutter="15">
            <flexbox-item>
@@ -202,7 +202,8 @@ export default {
         is_own: 0,
         time_str: 'month'
       },
-      infos: null
+      infos: null,
+      check: true
     }
   },
   created () {
@@ -234,6 +235,11 @@ export default {
       SaleReport(this.params).then(res => {
         this.infos = res.data
       })
+    },
+    lookme () {
+      this.params.is_own === 0 ? this.params.is_own = 1 : this.params.is_own = 0
+      this.check = !this.check
+      this.om()
     }
   },
   computed: {
@@ -272,18 +278,21 @@ export default {
           &::before {
             content: '';
             position: absolute;
-            bottom:1px;
+            bottom: 1px;
             left:0;
             width:100%;
             border-bottom:2px solid #1cb0f1
           }
+          &.mn {
+            margin-right: 15px
+          }
        }
-      &:nth-of-type(n + 2) {
-        margin-right: 15px;
-        float:left;
-        &::before {
-          border-bottom-color: #c3c3c3
-        }
+      &.isme {
+        margin:0 15px;
+        float:right;
+        display: block;
+        height: 100%;
+        color:#35495e;
       }
     }
   }
