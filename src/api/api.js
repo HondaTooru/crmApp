@@ -9,7 +9,7 @@ const oppo = '/crm/api/all_oppo'
 const prems = [ {name: 'customer_status'}, {name: 'customer_source'}, {name: 'industry'}, {name: 'customer_type'} ]
 const oparmas = [ {stype: 'opportunity_source'}, {stype: 'sale_stage'}, {stype: 'opportunity_type'} ]
 export const USER = JSON.parse(localStorage.getItem(USER_KEY))
-const USERID = { customer_id: USER.customer_id, uid: USER.id } // 用户ID
+const USERID = { customer_id: USER.customer_id, uid: USER.id, form: 'App' } // 用户ID
 
 export const DetailApi = (pamras, name) => { return Vue.http.post('/crm/' + name + '/detail', Object.assign({}, USERID, pamras)).then(res => res.data) }
 const mRequest = parmas => { return Vue.http.post(urls, Object.assign({}, USERID, parmas)).then(res => res.data) }
