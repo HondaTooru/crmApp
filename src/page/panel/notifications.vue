@@ -96,6 +96,7 @@ export default {
           }
         }
         if (item.msg_type === 'opportunity') { this.$router.push('/opportunitiesedit/' + item.row_id) }
+        if (item.msg_type === 'payment') { this.$router.push('/recorddetail/' + item.row_id) }
       })
     },
     delAll () {
@@ -113,7 +114,7 @@ export default {
           DelAllNotifications().then(res => {
             if (ERR_OK === res.code) {
               _that.listData = []
-              _that.$vux.toast.show({ text: res.msg })
+              _that.$vux.toast.show({ text: res.msg, type: 'success' })
             } else { _that.$vux.toast.show({ text: res.msg }) }
           })
         }

@@ -44,7 +44,7 @@ export default {
     return {
       xm: false,
       showContent: false,
-      unless: ['provance', 'city', 'area', 'imgs'],
+      unless: ['provance', 'city', 'area', 'imgs', 'image'],
       unlessId: ['pre_user_id', 'pre_department_id', 'parent_customer', 'customer', 'user_id_2', 'per_department', 'per_user'],
       note: [],
       saveList: [],

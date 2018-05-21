@@ -5,7 +5,7 @@
     <x-input title="产品单价" is-type="number" v-model.number="infos.unit_price" text-align="right"></x-input>
     <x-input title="产品单位" v-model="infos.unit_sales" text-align="right"></x-input>
     <x-input title="产品分类" v-model="infos.cate_id" text-align="right"></x-input>
-    <x-input title="产品主图" v-model="infos.image" text-align="right"></x-input>
+    <!-- <x-input title="产品主图" v-model="infos.image" text-align="right"></x-input> -->
     <datetime title="创建时间" v-model="infos.create_time" text-align="right" format="YYYY-MM-DD HH:mm"></datetime>
     <datetime title="更新时间" v-model="infos.update_time" text-align="right" format="YYYY-MM-DD HH:mm"></datetime>
     <x-input title="产品编号" v-model="infos.product_code" text-align="right"></x-input>

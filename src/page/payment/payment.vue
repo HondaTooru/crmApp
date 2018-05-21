@@ -38,7 +38,7 @@
             </div>
             <div class="min">{{item.pay_way}}</div>
           </cell>
-          <cell v-for="item in listData" v-if="tag === 2" :key="item.id" :link="'/pinfos/' + item.id" is-link>
+          <cell v-for="item in listData" v-if="tag === 2" :key="item.id" :link="'/ticketinfo/' + item.id" is-link>
             <div slot="title"><i class="fa fa-user" aria-hidden="true"></i>{{item.customer}}</div>
             <div slot="after-title" class="after">
               <div class="_ni"><i class="fa fa-briefcase" aria-hidden="true"></i>{{item.title}}</div>
@@ -46,7 +46,7 @@
             </div>
             <div class="min">{{item.ticket_type}}</div>
           </cell>
-          <cell v-for="item in listData" v-if="tag === 3" :key="item.id" :link="'/pinfos/' + item.id" is-link>
+          <cell v-for="item in listData" v-if="tag === 3" :key="item.id" :link="'/recorddetail/' + item.id" is-link>
             <div slot="title"><i class="fa fa-user" aria-hidden="true"></i>{{item.customer}}</div>
             <div slot="after-title" class="after">
               <div><i class="fa fa-briefcase" aria-hidden="true"></i>{{item.title}}</div>
@@ -110,16 +110,20 @@ export default {
   created () {
     this.list()
     this.getField()
+  },
+  activated () {
     this.$vux.bus.$on('getTypeList', msg => {
       this.params.be_approved = 0
+      this.params.keyword = ''
       this.params.page = 1
       this.tag = msg.show
       this.type = msg
       if (msg.label) this.params.be_approved = msg.label
       this.list(true, msg)
+      this.getField(msg)
     })
   },
-  beforeDestroy () {
+  deactivated () {
     this.$vux.bus.$off('getTypeList')
   },
   methods: {
@@ -160,13 +164,15 @@ export default {
         if (this.$refs.scroll) this.$refs.scroll.reset({top: 0})
       }, 1000)
     },
-    searchWord () {},
+    searchWord () { this.list(true, this.type) },
     change (value, label) {
-      this.value = value
+      this.params.field = value
       this.cShow = false
     },
-    getField () {
-      PlanField().then(res => {
+    getField (value) {
+      let api = value ? value.search : PlanField
+      this.listItem = []
+      api().then(res => {
         res.data.forEach(item => { this.listItem.push({value: item.showname, key: item.name}) })
         this.params.field = res.data[0].name
       })

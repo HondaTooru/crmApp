@@ -1,6 +1,6 @@
-import { PlanRecord, TicketRecord, PaymentIndex } from '@/api/api'
+import { PlanRecord, TicketRecord, PaymentIndex, PlanField, TabelField, TicketField } from '@/api/api'
 export const ActionMenu = ['clue', 'customer', 'contact', 'opportunity', 'contract', 'product', 'payment', 'clueinfo', 'customerinfo', 'opportunitiesinfo', 'plan', 'contactinfo', 'pinfos']
-export const AddData = ['oppoc', 'oppoaddcontact', 'opportunitiesedit', 'productinfo', 'updatepass', 'center', 'customeraudited', 'common', 'transfer', 'transformc', 'clueAdd', 'customerAdd', 'cluedit', 'contactAdd', 'opportunityAdd', 'contractAdd', 'productAdd', 'received', 'writeclue', 'writecustomer', 'writeopportunities', 'contractaudited', 'writecontract']
+export const AddData = ['ticketinfo', 'recorddetail', 'oppoc', 'oppoaddcontact', 'opportunitiesedit', 'productinfo', 'updatepass', 'center', 'customeraudited', 'common', 'transfer', 'transformc', 'clueAdd', 'customerAdd', 'cluedit', 'contactAdd', 'opportunityAdd', 'contractAdd', 'productAdd', 'received', 'writeclue', 'writecustomer', 'writeopportunities', 'contractaudited', 'writecontract']
 export const delBtns = ['notifications']
 export const Menus = [
   [{label: '新增线索', link: 'clueAdd'}, {label: '线索查重', link: 'checks/lead'}],
@@ -61,10 +61,10 @@ export const List = [
       { key: 3, value: '待审批的客户', tag: { name: 'to_be_approved', value: 1 } }]},
   {defaultVal:
       {key: 0, value: '回款计划'},
-    data: [{ key: 0, value: '回款计划', tag: { name: PaymentIndex, value: 0, show: 0 } },
-    { key: 1, value: '回款记录', tag: { name: PlanRecord, value: 0, show: 1 } },
-    { key: 2, value: '开票记录', tag: { name: TicketRecord, value: 0, show: 2 } },
-    { key: 3, value: '待审批的回款', tag: { name: PlanRecord, value: 0, label: 1, show: 3 } }]},
+    data: [{ key: 0, value: '回款计划', tag: { name: PaymentIndex, search: PlanField, value: 0, show: 0 } },
+    { key: 1, value: '回款记录', tag: { name: PlanRecord, search: TabelField, value: 0, show: 1 } },
+    { key: 2, value: '开票记录', tag: { name: TicketRecord, search: TicketField, value: 0, show: 2 } },
+    { key: 3, value: '待审批的回款', tag: { name: PlanRecord, search: TabelField, value: 0, label: 1, show: 3 } }]},
   {defaultVal:
     {key: 0, value: '全部'},
     data: [{ key: 0, value: '全部', tag: { name: '' } },
@@ -74,4 +74,4 @@ export const List = [
     {key: 4, value: '合同', tag: { name: 'contract' }}]}
 ]
 export const RouterName = ['clue', 'contract', 'contact', 'opportunity', 'customer', 'payment', 'mark']
-export const Include = ['apphome', 'mywork', 'common', 'notifications']
+export const Include = ['apphome', 'mywork', 'common', 'payment']

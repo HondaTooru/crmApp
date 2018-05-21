@@ -70,7 +70,7 @@
               <img src="../assets/more.svg">
             </div>
             </tabbar-item>
-            <tabbar-item badge="9" link="/mywork" :selected="route.path == '/mywork' && gobalSett == false">
+            <tabbar-item link="/mywork" :selected="route.path == '/mywork' && gobalSett == false">
               <img slot="icon" src="../assets/work.svg">
               <img slot="icon-active" src="../assets/work_active.svg">
               <span slot="label">工作</span>
@@ -232,7 +232,7 @@ export default {
       if (typeof i.link === 'object') {
         this.$vux.bus.$emit('saveData')
         return
-      } else { id = '' }
+      } else { if (this.$route.name !== 'contactinfo') id = '' }
       this.$router.push('/' + i.link + id)
     },
     ...mapActions([

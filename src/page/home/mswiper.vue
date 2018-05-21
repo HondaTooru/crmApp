@@ -135,7 +135,7 @@
          </flexbox>
       </div>
     </swiper-item>
-    <swiper-item>
+    <!-- <swiper-item>
       <div class="title vux-1px-b">
         <span class="select"><popup-picker :data="list" v-model="value"></popup-picker></span>销售形势预测</div>
       <div class="main shaped">
@@ -164,7 +164,7 @@
           </flexbox-item>
         </flexbox>
       </div>
-    </swiper-item>
+    </swiper-item> -->
   </swiper>
 </template>
 

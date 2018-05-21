@@ -244,7 +244,7 @@ export default {
       if (!this.flag) return
       this.flag = false
       this.$vux.confirm.show({
-        title: '删除后不可恢复',
+        title: '删除后不可恢复~',
         onConfirm () {
           DelThis({row_id: _that.$route.params.id}, 'Contract').then(res => {
             if (ERR_OK === res.code) {

@@ -9,7 +9,7 @@
                   <div class="item-wrap" v-for="x in 2" :key="x">
                     <div class="wrap">
                       <div class="icon icon-1"><i class="fa fa-calendar-minus-o" aria-hidden="true"></i></div>
-                      <div class="text">写周ss报</div>
+                      <div class="text">写周报</div>
                      </div>
                    </div>
                 </div>
