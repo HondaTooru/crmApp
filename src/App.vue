@@ -37,28 +37,25 @@ export default {
   },
   methods: {
     plusReady () {
+      let _that = this
       document.addEventListener('plusready', function () {
         let webview = plus.webview.currentWebview()
-        plus.key.addEventListener('backbutton', function () {
+        let first = null
+        plus.key.addEventListener('backbutton', function () { // 监听 Android 返回键
           webview.canBack(function (e) {
             if (e.canBack) {
               webview.back()
             } else {
-              //  webview.close() //  hide,quit
-              let first = null
-              plus.key.addEventListener('backbutton', () => {
-                if (!first) {
-                  first = new Date().getTime()
-                  plus.nativeUI.toast('再按一次退出')
-                  setTimeout(() => { first = null }, 1000)
-                } else {
-                  plus.runtime.quit()
-                }
-              }, false)
+              if (!first) {
+                first = new Date().getTime()
+                plus.nativeUI.toast('再按一次退出')
+                setTimeout(() => { first = null }, 1000)
+              } else {
+                plus.runtime.quit()
+              }
             }
           })
         })
-      })
     }
 //  plusReady () {
 //    var that = this
