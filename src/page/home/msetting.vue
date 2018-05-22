@@ -3,14 +3,14 @@
       <div class="container">
         <div class="content">
           <swiper height="100%" dots-position="center" class="list-item">
-            <swiper-item v-for="m in 2" :key="m">
-              <div class="box">
-                <div class="item" v-for="i in 3" :key="i">
-                  <div class="item-wrap" v-for="x in 2" :key="x">
-                    <div class="wrap">
-                      <div class="icon icon-1"><i class="fa fa-calendar-minus-o" aria-hidden="true"></i></div>
-                      <div class="text">写周报</div>
-                     </div>
+            <swiper-item v-for="(m, i) in list" :key="i">
+              <div class="box" :class="'box-'+ i">
+                <div class="item" v-for="(n, a) in m" :key="a" :class="'item-'+ a">
+                  <div class="item-wrap" v-for="(x, k) in n" :key="k">
+                    <router-link :to="x.link" tag="div" class="wrap" @click.native="$store.commit('updateGobalSett', {gobalSett: false})">
+                    <div class="icon"><i class="fa" :class="x.icon" aria-hidden="true"></i></div>
+                    <div class="text">{{x.value}}</div>
+                    </router-link>
                    </div>
                 </div>
               </div>
@@ -35,7 +35,14 @@ export default {
   },
   data () {
     return {
-      setter: false
+      setter: false,
+      list: [
+        [
+          [{icon: 'fa-user', value: '新增客户', link: 'customerAdd'}, {icon: 'fa-crosshairs', value: '新增线索', link: 'clueAdd'}],
+          [{icon: 'fa-address-book-o', link: 'contactAdd', value: '新增联系人'}, {icon: 'fa-usd', value: '新增商机', link: 'opportunityAdd'}],
+          [{icon: 'fa-briefcase', value: '新增产品', link: 'productAdd'}, {icon: 'fa-search', value: '查重', link: '/checks/customer'}]
+        ]
+      ]
     }
   },
   mounted () {
@@ -91,6 +98,26 @@ background:#35495e !important;
               padding: 5px;
               &.icon-1{background:orange;}
             }
+          }
+        }
+      }
+      &.box-0 {
+        .item-0 {
+          .item-wrap {
+            .icon {background:#b77600}
+            &:nth-of-type(2) { .icon {background:#659cad} }
+          }
+        }
+        .item-1 {
+          .item-wrap {
+            .icon {background:#25a297}
+            &:nth-of-type(2) { .icon {background:#934cab} }
+          }
+        }
+        .item-2 {
+          .item-wrap {
+            .icon {background:#00a56f}
+            &:nth-of-type(2) { .icon {background:linear-gradient(-45deg, #54b5e6, #9054a5)} }
           }
         }
       }

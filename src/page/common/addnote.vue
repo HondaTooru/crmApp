@@ -6,7 +6,7 @@
       </popup>
    </div>
    <group :gutter="0" title="必填信息">
-      <div v-for="m in note" v-if="m.required === 1" class="item">
+      <div v-for="m in note" v-if="m.required === 1 && m.name !== 'image'" class="item">
         <x-input :show-clear="false" :placeholder="'请输入' + m.showname" v-if="m.field_type === 'text' || m.field_type === 'decimal' || m.field_type === 'textarea'"  :title="m.showname" v-model='m.value' :is-type="m.name.indexOf('tel') !== -1 ? 'china-mobile' : ''" text-align="right" :type="m.name.indexOf('tel') !== -1 ? 'tel' : 'text'" required></x-input>
         <datetime v-model="m.value" :title="m.showname" v-if="m.field_type === 'date'" format="YYYY-MM-DD HH:mm"></datetime>
         <checklist :title="m.showname" :options="sexList" v-model="m.value" :max="1" v-if="m.field_type === 'radio'"></checklist>
@@ -44,7 +44,7 @@ export default {
     return {
       xm: false,
       showContent: false,
-      unless: ['provance', 'city', 'area', 'imgs', 'image'],
+      unless: ['provance', 'city', 'area', 'imgs'],
       unlessId: ['pre_user_id', 'pre_department_id', 'parent_customer', 'customer', 'user_id_2', 'per_department', 'per_user'],
       note: [],
       saveList: [],

@@ -14,21 +14,12 @@ export default {
   data () {
     return {
       managers: [
-        {label: '写跟进', value: 'opportunities', status: true},
         {label: '新增线索', value: 'client', status: true},
         {label: '新增客户', value: 'client', status: true},
         {label: '新增商机', value: 'client', status: true},
         {label: '新增联系人', value: 'xiansuo', status: true},
-        {label: '新增任务', value: 'compact', status: true},
-        {label: '写日报', value: 'opportunities', status: true},
-        {label: '写周报', value: 'opportunities', status: true},
-        {label: '写月报', value: 'opportunities', status: true},
-        {label: '拜访签到', value: 'xiansuo', status: false},
         {label: '查重', value: 'compact', status: false},
-        {label: '附近客户', value: 'xiansuo', status: false},
-        {label: '名片扫描', value: 'client', status: false},
-        {label: '数据上报', value: 'compact', status: false},
-        {label: '公海客户', value: 'xiansuo', status: true}
+        {label: '公海', value: 'xiansuo', status: true}
       ]
     }
   },
