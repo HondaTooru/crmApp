@@ -37,14 +37,15 @@ export default {
   },
   methods: {
     plusReady () {
+      let _that = this
       document.addEventListener('plusready', function () {
         let webview = plus.webview.currentWebview()
-        plus.key.addEventListener('backbutton', function () {
+        let first = null
+        plus.key.addEventListener('backbutton', function () { // 监听 Android 返回键
           webview.canBack(function (e) {
             if (e.canBack) {
               webview.back()
             } else {
-              let first = null
               if (!first) {
                 first = new Date().getTime()
                 plus.nativeUI.toast('再按一次退出')
@@ -55,33 +56,14 @@ export default {
             }
           })
         })
+        plus.push.addEventListener('click', msg => {
+          console.log('you clicked' + msg.content)
+          console.log(msg)
+          let getMsg = JSON.parse(msg.payload)
+          console.log(getMsg)
+        }, false)
       })
     }
-//  plusReady () {
-//    var that = this
-//    // 监听plusready事件
-//    document.addEventListener('plusready', function () {
-//      // 扩展API加载完毕，现在可以正常调用扩展API
-//      // 获取客户端标识信息
-//      that.plus = plus
-//      that.connWebIM()  // var info = plus.push.getClientInfo();console.log( JSON.stringify( info ) );获取app的信息，appid等
-//      // 添加监听从系统消息中心点击消息启动事件
-//      plus.push.addEventListener('click', function (msg) {
-//      // 分析msg.payload处理业务逻辑
-//        console.log('You clicked:' + msg.content)
-//        console.log(msg)
-//        console.log(JSON.parse(msg.payload))
-//        var getMsg = JSON.parse(msg.payload)
-//        if (getMsg.msg_type === 'payment') {
-//          that.$router.push({path: '/record', query: {id: getMsg.row_id}})
-//        } else if (getMsg.msg_type === 'customer') {
-//          that.$router.push('/clientdetail/' + getMsg.row_id)
-//        } else if (getMsg.msg_type === 'clue') {
-//          that.$router.push('/cluedetail/' + getMsg.row_id)
-//        }
-//      }, false)
-//    })
-//  },
    // connWebIM () {
    //   console.log(3)
    //   window.conn = new WebIM.connection ({
@@ -100,7 +82,7 @@ export default {
    //     this.connect()
    //   }
    // },
- //  消息处理回调
+   //  消息处理回调
     // connListen () {
     //   var that = this
     //   conn.listen({
