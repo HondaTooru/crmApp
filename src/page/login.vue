@@ -46,7 +46,7 @@ export default {
             if (ERR_OK === res.code) {
               this.loginState = !this.loginState
               localStorage.setItem(USER_KEY, JSON.stringify(res.data))
-              this.$router.push('/')
+              this.$router.replace('/')
             } else {
               this.$vux.toast.show({
                 text: res.msg,

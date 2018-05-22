@@ -29,7 +29,7 @@ export default {
     }
   },
   created () {
-//  this.plusReady()
+    this.plusReady()
 //  this.connWebIM()
   },
   components: {
@@ -37,6 +37,30 @@ export default {
     MSett
   },
   methods: {
+    plusReady () {
+      document.addEventListener('plusready', function () {
+        let webview = plus.webview.currentWebview()
+        plus.key.addEventListener('backbutton', function () {
+          webview.canBack(function (e) {
+            if (e.canBack) {
+              webview.back()
+            } else {
+              //  webview.close() //  hide,quit
+              let first = null
+              plus.key.addEventListener('backbutton', () => {
+                if (!first) {
+                  first = new Date().getTime()
+                  plus.nativeUI.toast('再按一次退出')
+                  setTimeout(() => { first = null }, 1000)
+                } else {
+                  plus.runtime.quit()
+                }
+              }, false)
+            }
+          })
+        })
+      })
+    }
 //  plusReady () {
 //    var that = this
 //    // 监听plusready事件

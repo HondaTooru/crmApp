@@ -187,7 +187,7 @@ export default {
                 text: res.msg,
                 type: 'success',
                 onHide () {
-                  _that.$router.replace('/opportunity')
+                  _that.$router.go(-2)
                 } })
             } else {
               _that.flag = true

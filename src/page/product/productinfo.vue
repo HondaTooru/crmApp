@@ -52,7 +52,7 @@ export default {
                 text: res.msg,
                 type: 'success',
                 onHide () {
-                  _that.$router.replace('/product')
+                  _that.$router.go(-1)
                 }
               })
             } else {

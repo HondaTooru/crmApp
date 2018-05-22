@@ -172,7 +172,11 @@ export default {
           this.$vux.toast.show({
             text: res.msg,
             onHide () {
-              _that.$router.back()
+              if (_that.is_edit === 1) {
+                _that.$router.go(-2)
+              } else {
+                _that.$router.go(-1)
+              }
             }
           })
         }

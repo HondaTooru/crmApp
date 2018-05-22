@@ -103,7 +103,7 @@ export default {
           this.infos.pay_way = [this.infos.pay_way]
           this.infos.pay_type = [this.infos.pay_type]
           this.is_eidt = res.data.detail.body.be_approved
-        } else { this.$vux.toast.show({text: '该条项目已被删除~', width: '11em', onHide () { _that.$router.back() }}) }
+        } else { this.$vux.toast.show({text: '该条项目已被删除~', width: '11em', onHide () { _that.$router.go(-1) }}) }
       })
     },
     getList () {
@@ -126,7 +126,7 @@ export default {
                 text: res.msg,
                 type: 'success',
                 onHide () {
-                  _that.$router.back()
+                  _that.$router.go(-1)
                 } })
             } else {
               _that.flag = true
@@ -156,7 +156,7 @@ export default {
           Approval({status: this.params.status, row_id: this.$route.params.id}, this.params.w_type).then(res => {
             if (ERR_OK === res.code) {
               this.xk = !this.xk
-              this.$vux.toast.show({ text: res.msg, type: 'success', onHide () { _that.$router.replace('/payment') } })
+              this.$vux.toast.show({ text: res.msg, type: 'success', onHide () { _that.$router.go('-1') } })
             } else {
               this.flag = true
               this.$vux.toast.show({ text: res.msg })

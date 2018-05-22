@@ -153,7 +153,6 @@ export default {
         }
       }
       addRecordApi(g).then(res => {
-        console.log(res)
         if (ERR_OK === res.code) {
           this.$vux.toast.show({
             text: res.msg,

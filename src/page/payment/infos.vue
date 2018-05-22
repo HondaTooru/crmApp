@@ -52,7 +52,7 @@ export default {
         onConfirm () {
           DelPayment({row_id: _that.$route.params.id}).then(res => {
             if (ERR_OK === res.code) {
-              _that.$vux.toast.show({ text: res.msg, type: 'success', onHide () { _that.$router.replace('/payment') } })
+              _that.$vux.toast.show({ text: res.msg, type: 'success', onHide () { _that.$router.go(-1) } })
             } else {
               _that.flag = false
               _that.$vux.toast.show({ text: res.msg })

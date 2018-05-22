@@ -178,7 +178,7 @@ export default {
                 text: res.msg,
                 type: 'success',
                 onHide () {
-                  _that.$router.replace('/contact')
+                  _that.$router.go(-1)
                 } })
             } else {
               _that.flag = true
