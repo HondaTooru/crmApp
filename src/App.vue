@@ -43,7 +43,7 @@ export default {
         let first = null
         plus.key.addEventListener('backbutton', function () { // 监听 Android 返回键
           webview.canBack(function (e) {
-            if (e.canBack) {
+            if (e.canBack && _that.$route.path !== '/') {
               webview.back()
             } else {
               if (!first) {
@@ -57,7 +57,7 @@ export default {
           })
         })
         plus.push.addEventListener('click', msg => {
-          console.log('you clicked' + msg.content)
+          alert('you clicked' + msg.content)
           console.log(msg)
           let getMsg = JSON.parse(msg.payload)
           console.log(getMsg)
