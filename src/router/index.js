@@ -70,6 +70,7 @@ const PaymentRecord = () => import('@/page/payment/paymentRecord')
 const PaymentInfo = () => import('@/page/payment/infos')
 const PaymentMark = () => import('@/page/payment/paymentMark')
 const ContractList = () => import('@/page/contractlist/contractlist')
+const DataCenter = () => import('@/page/mywork/datacenter')
 
 Vue.use(Router)
 export default new Router({
@@ -143,7 +144,8 @@ export default new Router({
         { path: 'paymentMark', name: 'paymentMark', component: PaymentMark, meta: { title: '新增开票记录' } },
         { path: 'ticketinfo/:id', name: 'ticketinfo', component: TicketInfo, meta: { title: '开票记录' } },
         { path: 'contract_list', name: 'contract_list', component: ContractList, meta: { title: '合同清单' } },
-        { path: 'listinfo/:id', name: 'listinfo', component: ListInfo, meta: { title: '合同清单详情' } }
+        { path: 'listinfo/:id', name: 'listinfo', component: ListInfo, meta: { title: '合同清单详情' } },
+        { path: 'datacenter', name: 'datacenter', component: DataCenter, meta: { title: '报表中心' } }
       ]
     },
     {

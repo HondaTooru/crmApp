@@ -20,12 +20,12 @@
              <div class="text">公海</div>
            </router-link>
          </flexbox-item>
-         <!-- <flexbox-item :span="1/4">
-           <router-link :to="{ name: '', params: {} }" tag="div">
+         <flexbox-item :span="1/4">
+           <router-link to="datacenter" tag="div">
              <div class="icon icon-10"><i class="fa fa-bar-chart" aria-hidden="true"></i></div>
              <div class="text">报表中心</div>
            </router-link>
-         </flexbox-item> -->
+         </flexbox-item>
          <flexbox-item :span="1/4">
            <router-link to="mark" tag="div">
              <div class="icon icon-11"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>
