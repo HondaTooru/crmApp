@@ -19,7 +19,7 @@ export const Menus = [
 ]
 export const addBtn = ['task']
 export const TaskList = ['打电话给该客户', '发邮件给该客户', '拜访该客户']
-export const DropTitle = ['/clue', '/contract', '/contact', '/customer', '/payment', '/opportunity', '/mark']
+export const DropTitle = ['/clue', '/contract', '/contact', '/customer', '/payment', '/opportunity', '/mark', '/datacenter']
 export const OptionsTime = [
   { value: '0', name: '准时' },
   {value: '5', name: '提前5分钟'},
@@ -71,7 +71,14 @@ export const List = [
     {key: 1, value: '线索', tag: { name: 'lead' }},
     {key: 2, value: '客户', tag: { name: 'customer' }},
     {key: 3, value: '商机', tag: { name: 'opportunity' }},
-    {key: 4, value: '合同', tag: { name: 'contract' }}]}
+    {key: 4, value: '合同', tag: { name: 'contract' }}]},
+  {defaultVal:
+    {key: 0, value: '全部'},
+    data: [{ key: 0, value: '全部', tag: { name: 'all' } },
+    {key: 1, value: '本周', tag: { name: 'week' }},
+    {key: 2, value: '本月', tag: { name: 'month' }},
+    {key: 3, value: '本季度', tag: { name: 'three_moth' }},
+    {key: 4, value: '本年', tag: { name: 'year' }}]}
 ]
-export const RouterName = ['clue', 'contract', 'contact', 'opportunity', 'customer', 'payment', 'mark']
+export const RouterName = ['clue', 'contract', 'contact', 'opportunity', 'customer', 'payment', 'mark', 'datacenter']
 export const Include = ['apphome', 'mywork', 'common', 'payment']

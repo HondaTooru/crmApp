@@ -69,6 +69,7 @@ export default {
       g.revisit_man_dep = g.revisit_man_dep.toString()
       g.revisit_man = g.revisit_man.toString()
       VisitList(g).then(res => {
+        res.data.length > 6 ? this.width = res.data.length * 60 : this.width = window.innerWidth - 20
         if (res.data.length) {
           if (flag) this.data = []
           res.data.forEach(item => {
@@ -81,8 +82,9 @@ export default {
             }
           })
         } else { this.$vux.toast.show({ text: '暂无数据~', position: 'bottom' }) }
-        res.data.length > 6 ? this.width = res.data.length * 60 : this.width = window.innerWidth - 20
-        if (this.$refs.chart) this.$refs.chart.rerender()
+        setTimeout(() => {
+          if (this.$refs.chart) this.$refs.chart.rerender()
+        }, 50)
       })
     },
     selectUser (value) {

@@ -1,5 +1,15 @@
 <template>
   <swiper height="235px" dots-position="center" class="mswiper">
+    <div v-transfer-dom>
+      <popup v-model="depart" :popup-style="{background: 'white'}" max-height="50%">
+        <radio :options="deList" @on-change="select"></radio>
+      </popup>
+    </div>
+    <div v-transfer-dom>
+      <popup v-model="deUser" :popup-style="{background: 'white'}" max-height="50%">
+        <radio :options="deUlist" @on-change="selectu"></radio>
+      </popup>
+    </div>
     <swiper-item>
       <div class="title vux-1px-b">
         <span class="select"><popup-picker :data="list" v-model="value" @on-change="getTagList"></popup-picker></span><span>业绩目标</span><span class="select mn"><popup-picker :data="list_" v-model="value_" @on-change="selectList" :columns="1" show-name></popup-picker></span></div>
@@ -135,42 +145,28 @@
          </flexbox>
       </div>
     </swiper-item>
-    <!-- <swiper-item>
+    <swiper-item>
       <div class="title vux-1px-b">
-        <span class="select"><popup-picker :data="list" v-model="value"></popup-picker></span>销售形势预测</div>
-      <div class="main shaped">
-        <flexbox>
-          <flexbox-item :span="8">
-            <div class="sha-content">
-            <div class="sha sha0"><span>电话沟通</span></div>
-            <div class="sha sha1"><span>邀约到园</span></div>
-            <div class="sha sha2"><span>卖体验卡</span></div>
-            <div class="sha sha3"><span>试听一</span></div>
-            <div class="sha sha4"><span>试听二</span></div>
-            <div class="sha sha5"><span>试听三</span></div>
-            <div class="sha sha6"><span>...</span></div>
-          </div>
-          </flexbox-item>
-          <flexbox-item :span="4">
-            <ul class="sha-list">
-              <li><span>4单</span><span>&yen;</span>50000</li>
-              <li><span>11单</span><span>&yen;</span>50000</li>
-              <li><span>0单</span><span>&yen;</span>50000</li>
-              <li><span>0单</span><span>&yen;</span>50000</li>
-              <li><span>0单</span><span>&yen;</span>50000</li>
-              <li><span>0单</span><span>&yen;</span>50000</li>
-              <li>...</li>
-            </ul>
-          </flexbox-item>
-        </flexbox>
+        <div class="content">
+        <div class="left" @click="chooseType">
+          <span>部门</span>
+        </div>
+        <div class="left" @click="getAdmin">
+          <span>负责人</span>
+        </div>
       </div>
-    </swiper-item> -->
+        销售漏斗</div>
+      <div class="main shaped">
+        <funnel-list :options="opt" ref="funnel"></funnel-list>
+      </div>
+    </swiper-item>
   </swiper>
 </template>
 
 <script>
-import { Swiper, SwiperItem, PopupPicker, XCircle, Flexbox, FlexboxItem } from 'vux'
-import { SlideApi, SaleReport, ERR_OK } from '@/api/api'
+import { Swiper, SwiperItem, PopupPicker, XCircle, Flexbox, FlexboxItem, Popup, Radio } from 'vux'
+import { AllDepartmentApi, DepUser, AllAdminApi, SlideApi, SaleReport, ERR_OK } from '@/api/api'
+import FunnelList from '@/page/mywork/funnel'
 
 export default {
   name: 'mswiper',
@@ -180,10 +176,24 @@ export default {
     PopupPicker,
     XCircle,
     Flexbox,
-    FlexboxItem
+    FlexboxItem,
+    FunnelList,
+    Popup,
+    Radio
   },
   data () {
     return {
+      opt: {
+        title: false,
+        type: 'all',
+        man_dep: '',
+        revisit_man: '',
+        height: '190px'
+      },
+      depart: false,
+      deList: [],
+      deUser: false,
+      deUlist: [],
       value: ['本月'],
       value2: ['本月'],
       value_: ['1'],
@@ -213,6 +223,42 @@ export default {
   mounted () {
   },
   methods: {
+    chooseType () {
+      if (!this.deList.length) {
+        AllDepartmentApi().then(res => {
+          res.data.forEach(item => { this.deList.push({key: item.id, value: item.name}) })
+          this.deList.unshift({key: 0, value: '全部'})
+          this.depart = !this.depart
+        })
+      } else { this.depart = !this.depart }
+    },
+    select (value, label) {
+      let g = value ? label : ''
+      this.opt.man_dep = g
+      this.$refs.funnel.getSaleFunnel()
+      this.depart = !this.depart
+      this.deUlist = []
+      value ? DepUser({revisit_man_dep: value}).then(res => { res.data.forEach(item => { this.deUlist.push({key: item.id, value: item.username}) }) }) : this.getAdmin(false)
+      this.deUlist.unshift({key: 0, value: '全部'})
+    },
+    selectu (value, label) {
+      let g = value ? label : ''
+      this.opt.revisit_man = g
+      this.$refs.funnel.getSaleFunnel()
+      this.deUser = !this.deUser
+    },
+    getAdmin (flag) {
+      flag = typeof flag === 'undefined' ? true : flag
+      if (!this.deUlist.length) {
+        AllAdminApi().then(res => {
+          res.data.forEach(item => { this.deUlist.push({key: item.id, value: item.username}) })
+          if (flag) {
+            this.deUser = !this.deUser
+            this.deUlist.unshift({key: 0, value: '全部'})
+          }
+        })
+      } else { this.deUser = !this.deUser }
+    },
     getTagList () {
       this.data.time_str = this.cuurentDate
       SlideApi(this.data).then(res => {
@@ -254,13 +300,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@sha0: #7f91e8;
-@sha1: #87a987;
-@sha2: #84d2c7;
-@sha3: #f16b0b;
-@sha4: #eab69e;
-@sha5: #38779c;
-@sha6: #5f6362;
 .mswiper{
   .title{
     padding-left: 15px;
@@ -403,120 +442,36 @@ export default {
         }
       }
     }
-    &.shaped {
-      .sha-content{
-        display: flex;
-        flex-direction: column;
-        padding:10px 0 0 15px;
-      .sha {
-            width:180px;
-            height:0;
-            border-top: 20px solid @sha0;
-            border-right: 10px solid transparent;
-            border-left:10px solid transparent;
-            position: relative;
-            text-align: center;
-            margin-bottom: 5px;
-            span {
-              position: relative;
-              top:-24px;
-              font-size: 12px;
-              color:white;
-            }
-            &.sha0 {
-              border-top-color:@sha0
-            }
-            &.sha1 {
-              width: 160px;
-              left: 10px;
-              border-top-color:@sha1;
-            }
-            &.sha2 {
-              width: 140px;
-              left: 20px;
-              border-top-color:@sha2;
-            }
-            &.sha3 {
-              width: 120px;
-              left: 30px;
-              border-top-color:@sha3;
-            }
-            &.sha4 {
-              width: 100px;
-              left: 40px;
-              border-top-color:@sha4;
-            }
-            &.sha5 {
-              width: 80px;
-              left: 50px;
-              border-top-color:@sha5;
-            }
-            &.sha6 {
-              width: 60px;
-              left: 60px;
-              border-top-color:@sha6;
-            }
-        }
+  }
+  .content {
+    display: flex;
+    float:right;
+    height: 100%;
+    .left {
+      min-width: 90px;
+      text-align: center;
+      position: relative;
+      font-size: 14px;
+      &:nth-of-type(2) {
+        margin-left: 15px
       }
-      .sha-list {
-        list-style: none;
-        font-size: 12px;
-        color:#7c7c7c;
-        padding-left: 15px;
-        padding-top: 8px;
-        li{
-          height: 20px;
-          line-height: 20px;
-          margin-bottom: 5px;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          overflow: hidden;
-          position: relative;
-          padding-left: 20px;
-          &:nth-of-type(2) {
-            &::before {
-              background:@sha1;
-            }
-          }
-          &:nth-of-type(3) {
-            &::before {
-              background:@sha2;
-            }
-          }
-          &:nth-of-type(4) {
-            &::before {
-              background:@sha3;
-            }
-          }
-          &:nth-of-type(5) {
-            &::before {
-              background:@sha4;
-            }
-          }
-          &:nth-of-type(6) {
-            &::before {
-              background:@sha5;
-            }
-          }
-          &:nth-of-type(7) {
-            &::before {
-              background:@sha6;
-            }
-          }
-          &::before{
-            content: '';
-            position: absolute;
-            left:0;
-            top:2px;
-            width:15px;
-            height: 15px;
-            background:@sha0;
-          }
-          span:nth-of-type(1) {
-            display:inline-block;
-            padding-right: 5px;
-          }
-        }
+      &:after{
+        content: '';
+        position: absolute;
+        bottom: 1px;
+        left: 0;
+        width: 100%;
+        border-bottom: 2px solid #1cb0f1;
+      }
+      &:before {
+        content: '❯';
+        position: absolute;
+        color:#C7C7C7;
+        right: 15px;
+      }
+      span {
+        width: 100%;
+        display: block;
       }
     }
   }
