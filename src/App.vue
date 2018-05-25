@@ -40,7 +40,7 @@ export default {
       document.addEventListener('plusready', function () {
         let webview = plus.webview.currentWebview()
         let first = null
-        plus.push.createMessage('content')
+        // plus.push.createMessage('content-1')
         plus.key.addEventListener('backbutton', function () { // 监听 Android 返回键
           webview.canBack(function (e) {
             if (e.canBack && _that.$route.path !== '/') {

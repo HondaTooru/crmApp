@@ -19,13 +19,30 @@ export default {
   data () {
     return {
       tagList: null,
-      message: ''
+      message: '',
+      plus: null
     }
   },
   created () {
-    this.connWebIM()
+    this.plusLoad()
   },
   methods: {
+    plusLoad () {
+      // console.log(1)
+      document.addEventListener('plusready', () => {
+        this.plus = plus
+        // plus.push.createMessage('content-2')
+        this.connWebIM()
+        plus.push.addEventListener('click', msg => {
+          console.log(msg)
+          this.$router.push('/notifications/')
+          // let tip = JSON.parse(msg.payload)
+          // if (tip.msg_type === 'lead') { this.$router.push('/clueinfo/' + tip.row_id) }
+          // if (tip.msg_type === 'customer') { this.$router.push('/CustomerInfo/' + tip.row_id) }
+          // if (tip.msg_type === 'opportunity') {}
+        })
+      })
+    },
     connWebIM () {
       let _that = this
       conn = new WebIM.connection({
@@ -50,10 +67,12 @@ export default {
         onOpened: function (msg) {
           console.log('进入函数: onOpened')
           conn.setPresence()
+          // _that.plus.push.createMessage('content-3')
         },
         onTextMessage: function (msg) {
-          console.log(1111111)
-          _that.$vux.toast.show({ text: msg.data })
+          //  console.log(msg)
+          // _that.$vux.toast.show({ text: msg.data })
+          _that.plus.push.createMessage(msg.data, JSON.stringify(msg.ext.data), {title: 'CRM', sound: 'system'})
         }
       })
     }
