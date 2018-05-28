@@ -41,8 +41,9 @@
         >
          <div slot="overwrite-title" class="com-title" v-if="this.dropTitle.indexOf(route.path) === -1">{{ gobalSett ? title : $route.meta.title }}</div>
          <drop-list slot="overwrite-title" class="com-title" v-if="this.dropTitle.indexOf(route.path) !== -1"></drop-list>
-          <figure slot="overwrite-left" @click="drawerVisibility = !drawerVisibility" v-if="(route.path == '/' || route.path == '/mywork') && !gobalSett">
-            <img :src="userInfos.avatar">
+          <figure slot="overwrite-left" @click="drawerVisibility = !drawerVisibility" v-if="(route.path == '/' || route.path == '/mywork') && !gobalSett"
+          :style="{backgroundImage: 'url(' + userInfos.avatar + ')'}"
+          >
           </figure>
           <div slot="right" class="set">
             <span v-if="route.path == '/mywork' && !gobalSett" @click="gosettingView">设置</span>
@@ -329,9 +330,9 @@ figure{
   overflow: hidden;
   touch-action: none;
   transform: translate(0, -8px);
-  img{
-    width:100%
-  }
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .vux-tabbar{
   background:#f7f7f7;

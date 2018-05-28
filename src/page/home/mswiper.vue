@@ -1,5 +1,5 @@
 <template>
-  <swiper height="235px" dots-position="center" class="mswiper">
+  <div>
     <div v-transfer-dom>
       <popup v-model="depart" :popup-style="{background: 'white'}" max-height="50%">
         <radio :options="deList" @on-change="select"></radio>
@@ -10,6 +10,7 @@
         <radio :options="deUlist" @on-change="selectu"></radio>
       </popup>
     </div>
+  <swiper height="235px" dots-position="center" class="mswiper">
     <swiper-item>
       <div class="title vux-1px-b">
         <span class="select"><popup-picker :data="list" v-model="value" @on-change="getTagList"></popup-picker></span><span>业绩目标</span><span class="select mn"><popup-picker :data="list_" v-model="value_" @on-change="selectList" :columns="1" show-name></popup-picker></span></div>
@@ -161,10 +162,11 @@
       </div>
     </swiper-item>
   </swiper>
+</div>
 </template>
 
 <script>
-import { Swiper, SwiperItem, PopupPicker, XCircle, Flexbox, FlexboxItem, Popup, Radio } from 'vux'
+import { Swiper, SwiperItem, PopupPicker, XCircle, Flexbox, FlexboxItem, Popup, Radio, Previewer } from 'vux'
 import { AllDepartmentApi, DepUser, AllAdminApi, SlideApi, SaleReport, ERR_OK } from '@/api/api'
 import FunnelList from '@/page/mywork/funnel'
 
@@ -179,7 +181,8 @@ export default {
     FlexboxItem,
     FunnelList,
     Popup,
-    Radio
+    Radio,
+    Previewer
   },
   data () {
     return {

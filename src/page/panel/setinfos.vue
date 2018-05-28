@@ -59,13 +59,13 @@ export default {
     pushImg (e) {
       let input = event.target
       let reader = new FileReader()
-      this.fileName = input.files[0].name
+      if (input.files[0]) this.fileName = input.files[0].name
       reader.onload = () => {
         let dataUrl = reader.result
         this.uploadImg = dataUrl
-        Upload({image_name: this.fileName, base64_image: dataUrl}).then(res => { this.fid = res.data })
+        Upload({image_name: this.fileName, base64_image: dataUrl}, 'api').then(res => { this.fid = res.data })
       }
-      reader.readAsDataURL(input.files[0])
+      if (input.files[0]) reader.readAsDataURL(input.files[0])
     },
     saveData () {
       let g = {}

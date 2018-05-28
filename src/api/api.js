@@ -21,6 +21,7 @@ export const PaymentIndex = parmas => { return Vue.http.post('/crm/payment/index
 export const Notice = parmas => { return Vue.http.post('/crm/dashboard/notice', Object.assign({}, USERID, parmas)).then(res => res.data) } // 公告栏
 export const NoticeShow = parmas => { return Vue.http.post('/crm/dashboard/show', Object.assign({}, USERID, parmas)).then(res => res.data) } // 公告详情
 
+export const ProCategroy = params => { return Vue.http.post('/crm/Product/draw', Object.assign({}, USERID, params)).then(res => res.data) } // 产品分类
 export const SaleReport = params => { return Vue.http.post('/crm/dashboard/sale_report', Object.assign({}, USERID, params)).then(res => res.data) } // 销售简报
 export const pContractInfoApi = params => { return Vue.http.post('/crm/Payment/contract_info', Object.assign({}, USERID, params)).then(res => res.data) }
 export const TaskListApi = params => { return Vue.http.post('/crm/api/task', Object.assign({}, USERID, params)).then(res => res.data) }
@@ -48,7 +49,7 @@ export const Notifications = params => { return Vue.http.post('/crm/Notification
 export const DelAllNotifications = () => { return Vue.http.post('/crm/Notifications/del_all', Object.assign({}, USERID)).then(res => res.data) } // 清除所有通知
 export const MemberInfo = () => { return Vue.http.post('/crm/api/member_info', Object.assign({}, USERID)).then(res => res.data) } // 读取个人信息
 export const SaveMemberInfo = params => { return Vue.http.post('/crm/api/save_member_info', Object.assign({}, USERID, params)).then(res => res.data) } // 读取个人信息
-export const Upload = params => { return Vue.http.post('/crm/api/upload', Object.assign({}, USERID, params)).then(res => res.data) }  // 头像上传
+export const Upload = (params, name) => { return Vue.http.post('/crm/' + name + '/upload', Object.assign({}, USERID, params)).then(res => res.data) }  // 头像上传
 export const UpdataPass = params => { return Vue.http.post('/crm/api/change_pwd', Object.assign({}, USERID, params)).then(res => res.data) }  // 修改密码
 export const DelProduct = params => { return Vue.http.post('/crm/product/del_product', Object.assign({}, USERID, params), formatData).then(res => res.data) } // 删除产品
 export const SaveEditPlan = params => { return Vue.http.post('/crm/payment/save_edit_plan_record', Object.assign({}, USERID, params), formatData).then(res => res.data) }
