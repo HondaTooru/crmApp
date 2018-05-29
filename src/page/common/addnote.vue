@@ -54,6 +54,7 @@
 <script>
 import { ERR_OK, AddApi, SaveAddApi, Upload } from '@/api/api'
 import { XInput, CellBox, PopupPicker, Datetime, XAddress, ChinaAddressV4Data, Checklist, dateFormat, Popup, Previewer } from 'vux'
+import lrz from 'lrz'
 
 export default {
   name: 'addnote',
@@ -118,11 +119,13 @@ export default {
     pushImg (e) {
       let input = event.target
       let reader = new FileReader()
-      reader.onload = () => {
-        let dataUrl = reader.result
-        this.uploadImg.push({src: dataUrl, name: input.files[0].name, msrc: dataUrl})
-      }
-      if (input.files[0]) reader.readAsDataURL(input.files[0])
+      lrz(input.files[0], {width: 800}).then(rst => {
+        reader.onload = () => {
+          let dataUrl = rst.base64
+          this.uploadImg.push({src: dataUrl, name: input.files[0].name, msrc: dataUrl})
+        }
+        if (input.files[0]) reader.readAsDataURL(input.files[0])
+      })
     },
     delPic (item) {
       this.uploadImg.splice(this.uploadImg.indexOf(item), 1)

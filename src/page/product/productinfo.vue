@@ -38,6 +38,7 @@
 <script>
 import { XInput, Datetime, XTextarea, XButton, PopupPicker, Previewer } from 'vux'
 import { DetailApi, EditSave, ERR_OK, DelProduct, Upload, ProCategroy } from '@/api/api'
+import lrz from 'lrz'
 
 export default {
   name: 'productinfo',
@@ -108,16 +109,21 @@ export default {
     },
     pushImg (e) {
       let input = event.target
-      let reader = new FileReader()
-      reader.onload = () => {
-        let dataUrl = reader.result
-        this.infos.image.push({id: '', url: dataUrl})
-        this.uploadImg.push({name: input.files[0].name, image: dataUrl, src: dataUrl, msrc: dataUrl})
-      }
-      if (input.files[0]) reader.readAsDataURL(input.files[0])
+      lrz(input.files[0], {width: 800}).then(rst => {
+        let reader = new FileReader()
+        reader.onload = () => {
+          let dataUrl = rst.base64
+          this.infos.image.push({id: '', url: dataUrl})
+          this.uploadImg.push({name: input.files[0].name, image: dataUrl, src: dataUrl, msrc: dataUrl})
+        }
+        if (input.files[0]) reader.readAsDataURL(input.files[0])
+      }).catch(err => {
+        console.log(err)
+      }).always(() => {})
     },
     delPic (item) {
       this.infos.image.splice(this.infos.image.indexOf(item), 1)
+      this.uploadImg.splice(this.uploadImg.indexOf(item), 1)
       this.ids.splice(this.ids.indexOf(item.id), 1)
     },
     getInfo () {
