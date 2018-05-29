@@ -52,7 +52,7 @@ export default {
         { icon: 'fa-address-book-o', name: 'contact' },
         { icon: 'fa-usd', name: 'opportunity' },
         { icon: 'fa-handshake-o', name: 'contract' },
-        { icon: 'fa-briefcase', name: 'product' },
+        { icon: 'fa-product-hunt', name: 'product' },
         { icon: 'fa-credit-card-alt', name: 'payment' },
         { icon: 'fa-list-alt', name: 'contract_list' }
       ]

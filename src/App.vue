@@ -14,7 +14,7 @@
 import { Loading } from 'vux'
 import MSett from '@/page/home/msetting'
 import { mapState } from 'vuex'
-let conn = ''
+
 export default {
   name: 'App',
   computed: {
@@ -43,7 +43,7 @@ export default {
         // plus.push.createMessage('content-1')
         plus.key.addEventListener('backbutton', function () { // 监听 Android 返回键
           webview.canBack(function (e) {
-            if (e.canBack && _that.$route.path !== '/') {
+            if (e.canBack && _that.$route.path !== '/' && _that.$route.path !== '/login') {
               webview.back()
             } else {
               if (!first) {
