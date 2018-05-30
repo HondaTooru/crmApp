@@ -17,7 +17,7 @@
     </div> -->
     <div>
       <input type="tel" placeholder="请输入您的账号" v-model="userInfo.phone">
-      <input type="text" placeholder="请输入您的密码" v-model="userInfo.password">
+      <input type="password" placeholder="请输入您的密码" v-model="userInfo.password">
       <input type="button" value="登录" @click="login">
     </div>
   </div>
