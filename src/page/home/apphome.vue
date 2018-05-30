@@ -31,7 +31,7 @@ export default {
       // console.log(1)
       document.addEventListener('plusready', () => {
         this.plus = plus
-        plus.push.createMessage('content-2')
+        //  plus.push.createMessage('content-2')
         this.connWebIM()
         plus.push.addEventListener('click', msg => {
           this.$router.push('/notifications/')

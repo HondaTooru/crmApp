@@ -1,20 +1,5 @@
 <template>
   <div class="login">
-    <!-- <div>
-      <group :gutter="0">
-        <div class="wrap">
-          <x-input v-model="userInfo.phone" :max="13" is-type="china-mobile" placeholder="请输入手机号码" type="tel">
-            <span slot="label" class="title">账号</span>
-          </x-input>
-          <x-input title="密码" v-model="userInfo.password" placeholder="密码" type="password" :min="6">
-            <span slot="label" class="title">密码</span>
-          </x-input>
-        </div>
-      </group>
-      <div class="btn">
-      <x-button :gradients="['#1D62F0', '#19D5FD']" action-type="button" @click.native="login" :show-loading="loginState" :disabled="loginState">登录</x-button>
-    </div>
-    </div> -->
     <div>
       <input type="tel" placeholder="请输入您的账号" v-model="userInfo.phone">
       <input type="password" placeholder="请输入您的密码" v-model="userInfo.password">
